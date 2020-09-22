@@ -22,6 +22,19 @@ public class Usuario {
     private String path_fotografia;
     private int estatus;
 
+    public Usuario(String usuario, String nombre, String apellido, String password, int rol, String fecha_nacimiento, String correo_alterno, String telefono, String path_fotografia, int estatus) {
+        this.usuario = usuario;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.password = password;
+        this.rol = rol;
+        this.fecha_nacimiento = fecha_nacimiento;
+        this.correo_alterno = correo_alterno;
+        this.telefono = telefono;
+        this.path_fotografia = path_fotografia;
+        this.estatus = estatus;
+    }
+
     /**
      * @return the usuario
      */
