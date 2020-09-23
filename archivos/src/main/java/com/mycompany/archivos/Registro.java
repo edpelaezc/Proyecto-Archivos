@@ -4,6 +4,11 @@
  * and open the template in the editor.
  */
 package com.mycompany.archivos;
+import java.io.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.*; 
 
 /**
  *
@@ -74,6 +79,11 @@ public class Registro extends javax.swing.JFrame {
         fotoButton.setText("Seleccionar");
 
         jButton1.setText("REGISTRARSE");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -101,12 +111,12 @@ public class Registro extends javax.swing.JFrame {
                                     .addComponent(jLabel3))
                                 .addGap(45, 45, 45)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(nombreTField)
-                                    .addComponent(apellidoTField)
-                                    .addComponent(contraseñaTField)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(usuarioTField, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(0, 0, Short.MAX_VALUE))))
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addComponent(nombreTField)
+                                    .addComponent(apellidoTField)
+                                    .addComponent(contraseñaTField)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel7)
@@ -160,14 +170,74 @@ public class Registro extends javax.swing.JFrame {
                     .addComponent(fotoTField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(fotoButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addComponent(jButton1)
-                .addContainerGap())
+                .addGap(19, 19, 19))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        // Llamar a método para formatear salida                                      
+        if (
+                usuarioTField.getText().length() < 20 &&
+                nombreTField.getText().length() < 30 &&
+                apellidoTField.getText().length() < 30 &&
+                contraseñaTField.getText().length() < 40 &&
+                validarFecha(nacimientoTField.getText()) == true &&
+                alternoTField.getText().length() < 40 &&
+                fotoTField.getText().length() < 182
+            ) {
+                // registro correcto
+                JOptionPane.showMessageDialog(null, "REGISTRO EXITOSO");
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "CAMPOS INVÁLIDOS\n" + FormatFields());
+        }
+    }//GEN-LAST:event_jButton1MouseClicked
+
+    private boolean validarFecha(String input){
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        
+        try
+        {
+            // Formato válido
+            format.parse(input); 
+            return true;
+        }           
+        catch (ParseException e)
+        {
+            // fallo en la conversión
+            return false;
+        }        
+    }
+    
+    private String FormatFields(){
+            String error = "";
+            if (usuarioTField.getText().length() > 20) {                
+                error += "El campo \"Usuario\" debe tener 20 caracteres como máximo\n";
+            }
+            if(nombreTField.getText().length() > 30) {
+                error += "El campo \"Nombre\" debe tener 30 caracteres como máximo\n";
+            }
+            if(apellidoTField.getText().length() > 30) {
+                error += "El campo \"Apellido\" debe tener 30 caracteres como máximo\n";
+            }
+            if(contraseñaTField.getText().length() > 40) {
+                error += "El campo \"Contraseña\" debe tener 40 caracteres como máximo\n";
+            }
+            if(validarFecha(nacimientoTField.getText()) == false) {
+                error += "El campo \"Fecha nacimiento\" debe tener el formato dd/MM/yyyy\n";
+            }
+            if(alternoTField.getText().length() > 40) {
+                error += "El campo \"Correo alterno\" debe tener 40 caracteres como máximo\n";
+            }
+            if(fotoTField.getText().length() > 40) {
+                error += "Ruta inválida para la foto de perfil\n";
+            }               
+            return error; 
+    }
     /**
      * @param args the command line arguments
      */
