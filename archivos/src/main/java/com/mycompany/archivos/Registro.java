@@ -8,6 +8,7 @@ package com.mycompany.archivos;
 import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.regex.Pattern;
 import javax.swing.*;
@@ -114,11 +115,11 @@ public class Registro extends javax.swing.JFrame {
                                 .addGap(45, 45, 45)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(nombreTField)
-                                    .addComponent(apellidoTField)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(usuarioTField, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(0, 0, Short.MAX_VALUE))
-                                    .addComponent(contraseñaTField)))
+                                    .addComponent(contraseñaTField, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(apellidoTField, javax.swing.GroupLayout.Alignment.TRAILING)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel7)
@@ -185,7 +186,8 @@ public class Registro extends javax.swing.JFrame {
         if (usuarioTField.getText().length() < 20
                 && nombreTField.getText().length() < 30
                 && apellidoTField.getText().length() < 30
-                && validarContraseña(contraseñaTField.getText())
+                && validarContraseña(new String(contraseñaTField.getPassword()))
+                && contieneUsuario(new String(contraseñaTField.getPassword())) == false
                 && validarFecha(nacimientoTField.getText()) == true
                 && alternoTField.getText().length() < 40
                 && fotoTField.getText().length() < 182) {
@@ -232,11 +234,15 @@ public class Registro extends javax.swing.JFrame {
         if (fotoTField.getText().length() > 40) {
             error += "Ruta inválida para la foto de perfil\n";
         }
+        if (contieneUsuario(new String(contraseñaTField.getPassword())) == true) {
+            error += "La contraseña contiene el nombre de usuario\n";
+        }
         return error;
     }
 
     private boolean validarContraseña(String input) {
         File obj = new File("C:\\MEIA\\SecurityLevel.txt");
+        System.out.println(input);
         String response = "";
         
         if (obj.exists()) {
@@ -292,7 +298,12 @@ public class Registro extends javax.swing.JFrame {
     }
     
     private boolean contieneUsuario(String input){
-        return false; 
+        input = input.toLowerCase();
+        
+        if (input.contains(usuarioTField.getText().toLowerCase())) {
+            return true; 
+        }
+        return false;
     }
 
     /**
