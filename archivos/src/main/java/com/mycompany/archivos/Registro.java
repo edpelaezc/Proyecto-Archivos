@@ -8,6 +8,7 @@ import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.regex.Pattern;
 import javax.swing.*; 
 
 /**
@@ -179,12 +180,15 @@ public class Registro extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-        // Llamar a método para formatear salida                                      
-        if (
+        // Llamar a método para formatear salida         
+        JOptionPane.showMessageDialog(null, contraseñaTField.getText());
+        String prueba = validarContraseña(contraseñaTField.getText()); 
+        JOptionPane.showMessageDialog(null, prueba);
+       /* if (
                 usuarioTField.getText().length() < 20 &&
                 nombreTField.getText().length() < 30 &&
                 apellidoTField.getText().length() < 30 &&
-                contraseñaTField.getText().length() < 40 &&
+                !"DEBIL".equals(validarContraseña(contraseñaTField.getText())) &&
                 validarFecha(nacimientoTField.getText()) == true &&
                 alternoTField.getText().length() < 40 &&
                 fotoTField.getText().length() < 182
@@ -194,7 +198,7 @@ public class Registro extends javax.swing.JFrame {
         }
         else{
             JOptionPane.showMessageDialog(null, "CAMPOS INVÁLIDOS\n" + FormatFields());
-        }
+        }*/
     }//GEN-LAST:event_jButton1MouseClicked
 
     private boolean validarFecha(String input){
@@ -238,6 +242,51 @@ public class Registro extends javax.swing.JFrame {
             }               
             return error; 
     }
+    
+    private String validarContraseña(String input){
+        File obj = new File("C:\\MEIA\\SecurityLevel.txt");
+        String response = "";
+        
+        if (obj.exists()) {            
+            FileReader lectura; 
+            
+            try {
+                //crear el lector
+                lectura = new FileReader(obj);
+                BufferedReader reader = new BufferedReader(lectura);
+                String linea = "";
+                
+                try {
+                    linea = reader.readLine();
+                    String[] split; 
+                    
+                    while (linea != null) {                        
+                        if (!"".equals(linea)) {
+                            split = linea.split("\\|");   
+                            
+                            // crear regex 
+                            if (Pattern.matches(split[0], input)) {
+                                response = split[1];
+                                break;
+                            }                            
+                        }
+                        linea = reader.readLine();
+                    }
+                    
+                    lectura.close();
+                    reader.close();                    
+                } catch (IOException ex) {
+                    response = ex.getMessage();
+                }
+            } 
+            catch (FileNotFoundException ex){
+                // archivo no encontrado
+                response = ex.getMessage();                                
+            }
+        }
+        return response;
+    }
+    
     /**
      * @param args the command line arguments
      */
