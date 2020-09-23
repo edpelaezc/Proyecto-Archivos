@@ -4,12 +4,13 @@
  * and open the template in the editor.
  */
 package com.mycompany.archivos;
+
 import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.regex.Pattern;
-import javax.swing.*; 
+import javax.swing.*;
 
 /**
  *
@@ -42,7 +43,6 @@ public class Registro extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         apellidoTField = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        contraseñaTField = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         nacimientoTField = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
@@ -53,6 +53,7 @@ public class Registro extends javax.swing.JFrame {
         fotoTField = new javax.swing.JTextField();
         fotoButton = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        contraseñaTField = new javax.swing.JPasswordField();
 
         jLabel1.setText("jLabel1");
 
@@ -112,11 +113,11 @@ public class Registro extends javax.swing.JFrame {
                                     .addComponent(jLabel3))
                                 .addGap(45, 45, 45)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(nombreTField)
+                                    .addComponent(apellidoTField)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(usuarioTField, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(0, 0, Short.MAX_VALUE))
-                                    .addComponent(nombreTField)
-                                    .addComponent(apellidoTField)
                                     .addComponent(contraseñaTField)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -171,122 +172,129 @@ public class Registro extends javax.swing.JFrame {
                     .addComponent(fotoTField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(fotoButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                 .addComponent(jButton1)
-                .addGap(19, 19, 19))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-        // Llamar a método para formatear salida         
-        JOptionPane.showMessageDialog(null, contraseñaTField.getText());
-        String prueba = validarContraseña(contraseñaTField.getText()); 
-        JOptionPane.showMessageDialog(null, prueba);
-       /* if (
-                usuarioTField.getText().length() < 20 &&
-                nombreTField.getText().length() < 30 &&
-                apellidoTField.getText().length() < 30 &&
-                !"DEBIL".equals(validarContraseña(contraseñaTField.getText())) &&
-                validarFecha(nacimientoTField.getText()) == true &&
-                alternoTField.getText().length() < 40 &&
-                fotoTField.getText().length() < 182
-            ) {
-                // registro correcto
-                JOptionPane.showMessageDialog(null, "REGISTRO EXITOSO");
-        }
-        else{
+
+        if (usuarioTField.getText().length() < 20
+                && nombreTField.getText().length() < 30
+                && apellidoTField.getText().length() < 30
+                && validarContraseña(contraseñaTField.getText())
+                && validarFecha(nacimientoTField.getText()) == true
+                && alternoTField.getText().length() < 40
+                && fotoTField.getText().length() < 182) {
+            // registro correcto
+            JOptionPane.showMessageDialog(null, "REGISTRO EXITOSO");
+        } else {
             JOptionPane.showMessageDialog(null, "CAMPOS INVÁLIDOS\n" + FormatFields());
-        }*/
+        }
     }//GEN-LAST:event_jButton1MouseClicked
 
-    private boolean validarFecha(String input){
+    private boolean validarFecha(String input) {
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        
-        try
-        {
+
+        try {
             // Formato válido
-            format.parse(input); 
+            format.parse(input);
             return true;
-        }           
-        catch (ParseException e)
-        {
+        } catch (ParseException e) {
             // fallo en la conversión
             return false;
-        }        
+        }
     }
-    
-    private String FormatFields(){
-            String error = "";
-            if (usuarioTField.getText().length() > 20) {                
-                error += "El campo \"Usuario\" debe tener 20 caracteres como máximo\n";
-            }
-            if(nombreTField.getText().length() > 30) {
-                error += "El campo \"Nombre\" debe tener 30 caracteres como máximo\n";
-            }
-            if(apellidoTField.getText().length() > 30) {
-                error += "El campo \"Apellido\" debe tener 30 caracteres como máximo\n";
-            }
-            if(contraseñaTField.getText().length() > 40) {
-                error += "El campo \"Contraseña\" debe tener 40 caracteres como máximo\n";
-            }
-            if(validarFecha(nacimientoTField.getText()) == false) {
-                error += "El campo \"Fecha nacimiento\" debe tener el formato dd/MM/yyyy\n";
-            }
-            if(alternoTField.getText().length() > 40) {
-                error += "El campo \"Correo alterno\" debe tener 40 caracteres como máximo\n";
-            }
-            if(fotoTField.getText().length() > 40) {
-                error += "Ruta inválida para la foto de perfil\n";
-            }               
-            return error; 
+
+    private String FormatFields() {
+        String error = "";
+        if (usuarioTField.getText().length() > 20) {
+            error += "El campo \"Usuario\" debe tener 20 caracteres como máximo\n";
+        }
+        if (nombreTField.getText().length() > 30) {
+            error += "El campo \"Nombre\" debe tener 30 caracteres como máximo\n";
+        }
+        if (apellidoTField.getText().length() > 30) {
+            error += "El campo \"Apellido\" debe tener 30 caracteres como máximo\n";
+        }
+        if (contraseñaTField.getPassword().length > 40 || contraseñaTField.getPassword().length < 8) {
+            error += "El campo \"Contraseña\" debe tener 8-40 caracteres\n";
+        }
+        if (validarFecha(nacimientoTField.getText()) == false) {
+            error += "El campo \"Fecha nacimiento\" debe tener el formato dd/MM/yyyy\n";
+        }
+        if (alternoTField.getText().length() > 40) {
+            error += "El campo \"Correo alterno\" debe tener 40 caracteres como máximo\n";
+        }
+        if (fotoTField.getText().length() > 40) {
+            error += "Ruta inválida para la foto de perfil\n";
+        }
+        return error;
     }
-    
-    private String validarContraseña(String input){
+
+    private boolean validarContraseña(String input) {
         File obj = new File("C:\\MEIA\\SecurityLevel.txt");
         String response = "";
         
-        if (obj.exists()) {            
-            FileReader lectura; 
-            
+        if (obj.exists()) {
+            FileReader lectura;
+
             try {
                 //crear el lector
                 lectura = new FileReader(obj);
                 BufferedReader reader = new BufferedReader(lectura);
                 String linea = "";
-                
+
                 try {
                     linea = reader.readLine();
-                    String[] split; 
-                    
-                    while (linea != null) {                        
+                    String[] split;
+
+                    while (linea != null) {
                         if (!"".equals(linea)) {
-                            split = linea.split("\\|");   
-                            
-                            // crear regex 
+                            split = linea.split("\\|");
+
+                            // comparar entrada contra regex 
                             if (Pattern.matches(split[0], input)) {
                                 response = split[1];
                                 break;
-                            }                            
+                            }
                         }
                         linea = reader.readLine();
                     }
-                    
+
+                    if ("".equals(response)) {
+                        response = "LONGITUD INVÁLIDA PARA LA CONTRASEÑA";
+                        System.out.println(response);
+                        return false;
+                    }                                        
+
                     lectura.close();
-                    reader.close();                    
+                    reader.close();
+                    System.out.println(response);
+                    return true;
                 } catch (IOException ex) {
                     response = ex.getMessage();
+                    System.out.println(response);
+                    return false;
                 }
-            } 
-            catch (FileNotFoundException ex){
+            } catch (FileNotFoundException ex) {
                 // archivo no encontrado
-                response = ex.getMessage();                                
+                response = ex.getMessage();
+                System.out.println(response);
+                return false;
             }
+        }else {
+            return false; 
         }
-        return response;
     }
     
+    private boolean contieneUsuario(String input){
+        return false; 
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -326,7 +334,7 @@ public class Registro extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField alternoTField;
     private javax.swing.JTextField apellidoTField;
-    private javax.swing.JTextField contraseñaTField;
+    private javax.swing.JPasswordField contraseñaTField;
     private javax.swing.JButton fotoButton;
     private javax.swing.JTextField fotoTField;
     private javax.swing.JButton jButton1;
