@@ -54,15 +54,15 @@
                                   <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace min="45" pref="45" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="nombreTField" alignment="0" max="32767" attributes="0"/>
                                   <Group type="102" attributes="0">
-                                      <Component id="usuarioTField" min="-2" pref="180" max="-2" attributes="0"/>
+                                      <Component id="usuarioTField" min="-2" pref="173" max="-2" attributes="0"/>
                                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                   </Group>
-                                  <Component id="contraseñaTField" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="apellidoTField" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="nombreTField" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="contraseñaTField" max="32767" attributes="0"/>
+                                  <Component id="apellidoTField" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
@@ -75,9 +75,9 @@
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="nacimientoTField" max="32767" attributes="0"/>
-                                  <Component id="alternoTField" max="32767" attributes="0"/>
-                                  <Component id="telefonoTField" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="fotoTField" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="alternoTField" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="telefonoTField" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="fotoTField" alignment="1" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -134,9 +134,9 @@
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="fotoButton" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="38" max="32767" attributes="0"/>
+              <EmptySpace pref="33" max="32767" attributes="0"/>
               <Component id="jButton1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>

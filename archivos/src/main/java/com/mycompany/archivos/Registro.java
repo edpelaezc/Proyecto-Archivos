@@ -12,7 +12,9 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.regex.Pattern;
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import org.codehaus.plexus.util.FileUtils;
 
 /**
@@ -119,14 +121,14 @@ public class Registro extends javax.swing.JFrame {
                                     .addComponent(jLabel5)
                                     .addComponent(jLabel4)
                                     .addComponent(jLabel3))
-                                .addGap(45, 45, 45)
+                                .addGap(52, 52, 52)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(nombreTField)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(usuarioTField, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(usuarioTField, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(0, 0, Short.MAX_VALUE))
-                                    .addComponent(contraseñaTField, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(apellidoTField, javax.swing.GroupLayout.Alignment.TRAILING)))
+                                    .addComponent(nombreTField, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(contraseñaTField)
+                                    .addComponent(apellidoTField)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel7)
@@ -136,9 +138,9 @@ public class Registro extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(nacimientoTField)
-                                    .addComponent(alternoTField)
-                                    .addComponent(telefonoTField)
-                                    .addComponent(fotoTField))))))
+                                    .addComponent(alternoTField, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(telefonoTField, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(fotoTField, javax.swing.GroupLayout.Alignment.TRAILING))))))
                 .addGap(31, 31, 31))
         );
         layout.setVerticalGroup(
@@ -180,9 +182,9 @@ public class Registro extends javax.swing.JFrame {
                     .addComponent(fotoTField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(fotoButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                 .addComponent(jButton1)
-                .addContainerGap())
+                .addGap(26, 26, 26))
         );
 
         pack();
@@ -222,11 +224,12 @@ public class Registro extends javax.swing.JFrame {
 
     private void fotoButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fotoButtonMouseClicked
         
-        JFileChooser dialog = new JFileChooser();
+        JFileChooser dialog = new JFileChooser();       
+        dialog.setFileFilter(new FileNameExtensionFilter("Image files", ImageIO.getReaderFileSuffixes()));
         
         File ficheroImagen; 
         String path; 
-        int valor = dialog.showOpenDialog(this);
+        int valor = dialog.showOpenDialog(this);            
         
         if (valor == JFileChooser.APPROVE_OPTION) {
             ficheroImagen = dialog.getSelectedFile();
