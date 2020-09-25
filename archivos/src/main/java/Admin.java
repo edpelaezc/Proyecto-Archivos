@@ -8,8 +8,11 @@
  *
  * @author kevin
  */
-import java.text.DateFormat;
+import java.text.ParseException;
+import java.util.Date;
 import java.text.SimpleDateFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFormattedTextField;
 import static javax.swing.JOptionPane.showMessageDialog;
 
@@ -71,13 +74,28 @@ public class Admin extends javax.swing.JFrame {
 
         jLabel5.setText("Birthday");
 
+        try {
+            birthday.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
         birthday.setToolTipText("Birthday");
+        birthday.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                birthdayFocusLost(evt);
+            }
+        });
         birthday.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 birthdayActionPerformed(evt);
             }
         });
 
+        try {
+            phone_number.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("########")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
         phone_number.setToolTipText("Phone ");
         phone_number.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -152,7 +170,11 @@ public class Admin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        showMessageDialog(null, "Mensaje de prueba");
+        String valores = "";
+        valores += "Email alternativo: " + email.getText() + "\n";
+        valores += "Cumpleaños: " + birthday.getText() + "\n";
+        valores += "Teléfono: " + phone_number.getText() + "\n";
+        showMessageDialog(null, valores);
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -167,10 +189,26 @@ public class Admin extends javax.swing.JFrame {
     }//GEN-LAST:event_phone_numberKeyTyped
 
     private void birthdayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_birthdayActionPerformed
-        DateFormat format = new SimpleDateFormat("dd/MM/yy").format(new Date());
-        
+        String format = new SimpleDateFormat("dd/MM/yy").format(new Date());
         JFormattedTextField dateTextField = new JFormattedTextField(format);
+        
     }//GEN-LAST:event_birthdayActionPerformed
+
+    private void birthdayFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_birthdayFocusLost
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        try {
+            Date usuario = sdf.parse(birthday.getText());
+            Date date = new Date();
+            if (usuario.compareTo(date) > 0) {
+                birthday.setText("");
+                showMessageDialog(null, "la fecha ingresada es mayor a la actual.");
+            }
+        } catch (ParseException ex) {
+            Logger.getLogger(Admin.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        
+        // TODO add your handling code here:
+    }//GEN-LAST:event_birthdayFocusLost
 
     /**
      * @param args the command line arguments
