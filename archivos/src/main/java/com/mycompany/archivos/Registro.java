@@ -5,6 +5,7 @@
  */
 package com.mycompany.archivos;
 
+import ADT.Usuario;
 import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -196,7 +197,17 @@ public class Registro extends javax.swing.JFrame {
             // registro correcto
             JOptionPane.showMessageDialog(null, "REGISTRO EXITOSO\nSEGURIDAD DE CONTRASEÑA: " + validacion[1].toString());
             // ingresar usuario
-            
+            Usuario temp = new Usuario(
+                    usuarioTField.getText(), 
+                    nombreTField.getText(), 
+                    apellidoTField.getText(), 
+                    new String(contraseñaTField.getPassword()), 
+                    1, 
+                    nacimientoTField.getText(), 
+                    alternoTField.getText(), 
+                    telefonoTField.getText(), 
+                    fotoTField.getText(), 
+                    1);
         } else {
             JOptionPane.showMessageDialog(null, "CAMPOS INVÁLIDOS\n" + FormatFields(validacion));
         }

@@ -5,6 +5,8 @@
  */
 package ADT;
 
+import java.security.*;
+
 /**
  *
  * @author edanP
@@ -26,7 +28,7 @@ public class Usuario {
         this.usuario = usuario;
         this.nombre = nombre;
         this.apellido = apellido;
-        this.password = password;
+        this.password = encryptPassword(password);
         this.rol = rol;
         this.fecha_nacimiento = fecha_nacimiento;
         this.correo_alterno = correo_alterno;
@@ -173,5 +175,34 @@ public class Usuario {
      */
     public void setEstatus(int estatus) {
         this.estatus = estatus;
+    }
+
+    public String encryptPassword(String input) {
+
+        try {
+            // Instanciar md5
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            
+            // digest password
+            md.update(input.getBytes());
+            byte[] bytes = md.digest();
+            StringBuilder sb = new StringBuilder();
+            
+            // to hex
+            for(int i=0; i< bytes.length ;i++)
+            {
+                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+            }
+            
+            //Get complete hashed password in hex format            
+            return sb.toString();                   
+        } 
+        catch (NoSuchAlgorithmException e) {
+            return e.getMessage();
+        }
+    }
+    
+    public String toString(){
+        return "";
     }
 }
