@@ -215,7 +215,7 @@ public class Registro extends javax.swing.JFrame {
                     nacimientoTField.getText(),
                     alternoTField.getText(),
                     telefonoTField.getText(),
-                    moverFoto(fotoTField.getText()),
+                    moverFoto(fotoTField.getText(), usuarioTField.getText()),
                     1);
         } else {
             JOptionPane.showMessageDialog(null, "CAMPOS INVÁLIDOS\n" + FormatFields(validacion));
@@ -383,11 +383,19 @@ public class Registro extends javax.swing.JFrame {
         return false;
     }
 
-    private String moverFoto(String path) {
+    /**
+     * Obtener la foto de perfil del usuario y guardarla en el directorio del sistema. 
+     * @param path Ruta hacia la foto.
+     * @param username Se guardará la foto con la llave única de los usuarios.
+     * @return Ruta hacia el nuevo archivo copiado.
+     */
+    private String moverFoto(String path, String username) {
         path = path.replaceAll(" ", "");
         if (!"".equals(path)) {
             File source = new File(path);
-            File dest = new File("C:\\MEIA\\Imagenes\\" + source.getName());
+            int index = source.getName().lastIndexOf('.');
+            File dest = new File("C:\\MEIA\\Imagenes\\" + username + source.getName().substring(index));
+            System.out.println(dest.getName());
             try {
                 FileUtils.copyFile(source, dest);
                 return dest.getPath();
