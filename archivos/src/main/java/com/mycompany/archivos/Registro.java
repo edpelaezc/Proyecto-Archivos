@@ -13,6 +13,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.regex.Pattern;
 import javax.swing.*;
+import org.codehaus.plexus.util.FileUtils;
 
 /**
  *
@@ -81,6 +82,11 @@ public class Registro extends javax.swing.JFrame {
         jLabel10.setText("Fotografía");
 
         fotoButton.setText("Seleccionar");
+        fotoButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                fotoButtonMouseClicked(evt);
+            }
+        });
 
         jButton1.setText("REGISTRARSE");
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -185,11 +191,11 @@ public class Registro extends javax.swing.JFrame {
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
 
         Object[] validacion = validarContraseña(new String(contraseñaTField.getPassword()));
-        
+
         if (usuarioTField.getText().length() < 20
                 && nombreTField.getText().length() < 30
                 && apellidoTField.getText().length() < 30
-                && (Boolean)validacion[0] == true
+                && (Boolean) validacion[0] == true
                 && contieneUsuario(new String(contraseñaTField.getPassword())) == false
                 && validarFecha(nacimientoTField.getText()) == true
                 && alternoTField.getText().length() < 40
@@ -197,24 +203,42 @@ public class Registro extends javax.swing.JFrame {
             // registro correcto
             JOptionPane.showMessageDialog(null, "REGISTRO EXITOSO\nSEGURIDAD DE CONTRASEÑA: " + validacion[1].toString());
             // ingresar usuario
+            
             Usuario temp = new Usuario(
-                    usuarioTField.getText(), 
-                    nombreTField.getText(), 
-                    apellidoTField.getText(), 
-                    new String(contraseñaTField.getPassword()), 
-                    1, 
-                    nacimientoTField.getText(), 
-                    alternoTField.getText(), 
-                    telefonoTField.getText(), 
-                    fotoTField.getText(), 
+                    usuarioTField.getText(),
+                    nombreTField.getText(),
+                    apellidoTField.getText(),
+                    new String(contraseñaTField.getPassword()),
+                    1,
+                    nacimientoTField.getText(),
+                    alternoTField.getText(),
+                    telefonoTField.getText(),
+                    moverFoto(fotoTField.getText()),
                     1);
         } else {
             JOptionPane.showMessageDialog(null, "CAMPOS INVÁLIDOS\n" + FormatFields(validacion));
         }
     }//GEN-LAST:event_jButton1MouseClicked
 
+    private void fotoButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fotoButtonMouseClicked
+        
+        JFileChooser dialog = new JFileChooser();
+        
+        File ficheroImagen; 
+        String path; 
+        int valor = dialog.showOpenDialog(this);
+        
+        if (valor == JFileChooser.APPROVE_OPTION) {
+            ficheroImagen = dialog.getSelectedFile();
+            path = ficheroImagen.getPath();
+            
+            fotoTField.setText(path);
+        }        
+    }//GEN-LAST:event_fotoButtonMouseClicked
+
     /**
      * Valida el formato de la fecha.
+     *
      * @param input Cadena ingresada por el usuario.
      * @return True si cumple el formato, false si no.
      */
@@ -233,7 +257,9 @@ public class Registro extends javax.swing.JFrame {
 
     /**
      * Indica los fallos que se dieron al intentar registrarse en el sistema.
-     * @param fallo La validación de contraseña falló por el nivel de seguridad o su longitud.
+     *
+     * @param fallo La validación de contraseña falló por el nivel de seguridad
+     * o su longitud.
      * @return Los fallos encontrados en los campos ingresados por el usuario.
      */
     private String FormatFields(Object[] fallo) {
@@ -247,18 +273,16 @@ public class Registro extends javax.swing.JFrame {
         if (apellidoTField.getText().length() > 30) {
             error += "El campo \"Apellido\" debe tener 30 caracteres como máximo\n";
         }
-        
+
         // verficar fallo en contraseña
         if (fallo[1].toString().equals("DEBIL")) {
-            error += "CONTRASEÑA DÉBIL";            
-        } 
-        else if (contieneUsuario(new String(contraseñaTField.getPassword())) == true) {
+            error += "CONTRASEÑA DÉBIL";
+        } else if (contieneUsuario(new String(contraseñaTField.getPassword())) == true) {
             error += "La contraseña contiene el nombre de usuario\n";
-        }
-        else {
+        } else {
             error += "El campo \"Contraseña\" debe tener 8-40 caracteres\n";
         }
-        
+
         if (validarFecha(nacimientoTField.getText()) == false) {
             error += "El campo \"Fecha nacimiento\" debe tener el formato dd/MM/yyyy\n";
         }
@@ -272,15 +296,18 @@ public class Registro extends javax.swing.JFrame {
     }
 
     /**
-     * Compara con expresiones regulares almacenadas en el archivo "SecurityLevel"
+     * Compara con expresiones regulares almacenadas en el archivo
+     * "SecurityLevel"
+     *
      * @param input Contraseña ingresada por el usuario.
-     * @return El nivel de seguridad de la contraseña y un bool, que indica en la validación general verdadero o falso siguiendo nuestros criterios.
+     * @return El nivel de seguridad de la contraseña y un bool, que indica en
+     * la validación general verdadero o falso siguiendo nuestros criterios.
      */
     private Object[] validarContraseña(String input) {
         File obj = new File("C:\\MEIA\\SecurityLevel.txt");
         System.out.println(input);
         String response = "";
-        
+
         if (obj.exists()) {
             FileReader lectura;
 
@@ -311,8 +338,8 @@ public class Registro extends javax.swing.JFrame {
                         response = "LONGITUD INVÁLIDA PARA LA CONTRASEÑA";
                         System.out.println(response);
                         return new Object[]{false, response};
-                    }              
-                    
+                    }
+
                     if ("DEBIL".equals(response)) {
                         return new Object[]{false, response};
                     }
@@ -332,23 +359,39 @@ public class Registro extends javax.swing.JFrame {
                 System.out.println(response);
                 return new Object[]{false, response};
             }
-        }else {
+        } else {
             return new Object[]{false, response};
         }
     }
-    
+
     /**
-     * Verifica que la contraseña no contenga el usuario, para evitar que sea más fácil deducir la contraseña.
+     * Verifica que la contraseña no contenga el usuario, para evitar que sea
+     * más fácil deducir la contraseña.
+     *
      * @param input Contraseña.
-     * @return True si contiene el usuario, false si no. 
+     * @return True si contiene el usuario, false si no.
      */
-    private boolean contieneUsuario(String input){
+    private boolean contieneUsuario(String input) {
         input = input.toLowerCase();
-        
+
         if (input.contains(usuarioTField.getText().toLowerCase())) {
-            return true; 
+            return true;
         }
         return false;
+    }
+
+    private String moverFoto(String path) {
+        if (!"".equals(path)) {
+            File source = new File(path);
+            File dest = new File("C:\\MEIA\\Imagenes\\" + source.getName());
+            try {
+                FileUtils.copyFile(source, dest);
+                return dest.getPath();
+            } catch (IOException e) {
+                return e.getMessage();
+            }        
+        }
+        return "";
     }
 
     /**
