@@ -202,6 +202,11 @@ public class Registro extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton1MouseClicked
 
+    /**
+     * Valida el formato de la fecha.
+     * @param input Cadena ingresada por el usuario.
+     * @return True si cumple el formato, false si no.
+     */
     private boolean validarFecha(String input) {
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -215,6 +220,11 @@ public class Registro extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Indica los fallos que se dieron al intentar registrarse en el sistema.
+     * @param fallo La validación de contraseña falló por el nivel de seguridad o su longitud.
+     * @return Los fallos encontrados en los campos ingresados por el usuario.
+     */
     private String FormatFields(Object[] fallo) {
         String error = "";
         if (usuarioTField.getText().length() > 20) {
@@ -250,6 +260,11 @@ public class Registro extends javax.swing.JFrame {
         return error;
     }
 
+    /**
+     * Compara con expresiones regulares almacenadas en el archivo "SecurityLevel"
+     * @param input Contraseña ingresada por el usuario.
+     * @return El nivel de seguridad de la contraseña y un bool, que indica en la validación general verdadero o falso siguiendo nuestros criterios.
+     */
     private Object[] validarContraseña(String input) {
         File obj = new File("C:\\MEIA\\SecurityLevel.txt");
         System.out.println(input);
@@ -311,6 +326,11 @@ public class Registro extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Verifica que la contraseña no contenga el usuario, para evitar que sea más fácil deducir la contraseña.
+     * @param input Contraseña.
+     * @return True si contiene el usuario, false si no. 
+     */
     private boolean contieneUsuario(String input){
         input = input.toLowerCase();
         
