@@ -183,18 +183,20 @@ public class Registro extends javax.swing.JFrame {
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
 
+        Object[] validacion = validarContraseña(new String(contraseñaTField.getPassword()));
+        
         if (usuarioTField.getText().length() < 20
                 && nombreTField.getText().length() < 30
                 && apellidoTField.getText().length() < 30
-                && validarContraseña(new String(contraseñaTField.getPassword()))
+                && (Boolean)validacion[0] == true
                 && contieneUsuario(new String(contraseñaTField.getPassword())) == false
                 && validarFecha(nacimientoTField.getText()) == true
                 && alternoTField.getText().length() < 40
                 && fotoTField.getText().length() < 182) {
             // registro correcto
-            JOptionPane.showMessageDialog(null, "REGISTRO EXITOSO");
+            JOptionPane.showMessageDialog(null, "REGISTRO EXITOSO\nSEGURIDAD DE CONTRASEÑA: " + validacion[1].toString());
         } else {
-            JOptionPane.showMessageDialog(null, "CAMPOS INVÁLIDOS\n" + FormatFields());
+            JOptionPane.showMessageDialog(null, "CAMPOS INVÁLIDOS\n" + FormatFields(validacion[1].toString()));
         }
     }//GEN-LAST:event_jButton1MouseClicked
 
@@ -211,7 +213,7 @@ public class Registro extends javax.swing.JFrame {
         }
     }
 
-    private String FormatFields() {
+    private String FormatFields(String nivel) {
         String error = "";
         if (usuarioTField.getText().length() > 20) {
             error += "El campo \"Usuario\" debe tener 20 caracteres como máximo\n";
@@ -224,6 +226,9 @@ public class Registro extends javax.swing.JFrame {
         }
         if (contraseñaTField.getPassword().length > 40 || contraseñaTField.getPassword().length < 8) {
             error += "El campo \"Contraseña\" debe tener 8-40 caracteres\n";
+        }
+        if (nivel.equals("DEBIL")) {
+            error += "CONTRASEÑA DÉBIL";
         }
         if (validarFecha(nacimientoTField.getText()) == false) {
             error += "El campo \"Fecha nacimiento\" debe tener el formato dd/MM/yyyy\n";
@@ -240,7 +245,7 @@ public class Registro extends javax.swing.JFrame {
         return error;
     }
 
-    private boolean validarContraseña(String input) {
+    private Object[] validarContraseña(String input) {
         File obj = new File("C:\\MEIA\\SecurityLevel.txt");
         System.out.println(input);
         String response = "";
@@ -274,26 +279,30 @@ public class Registro extends javax.swing.JFrame {
                     if ("".equals(response)) {
                         response = "LONGITUD INVÁLIDA PARA LA CONTRASEÑA";
                         System.out.println(response);
-                        return false;
-                    }                                        
+                        return new Object[]{false, response};
+                    }              
+                    
+                    if ("DEBIL".equals(response)) {
+                        return new Object[]{false, response};
+                    }
 
                     lectura.close();
                     reader.close();
                     System.out.println(response);
-                    return true;
+                    return new Object[]{true, response};
                 } catch (IOException ex) {
                     response = ex.getMessage();
                     System.out.println(response);
-                    return false;
+                    return new Object[]{false, response};
                 }
             } catch (FileNotFoundException ex) {
                 // archivo no encontrado
                 response = ex.getMessage();
                 System.out.println(response);
-                return false;
+                return new Object[]{false, response};
             }
         }else {
-            return false; 
+            return new Object[]{false, response};
         }
     }
     
