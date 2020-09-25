@@ -202,8 +202,8 @@ public class Registro extends javax.swing.JFrame {
                 && fotoTField.getText().length() < 182) {
             // registro correcto
             JOptionPane.showMessageDialog(null, "REGISTRO EXITOSO\nSEGURIDAD DE CONTRASEÑA: " + validacion[1].toString());
-            // ingresar usuario
             
+            // ingresar usuario            
             Usuario temp = new Usuario(
                     usuarioTField.getText(),
                     nombreTField.getText(),
@@ -381,6 +381,7 @@ public class Registro extends javax.swing.JFrame {
     }
 
     private String moverFoto(String path) {
+        path = path.replaceAll(" ", "");
         if (!"".equals(path)) {
             File source = new File(path);
             File dest = new File("C:\\MEIA\\Imagenes\\" + source.getName());
