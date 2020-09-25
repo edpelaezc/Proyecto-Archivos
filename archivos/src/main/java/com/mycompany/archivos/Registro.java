@@ -195,8 +195,10 @@ public class Registro extends javax.swing.JFrame {
                 && fotoTField.getText().length() < 182) {
             // registro correcto
             JOptionPane.showMessageDialog(null, "REGISTRO EXITOSO\nSEGURIDAD DE CONTRASEÑA: " + validacion[1].toString());
+            // ingresar usuario
+            
         } else {
-            JOptionPane.showMessageDialog(null, "CAMPOS INVÁLIDOS\n" + FormatFields(validacion[1].toString()));
+            JOptionPane.showMessageDialog(null, "CAMPOS INVÁLIDOS\n" + FormatFields(validacion));
         }
     }//GEN-LAST:event_jButton1MouseClicked
 
@@ -213,7 +215,7 @@ public class Registro extends javax.swing.JFrame {
         }
     }
 
-    private String FormatFields(String nivel) {
+    private String FormatFields(Object[] fallo) {
         String error = "";
         if (usuarioTField.getText().length() > 20) {
             error += "El campo \"Usuario\" debe tener 20 caracteres como máximo\n";
@@ -224,12 +226,18 @@ public class Registro extends javax.swing.JFrame {
         if (apellidoTField.getText().length() > 30) {
             error += "El campo \"Apellido\" debe tener 30 caracteres como máximo\n";
         }
-        if (contraseñaTField.getPassword().length > 40 || contraseñaTField.getPassword().length < 8) {
+        
+        // verficar fallo en contraseña
+        if (fallo[1].toString().equals("DEBIL")) {
+            error += "CONTRASEÑA DÉBIL";            
+        } 
+        else if (contieneUsuario(new String(contraseñaTField.getPassword())) == true) {
+            error += "La contraseña contiene el nombre de usuario\n";
+        }
+        else {
             error += "El campo \"Contraseña\" debe tener 8-40 caracteres\n";
         }
-        if (nivel.equals("DEBIL")) {
-            error += "CONTRASEÑA DÉBIL";
-        }
+        
         if (validarFecha(nacimientoTField.getText()) == false) {
             error += "El campo \"Fecha nacimiento\" debe tener el formato dd/MM/yyyy\n";
         }
@@ -238,9 +246,6 @@ public class Registro extends javax.swing.JFrame {
         }
         if (fotoTField.getText().length() > 40) {
             error += "Ruta inválida para la foto de perfil\n";
-        }
-        if (contieneUsuario(new String(contraseñaTField.getPassword())) == true) {
-            error += "La contraseña contiene el nombre de usuario\n";
         }
         return error;
     }
