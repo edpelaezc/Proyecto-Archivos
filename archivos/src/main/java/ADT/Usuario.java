@@ -203,6 +203,6 @@ public class Usuario {
     }
     
     public String toString(){
-        return "";
+        return this.usuario + "|" + this.nombre + "|" + this.apellido + "|" + this.password + "|" + this.rol + "|" + this.fecha_nacimiento + "|" + this.correo_alterno + "|" + this.telefono + "|" + this.path_fotografia + "|" + this.estatus;
     }
 }
