@@ -24,7 +24,7 @@ public class HandleFiles {
         File usuario = new File("C:\\MEIA\\usuario.txt");
         ArrayList bitacora = ReadFile(bitacora_usuario);
         ArrayList aux_usuario = ReadFile(usuario);
-                        
+
         return bitacora.isEmpty() && aux_usuario.isEmpty();
     }
 
@@ -109,7 +109,7 @@ public class HandleFiles {
 
                 } else {
                     // insertar en usuario todo lo que hay en bitácora                     
-                    HandleUsuario(usuario.getUsuario());
+                    HandleUsuario(usuario.getUsuario(), fecha);
 
                     // insertar en bitácora el nuevo
                     PrintWriter writer = new PrintWriter(bitacora_usuario);
@@ -158,7 +158,7 @@ public class HandleFiles {
         return response;
     }
 
-    private void HandleUsuario(String username) {
+    private void HandleUsuario(String username, String fecha) {
         File usuario = new File("C:\\MEIA\\usuario.txt");
         File desc_usuario = new File("C:\\MEIA\\desc_usuario.txt");
         File bitacora_usuario = new File("C:\\MEIA\\bitacora_usuario.txt");
@@ -178,18 +178,57 @@ public class HandleFiles {
         }
 
         Collections.sort(allUsers);
+        PrintWriter descWriter;
 
-        // escribir usuario ordenados por su clave única
         try {
+            // crear o actulizar
+            if (desc_usuario.createNewFile()) {
+                descWriter = new PrintWriter(desc_usuario);
+                descWriter.print("nombre_simbolico: bitacora_usuario\n"
+                        + "fecha_creacion: " + fecha + "\n"
+                        + "usuario_creacion: " + username + "\n"
+                        + "fecha_modificacion: " + fecha + "\n"
+                        + "usuario_modificacion: " + username + "\n"
+                        + "#_registros: 1\n"
+                        + "registros_activos: 1\n"
+                        + "registros_inactivos: 0\n");
+                descWriter.close();
+            } else {
+                ArrayList desc = ReadFile(desc_usuario);
+                String[] aux;
+
+                //actualizar campos
+                desc.set(3, "fecha_modificacion: " + fecha);
+
+                // actualizar usuario modificacion
+                desc.set(4, "usuario_modificacion: " + username);
+
+                // actualizar conteo                
+                aux = desc.get(5).toString().split(" ");
+                aux[1] = String.valueOf(Integer.parseInt(aux[1]) + 1);
+                desc.set(5, aux[0] + " " + aux[1]); // numero de registros
+
+                aux = desc.get(6).toString().split(" ");
+                aux[1] = String.valueOf(Integer.parseInt(aux[1]) + 1);
+                desc.set(6, aux[0] + " " + aux[1]); // numero de registros activos                    
+
+                descWriter = new PrintWriter(desc_usuario);
+                for (int i = 0; i < 9; i++) {
+                    descWriter.println(desc.get(i).toString());
+                }
+                descWriter.close();
+            }
+
+            // escribir usuario ordenados por su clave única
             PrintWriter userWriter = new PrintWriter(usuario);
             for (int i = 0; i < allUsers.size(); i++) {
                 userWriter.println(allUsers.get(i).toString());
             }
             userWriter.close();
-        } catch (FileNotFoundException ex) {
-            System.out.println(ex.getMessage());
-        }
 
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
     private Usuario createUsuario(String line) {
