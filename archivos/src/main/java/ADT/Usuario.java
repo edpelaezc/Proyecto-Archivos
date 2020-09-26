@@ -21,14 +21,13 @@ public class Usuario implements Comparable<Usuario> {
     private String correo_alterno;
     private String telefono;
     private String path_fotografia;
-    private int estatus;
-    private MD5 encrypt = new MD5();
+    private int estatus;    
 
     public Usuario(String usuario, String nombre, String apellido, String password, int rol, String fecha_nacimiento, String correo_alterno, String telefono, String path_fotografia, int estatus) {
         this.usuario = usuario;
         this.nombre = nombre;
         this.apellido = apellido;
-        this.password = encrypt.encryptPassword(password);
+        this.password = MD5.encryptPassword(password);
         this.rol = rol;
         this.fecha_nacimiento = fecha_nacimiento;
         this.correo_alterno = correo_alterno;
