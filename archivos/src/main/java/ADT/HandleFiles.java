@@ -9,6 +9,7 @@ import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,7 +21,7 @@ public class HandleFiles {
 
     public int conteo() {
         File desc_bitacora_usuario = new File("C:\\MEIA\\desc_bitacora_usuario.txt");
-        ArrayList desc = ReadBitacoraDesc(desc_bitacora_usuario);
+        ArrayList desc = ReadFile(desc_bitacora_usuario);
         String[] aux;
         aux = desc.get(5).toString().split(" ");
         return Integer.parseInt(aux[1]);
@@ -64,7 +65,7 @@ public class HandleFiles {
 
             } else { // YA EXISTE EL ARCHIVO
                 System.out.println("File already exists: " + desc_bitacora_usuario.getName());
-                ArrayList desc = ReadBitacoraDesc(desc_bitacora_usuario);
+                ArrayList desc = ReadFile(desc_bitacora_usuario);
                 String[] aux;
 
                 // validar el max de reorganización
@@ -105,8 +106,16 @@ public class HandleFiles {
                         System.out.println(ex.getMessage());
                     }
 
-                } else { // insertar en usuario
+                } else {
+                    // insertar en usuario todo lo que hay en bitácora                     
+                    HandleUsuario(usuario.getUsuario());
 
+                    // insertar en bitácora el nuevo
+                    PrintWriter writer = new PrintWriter(bitacora_usuario);
+                    writer.print("");
+                    writer.close();
+                    desc.set(6, "registros_activos: 0"); // numero de registros activos 
+                    HandleBitacora(usuario);
                 }
 
             }
@@ -115,7 +124,7 @@ public class HandleFiles {
         }
     }
 
-    private ArrayList ReadBitacoraDesc(File input) {
+    private ArrayList ReadFile(File input) {
         FileReader lectura;
         ArrayList response = new ArrayList();
 
@@ -151,28 +160,50 @@ public class HandleFiles {
     private void HandleUsuario(String username) {
         File usuario = new File("C:\\MEIA\\usuario.txt");
         File desc_usuario = new File("C:\\MEIA\\desc_usuario.txt");
-        // verificar archivo usuario.txt para login
-        try {
-            if (usuario.createNewFile()) {
-                System.out.println("File created: " + usuario.getName());
-            } else {
-                System.out.println("File already exists: " + usuario.getName());
-            }
-        } catch (IOException ex) {
-            ex.printStackTrace();
+        File bitacora_usuario = new File("C:\\MEIA\\bitacora_usuario.txt");
+
+        ArrayList bitacora = ReadFile(bitacora_usuario); // usuarios en bitacora
+        ArrayList aux_usuario = ReadFile(usuario); // usuarios en usuario.txt
+        ArrayList allUsers = new ArrayList();
+
+        // usuarios en bitacora
+        for (int i = 0; i < bitacora.size(); i++) {
+            allUsers.add(createUsuario(bitacora.get(i).toString()));
         }
 
-        // verificar archivo desc_usuario.txt para login
-        try {
-            if (desc_usuario.createNewFile()) {
-                System.out.println("File created: " + desc_usuario.getName());
-
-            } else {
-                System.out.println("File already exists: " + desc_usuario.getName());
-            }
-        } catch (IOException ex) {
-            ex.printStackTrace();
+        // usuarios en usuario.txt
+        for (int i = 0; i < aux_usuario.size(); i++) {
+            allUsers.add(createUsuario(aux_usuario.get(i).toString()));
         }
+
+        Collections.sort(allUsers);
+
+        try {
+            PrintWriter userWriter = new PrintWriter(usuario);
+            for (int i = 0; i < allUsers.size(); i++) {
+                userWriter.println(allUsers.get(i).toString());
+            }
+            userWriter.close();
+        } catch (FileNotFoundException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+    }
+
+    private Usuario createUsuario(String line) {
+        String[] fields = line.split("|");
+        return new Usuario(
+                fields[0],
+                fields[1],
+                fields[2],
+                fields[3],
+                Integer.parseInt(fields[4]),
+                fields[5],
+                fields[6],
+                fields[7],
+                fields[8],
+                Integer.parseInt(fields[9])
+        );
     }
 
     public void writeUser(Usuario input) {
