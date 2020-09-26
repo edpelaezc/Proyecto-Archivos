@@ -115,7 +115,20 @@ public class HandleFiles {
                     PrintWriter writer = new PrintWriter(bitacora_usuario);
                     writer.print("");
                     writer.close();
+
+                    // actualizar desc bitacora                    
+                    desc.set(3, "fecha_modificacion: " + fecha);
+
+                    desc.set(4, "usuario_modificacion: " + usuario.getUsuario());
+                    desc.set(5, "registros_activos: 0"); // numero de registros
                     desc.set(6, "registros_activos: 0"); // numero de registros activos 
+
+                    PrintWriter descWriter = new PrintWriter(desc_bitacora_usuario);
+                    for (int i = 0; i < 9; i++) {
+                        descWriter.println(desc.get(i).toString());
+                    }
+                    descWriter.close();
+
                     HandleBitacora(usuario);
                 }
 
@@ -165,11 +178,12 @@ public class HandleFiles {
 
         ArrayList bitacora = ReadFile(bitacora_usuario); // usuarios en bitacora
         ArrayList aux_usuario = ReadFile(usuario); // usuarios en usuario.txt
-        ArrayList allUsers = new ArrayList();
+        ArrayList<Usuario> allUsers = new ArrayList<Usuario>();
 
         // usuarios en bitacora
-        for (int i = 0; i < bitacora.size(); i++) {
-            allUsers.add(createUsuario(bitacora.get(i).toString()));
+        for (var item : bitacora) {
+            System.out.println(item.toString());
+            allUsers.add(createUsuario(item.toString()));
         }
 
         // usuarios en usuario.txt
@@ -178,19 +192,18 @@ public class HandleFiles {
         }
 
         Collections.sort(allUsers);
-        PrintWriter descWriter;
 
         try {
             // crear o actulizar
             if (desc_usuario.createNewFile()) {
-                descWriter = new PrintWriter(desc_usuario);
+                PrintWriter descWriter = new PrintWriter(desc_usuario);
                 descWriter.print("nombre_simbolico: bitacora_usuario\n"
                         + "fecha_creacion: " + fecha + "\n"
                         + "usuario_creacion: " + username + "\n"
                         + "fecha_modificacion: " + fecha + "\n"
                         + "usuario_modificacion: " + username + "\n"
-                        + "#_registros: 1\n"
-                        + "registros_activos: 1\n"
+                        + "#_registros: 5\n"
+                        + "registros_activos: 5\n"
                         + "registros_inactivos: 0\n");
                 descWriter.close();
             } else {
@@ -205,15 +218,11 @@ public class HandleFiles {
 
                 // actualizar conteo                
                 aux = desc.get(5).toString().split(" ");
-                aux[1] = String.valueOf(Integer.parseInt(aux[1]) + 1);
-                desc.set(5, aux[0] + " " + aux[1]); // numero de registros
+                aux[1] = String.valueOf(Integer.parseInt(aux[1]) + 5);
+                desc.set(5, aux[0] + " " + aux[1]); // numero de registros                  
 
-                aux = desc.get(6).toString().split(" ");
-                aux[1] = String.valueOf(Integer.parseInt(aux[1]) + 1);
-                desc.set(6, aux[0] + " " + aux[1]); // numero de registros activos                    
-
-                descWriter = new PrintWriter(desc_usuario);
-                for (int i = 0; i < 9; i++) {
+                PrintWriter descWriter = new PrintWriter(desc_usuario);
+                for (int i = 0; i < 8; i++) {
                     descWriter.println(desc.get(i).toString());
                 }
                 descWriter.close();
@@ -232,7 +241,7 @@ public class HandleFiles {
     }
 
     private Usuario createUsuario(String line) {
-        String[] fields = line.split("|");
+        String[] fields = line.split("\\|");
         return new Usuario(
                 fields[0],
                 fields[1],
