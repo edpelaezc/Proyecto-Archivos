@@ -25,6 +25,7 @@ import org.codehaus.plexus.util.FileUtils;
 public class Registro extends javax.swing.JFrame {
 
     HandleFiles handler = new HandleFiles();
+
     /**
      * Creates new form Login
      */
@@ -206,42 +207,57 @@ public class Registro extends javax.swing.JFrame {
                 && fotoTField.getText().length() < 182) {
             // registro correcto
             JOptionPane.showMessageDialog(null, "REGISTRO EXITOSO\nSEGURIDAD DE CONTRASEÑA: " + validacion[1].toString());
-            
-            // ingresar usuario            
-            Usuario temp = new Usuario(
-                    usuarioTField.getText(),
-                    nombreTField.getText(),
-                    apellidoTField.getText(),
-                    new String(contraseñaTField.getPassword()),
-                    1,
-                    nacimientoTField.getText(),
-                    alternoTField.getText(),
-                    telefonoTField.getText(),
-                    moverFoto(fotoTField.getText(), usuarioTField.getText()),
-                    1);
-            
+
+            // ingresar usuario   
+            Usuario temp = null;
+            if (handler.conteo() == 0) {
+                    temp = new Usuario(
+                        usuarioTField.getText(),
+                        nombreTField.getText(),
+                        apellidoTField.getText(),
+                        new String(contraseñaTField.getPassword()),
+                        1,
+                        nacimientoTField.getText(),
+                        alternoTField.getText(),
+                        telefonoTField.getText(),
+                        moverFoto(fotoTField.getText(), usuarioTField.getText()),
+                        1);
+            }else {
+                    temp = new Usuario(
+                        usuarioTField.getText(),
+                        nombreTField.getText(),
+                        apellidoTField.getText(),
+                        new String(contraseñaTField.getPassword()),
+                        1,
+                        nacimientoTField.getText(),
+                        alternoTField.getText(),
+                        telefonoTField.getText(),
+                        moverFoto(fotoTField.getText(), usuarioTField.getText()),
+                        0);            
+            }
+
             handler.writeUser(temp);
-            
+
         } else {
             JOptionPane.showMessageDialog(null, "CAMPOS INVÁLIDOS\n" + FormatFields(validacion));
         }
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void fotoButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fotoButtonMouseClicked
-        
-        JFileChooser dialog = new JFileChooser();       
+
+        JFileChooser dialog = new JFileChooser();
         dialog.setFileFilter(new FileNameExtensionFilter("Image files", ImageIO.getReaderFileSuffixes()));
-        
-        File ficheroImagen; 
-        String path; 
-        int valor = dialog.showOpenDialog(this);            
-        
+
+        File ficheroImagen;
+        String path;
+        int valor = dialog.showOpenDialog(this);
+
         if (valor == JFileChooser.APPROVE_OPTION) {
             ficheroImagen = dialog.getSelectedFile();
             path = ficheroImagen.getPath();
-            
+
             fotoTField.setText(path);
-        }        
+        }
     }//GEN-LAST:event_fotoButtonMouseClicked
 
     /**
@@ -389,7 +405,9 @@ public class Registro extends javax.swing.JFrame {
     }
 
     /**
-     * Obtener la foto de perfil del usuario y guardarla en el directorio del sistema. 
+     * Obtener la foto de perfil del usuario y guardarla en el directorio del
+     * sistema.
+     *
      * @param path Ruta hacia la foto.
      * @param username Se guardará la foto con la llave única de los usuarios.
      * @return Ruta hacia el nuevo archivo copiado.
@@ -406,7 +424,7 @@ public class Registro extends javax.swing.JFrame {
                 return dest.getPath();
             } catch (IOException e) {
                 return e.getMessage();
-            }        
+            }
         }
         return "";
     }

@@ -18,6 +18,14 @@ import java.util.logging.Logger;
  */
 public class HandleFiles {
 
+    public int conteo() {
+        File desc_bitacora_usuario = new File("C:\\MEIA\\desc_bitacora_usuario.txt");
+        ArrayList desc = ReadBitacoraDesc(desc_bitacora_usuario);
+        String[] aux;
+        aux = desc.get(5).toString().split(" ");
+        return Integer.parseInt(aux[1]);
+    }
+
     private void HandleBitacora(Usuario usuario) {
         File bitacora_usuario = new File("C:\\MEIA\\bitacora_usuario.txt");
         File desc_bitacora_usuario = new File("C:\\MEIA\\desc_bitacora_usuario.txt");
@@ -42,7 +50,7 @@ public class HandleFiles {
                         + "registros_inactivos: 0\n"
                         + "max_reorganizacion: 5");
                 descWriter.close();
-                
+
                 // insertar en archivo bitacora_usuario.txt para registro
                 try {
                     FileWriter writer = new FileWriter(bitacora_usuario, true);
