@@ -273,7 +273,7 @@ public class Admin extends javax.swing.JFrame {
             showMessageDialog(null, "El correo debe contener un dominio.");
         }
         else{
-        String[] new_values = {
+            String[] new_values = {
             Usuario_Nuevo[0],                       //Usuario
             name.getText(),                         //Nombre
             last_name.getText(),                    //Apellido

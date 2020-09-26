@@ -25,13 +25,14 @@ public class FileHandling {
         return txt;
     }
     public void Write_Text(String[] old_Line, String[] new_Line, String ruta){
-        String nueva_linea = Arrays.toString(old_Line);
-        String vieja_linea = Arrays.toString(new_Line);
-        Remove_Line(vieja_linea, nueva_linea, ruta);
-    
+        String nueva_linea = Arrays.toString(new_Line).replace("[", "").replace("]", "");
+        String vieja_linea = Arrays.toString(old_Line).replace("[", "").replace("]", "");
+        nueva_linea = nueva_linea.replace("," , "|").replace(" ","");
+        vieja_linea = vieja_linea.replace("," , "|").replace(" ","");
+        Remove_Line(vieja_linea.trim(), nueva_linea.trim(), ruta);
     }
     
-    private void Remove_Line(String lineToRemove, String ruta, String newLine) {
+    private void Remove_Line(String lineToRemove, String newLine, String ruta) {
  
     try {
  
@@ -44,12 +45,12 @@ public class FileHandling {
         String line = null;
         while ((line = br.readLine()) != null) {
  
-            if (!line.trim().equals(lineToRemove)) {
+            if (!line.trim().equals(lineToRemove.trim())) {
                 pw.println(line);
-                pw.println(newLine);
                 pw.flush();
             }
         }
+        pw.println(newLine.trim());
         pw.close();
         br.close();
 
