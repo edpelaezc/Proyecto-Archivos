@@ -9,9 +9,7 @@ import javax.swing.*;
 
 public class Admin extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Admin
-     */
+    String[] Usuario_Nuevo = {};
     public Admin() {
         initComponents();
     }
@@ -260,12 +258,38 @@ public class Admin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String valores = "";
-        valores += "Email alternativo: " + email.getText() + "\n";
-        valores += "Cumpleaños: " + birthday.getText() + "\n";
-        valores += "Teléfono: " + phone_number.getText() + "\n";
-        showMessageDialog(null, valores);
-        // TODO add your handling code here:
+        String oldPass = String.valueOf(old_Pass.getPassword());
+        int tam = birthday.getText().length();
+        if(!(oldPass.equals(Usuario_Nuevo[3]))) {
+            showMessageDialog(null, "La contraseña antigua no coincide con la actual.");
+        }
+        else if (birthday.getText().length() < 10) {
+                showMessageDialog(null, "La fecha lleva formato dd-MM-yyyy");
+        }
+        else if (phone_number.getText().length() < 8) {
+            showMessageDialog(null, "El número telefónico debe de contener 8 dígitos.");
+        }
+        else if (!(email.getText().contains("@"))) {
+            showMessageDialog(null, "El correo debe contener un dominio.");
+        }
+        else{
+        String[] new_values = {
+            Usuario_Nuevo[0],                       //Usuario
+            name.getText(),                         //Nombre
+            last_name.getText(),                    //Apellido
+            String.valueOf(new_Pass.getPassword()), //Nueva contraseña
+            Usuario_Nuevo[4],                       //Rol
+            birthday.getText(),                     //Cumpleaños
+            email.getText(),                        //email
+            phone_number.getText(),                 //Telefono
+            Usuario_Nuevo[8],                       //Ruta foto perfil
+            Usuario_Nuevo[9]                        //Status
+        };
+        FileHandling manejo = new FileHandling();
+        String ruta = "C:\\MEIA\\bitacora_usuario.txt";
+        manejo.Write_Text(Usuario_Nuevo, new_values, ruta);
+        showMessageDialog(null, "Usuario modificado");
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void phone_numberKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_phone_numberKeyTyped
@@ -274,8 +298,6 @@ public class Admin extends javax.swing.JFrame {
         {
             evt.consume();
         }
-        
-        // TODO add your handling code here:
     }//GEN-LAST:event_phone_numberKeyTyped
 
     private void birthdayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_birthdayActionPerformed
@@ -296,7 +318,6 @@ public class Admin extends javax.swing.JFrame {
         } catch (ParseException ex) {
             Logger.getLogger(Admin.class.getName()).log(Level.SEVERE, null, ex);
         } 
-        // TODO add your handling code here:
     }//GEN-LAST:event_birthdayFocusLost
 
     private void Boton_BajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Boton_BajaActionPerformed
@@ -320,12 +341,14 @@ public class Admin extends javax.swing.JFrame {
         showMessageDialog(null, "Creando nuevo usuario..."); 
         //Llamar jForm de creación de usuario
     }//GEN-LAST:event_Nuevo_UsuarioActionPerformed
-
+    
+    //Muestra en textbox los valores del usuario que se desea administrar
     private void AdministrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AdministrarActionPerformed
         String Usuario = JOptionPane.showInputDialog(null, "Ingrese el nombre del usuario que desea administrar:");
         FileHandling manejo = new FileHandling();
         String[] valores = {};
         valores = manejo.Read_Text("C:\\MEIA\\bitacora_usuario.txt", Usuario);
+        Usuario_Nuevo = valores;    //Para ser utilizado en otros métodos sin necesidad de leer el archivo
         User_Name.setText(valores[0]);
         name.setText(valores[1]);
         last_name.setText(valores[2]);
@@ -333,10 +356,6 @@ public class Admin extends javax.swing.JFrame {
         birthday.setText(valores[5]);
         email.setText(valores[6]);
         phone_number.setText(valores[7]);
-        
-        
-        
-        showMessageDialog(null, Usuario);
     }//GEN-LAST:event_AdministrarActionPerformed
 
     private void AdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AdminActionPerformed
@@ -350,7 +369,6 @@ public class Admin extends javax.swing.JFrame {
             Nuevo_Usuario.setEnabled(false);
             Administrar.setEnabled(false);            
         }
-        // TODO add your handling code here:
     }//GEN-LAST:event_AdminActionPerformed
 
     /**
