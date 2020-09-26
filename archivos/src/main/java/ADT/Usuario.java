@@ -11,7 +11,7 @@ import java.security.*;
  *
  * @author edanP
  */
-public class Usuario {
+public class Usuario implements Comparable<Usuario> {
 
     private String usuario;
     private String nombre;
@@ -177,6 +177,11 @@ public class Usuario {
         this.estatus = estatus;
     }
 
+    /**
+     * Encriptar la contraseña usando MD5
+     * @param input Cadena que representa la contraseña. 
+     * @return Cadena con la contraseña cifrada.
+     */
     public String encryptPassword(String input) {
 
         try {
@@ -202,7 +207,22 @@ public class Usuario {
         }
     }
     
-    public String toString(){
+    /**
+     * Retorna el usuario con el debido formato para guardarlo en los archivos.
+     * @return Cadena conteniendo toda su información.
+     */
+    public String toString(){        
         return this.usuario + "|" + this.nombre + "|" + this.apellido + "|" + this.password + "|" + this.rol + "|" + this.fecha_nacimiento + "|" + this.correo_alterno + "|" + this.telefono + "|" + this.path_fotografia + "|" + this.estatus;
+    }   
+
+    /**
+     * Override para poder comparar los usuarios por su llave única - Nombre de usuario.
+     * @param o Usuario
+     * @return 
+     */
+    @Override
+    public int compareTo(Usuario o) {
+        return this.getUsuario().compareTo(o.getUsuario());
     }
+    
 }

@@ -5,6 +5,7 @@
  */
 package com.mycompany.archivos;
 
+import ADT.HandleFiles;
 import ADT.Usuario;
 import java.io.*;
 import java.text.ParseException;
@@ -23,6 +24,7 @@ import org.codehaus.plexus.util.FileUtils;
  */
 public class Registro extends javax.swing.JFrame {
 
+    HandleFiles handler = new HandleFiles();
     /**
      * Creates new form Login
      */
@@ -217,6 +219,9 @@ public class Registro extends javax.swing.JFrame {
                     telefonoTField.getText(),
                     moverFoto(fotoTField.getText(), usuarioTField.getText()),
                     1);
+            
+            handler.writeUser(temp);
+            
         } else {
             JOptionPane.showMessageDialog(null, "CAMPOS INVÁLIDOS\n" + FormatFields(validacion));
         }
