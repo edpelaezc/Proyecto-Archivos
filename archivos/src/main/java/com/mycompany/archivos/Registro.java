@@ -208,33 +208,18 @@ public class Registro extends javax.swing.JFrame {
             // registro correcto
             JOptionPane.showMessageDialog(null, "REGISTRO EXITOSO\nSEGURIDAD DE CONTRASEÑA: " + validacion[1].toString());
 
-            // ingresar usuario   
-            Usuario temp = null;
-            if (handler.conteo() == 0) {
-                    temp = new Usuario(
-                        usuarioTField.getText(),
-                        nombreTField.getText(),
-                        apellidoTField.getText(),
-                        new String(contraseñaTField.getPassword()),
-                        1,
-                        nacimientoTField.getText(),
-                        alternoTField.getText(),
-                        telefonoTField.getText(),
-                        moverFoto(fotoTField.getText(), usuarioTField.getText()),
-                        1);
-            }else {
-                    temp = new Usuario(
-                        usuarioTField.getText(),
-                        nombreTField.getText(),
-                        apellidoTField.getText(),
-                        new String(contraseñaTField.getPassword()),
-                        1,
-                        nacimientoTField.getText(),
-                        alternoTField.getText(),
-                        telefonoTField.getText(),
-                        moverFoto(fotoTField.getText(), usuarioTField.getText()),
-                        0);            
-            }
+            // ingresar usuario               
+            Usuario temp = new Usuario(
+                    usuarioTField.getText(),
+                    nombreTField.getText(),
+                    apellidoTField.getText(),
+                    new String(contraseñaTField.getPassword()),
+                    1,
+                    nacimientoTField.getText(),
+                    alternoTField.getText(),
+                    telefonoTField.getText(),
+                    moverFoto(fotoTField.getText(), usuarioTField.getText()),
+                    handler.conteo() ? 1 : 0);
 
             handler.writeUser(temp);
 

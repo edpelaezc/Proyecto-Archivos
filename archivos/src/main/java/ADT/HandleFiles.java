@@ -19,12 +19,13 @@ import java.util.logging.Logger;
  */
 public class HandleFiles {
 
-    public int conteo() {
-        File desc_bitacora_usuario = new File("C:\\MEIA\\desc_bitacora_usuario.txt");
-        ArrayList desc = ReadFile(desc_bitacora_usuario);
-        String[] aux;
-        aux = desc.get(5).toString().split(" ");
-        return Integer.parseInt(aux[1]);
+    public boolean conteo() {
+        File bitacora_usuario = new File("C:\\MEIA\\bitacora_usuario.txt");
+        File usuario = new File("C:\\MEIA\\usuario.txt");
+        ArrayList bitacora = ReadFile(bitacora_usuario);
+        ArrayList aux_usuario = ReadFile(usuario);
+                        
+        return bitacora.isEmpty() && aux_usuario.isEmpty();
     }
 
     private void HandleBitacora(Usuario usuario) {
@@ -178,6 +179,7 @@ public class HandleFiles {
 
         Collections.sort(allUsers);
 
+        // escribir usuario ordenados por su clave única
         try {
             PrintWriter userWriter = new PrintWriter(usuario);
             for (int i = 0; i < allUsers.size(); i++) {

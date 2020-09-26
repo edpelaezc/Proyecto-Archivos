@@ -5,7 +5,6 @@
  */
 package ADT;
 
-import java.security.*;
 
 /**
  *
@@ -23,12 +22,13 @@ public class Usuario implements Comparable<Usuario> {
     private String telefono;
     private String path_fotografia;
     private int estatus;
+    private MD5 encrypt = new MD5();
 
     public Usuario(String usuario, String nombre, String apellido, String password, int rol, String fecha_nacimiento, String correo_alterno, String telefono, String path_fotografia, int estatus) {
         this.usuario = usuario;
         this.nombre = nombre;
         this.apellido = apellido;
-        this.password = encryptPassword(password);
+        this.password = encrypt.encryptPassword(password);
         this.rol = rol;
         this.fecha_nacimiento = fecha_nacimiento;
         this.correo_alterno = correo_alterno;
@@ -175,36 +175,6 @@ public class Usuario implements Comparable<Usuario> {
      */
     public void setEstatus(int estatus) {
         this.estatus = estatus;
-    }
-
-    /**
-     * Encriptar la contraseña usando MD5
-     * @param input Cadena que representa la contraseña. 
-     * @return Cadena con la contraseña cifrada.
-     */
-    public String encryptPassword(String input) {
-
-        try {
-            // Instanciar md5
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            
-            // digest password
-            md.update(input.getBytes());
-            byte[] bytes = md.digest();
-            StringBuilder sb = new StringBuilder();
-            
-            // to hex
-            for(int i=0; i< bytes.length ;i++)
-            {
-                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
-            }
-            
-            //Get complete hashed password in hex format            
-            return sb.toString();                   
-        } 
-        catch (NoSuchAlgorithmException e) {
-            return e.getMessage();
-        }
     }
     
     /**
