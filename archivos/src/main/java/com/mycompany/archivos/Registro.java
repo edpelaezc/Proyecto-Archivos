@@ -202,6 +202,7 @@ public class Registro extends javax.swing.JFrame {
                 && apellidoTField.getText().length() < 30
                 && (Boolean) validacion[0] == true
                 && contieneUsuario(new String(contraseñaTField.getPassword())) == false
+                && handler.uniqueKey(usuarioTField.getText())
                 && validarFecha(nacimientoTField.getText()) == true
                 && alternoTField.getText().length() < 40
                 && fotoTField.getText().length() < 182) {
@@ -282,13 +283,16 @@ public class Registro extends javax.swing.JFrame {
         if (apellidoTField.getText().length() > 30) {
             error += "El campo \"Apellido\" debe tener 30 caracteres como máximo\n";
         }
+        if (handler.uniqueKey(usuarioTField.getText()) == false) {
+            error += "EL USUARIO YA EXISTE\n";
+        }
 
         // verficar fallo en contraseña
         if (fallo[1].toString().equals("DEBIL")) {
             error += "CONTRASEÑA DÉBIL";
         } else if (contieneUsuario(new String(contraseñaTField.getPassword())) == true) {
             error += "La contraseña contiene el nombre de usuario\n";
-        } else {
+        } else if(contraseñaTField.getPassword().length < 8 || contraseñaTField.getPassword().length > 40) {
             error += "El campo \"Contraseña\" debe tener 8-40 caracteres\n";
         }
 
@@ -298,7 +302,7 @@ public class Registro extends javax.swing.JFrame {
         if (alternoTField.getText().length() > 40) {
             error += "El campo \"Correo alterno\" debe tener 40 caracteres como máximo\n";
         }
-        if (fotoTField.getText().length() > 40) {
+        if (fotoTField.getText().length() > 200) {
             error += "Ruta inválida para la foto de perfil\n";
         }
         return error;

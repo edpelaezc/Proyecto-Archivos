@@ -20,7 +20,7 @@ public class MD5 {
      * @param input Cadena que representa la contraseña.
      * @return Cadena con la contraseña cifrada.
      */
-    static String encryptPassword(String input) {
+    public static String encryptPassword(String input) {
 
         try {
             // Instanciar md5

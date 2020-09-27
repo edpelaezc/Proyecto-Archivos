@@ -6,6 +6,8 @@
 package com.mycompany.archivos;
 
 import ADT.HandleFiles;
+import ADT.MD5;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -14,6 +16,7 @@ import ADT.HandleFiles;
 public class Login extends javax.swing.JFrame {
 
     HandleFiles handler = new HandleFiles();
+    MD5 md5 = new MD5();            
     /**
      * Creates new form Login
      */
@@ -34,10 +37,10 @@ public class Login extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         usuarioTField = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        contraseñaTField = new javax.swing.JTextField();
         ingresarButton = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         registroButton = new javax.swing.JButton();
+        contraseñaTField = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -49,6 +52,11 @@ public class Login extends javax.swing.JFrame {
         jLabel3.setText("Contraseña");
 
         ingresarButton.setText("Ingresar");
+        ingresarButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ingresarButtonMouseClicked(evt);
+            }
+        });
 
         jLabel4.setText("¿No tiene una cuenta?");
 
@@ -77,9 +85,11 @@ public class Login extends javax.swing.JFrame {
                                 .addGroup(layout.createSequentialGroup()
                                     .addComponent(jLabel3)
                                     .addGap(18, 18, 18)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(ingresarButton)
-                                        .addComponent(contraseñaTField, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(ingresarButton)
+                                            .addGap(68, 68, 68))
+                                        .addComponent(contraseñaTField))))))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel4)
@@ -118,6 +128,18 @@ public class Login extends javax.swing.JFrame {
         registroFrame.setVisible(true);
     }//GEN-LAST:event_registroButtonMouseClicked
 
+    private void ingresarButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ingresarButtonMouseClicked
+        // TODO add your handling code here:
+        if (!"".equals(usuarioTField.getText()) && contraseñaTField.getPassword().length > 0) {
+            if (handler.login(usuarioTField.getText(), MD5.encryptPassword(new String(contraseñaTField.getPassword())))) {                
+                System.out.println("CORRECTO");
+
+            } else {
+                JOptionPane.showMessageDialog(null, "USUARIO O CONTRASEÑA INVÁLIDOS");
+            }
+        }
+    }//GEN-LAST:event_ingresarButtonMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -154,7 +176,7 @@ public class Login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField contraseñaTField;
+    private javax.swing.JPasswordField contraseñaTField;
     private javax.swing.JButton ingresarButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

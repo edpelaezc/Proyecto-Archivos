@@ -19,9 +19,12 @@ import java.util.logging.Logger;
  */
 public class HandleFiles {
 
+    File usuario = new File("C:\\MEIA\\usuario.txt");
+    File desc_usuario = new File("C:\\MEIA\\desc_usuario.txt");
+    File bitacora_usuario = new File("C:\\MEIA\\bitacora_usuario.txt");
+    File desc_bitacora_usuario = new File("C:\\MEIA\\desc_bitacora_usuario.txt");
+
     public boolean conteo() {
-        File bitacora_usuario = new File("C:\\MEIA\\bitacora_usuario.txt");
-        File usuario = new File("C:\\MEIA\\usuario.txt");
         ArrayList bitacora = ReadFile(bitacora_usuario);
         ArrayList aux_usuario = ReadFile(usuario);
 
@@ -29,8 +32,6 @@ public class HandleFiles {
     }
 
     private void HandleBitacora(Usuario usuario) {
-        File bitacora_usuario = new File("C:\\MEIA\\bitacora_usuario.txt");
-        File desc_bitacora_usuario = new File("C:\\MEIA\\desc_bitacora_usuario.txt");
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
         String fecha = dtf.format(now);
@@ -172,9 +173,6 @@ public class HandleFiles {
     }
 
     private void HandleUsuario(String username, String fecha) {
-        File usuario = new File("C:\\MEIA\\usuario.txt");
-        File desc_usuario = new File("C:\\MEIA\\desc_usuario.txt");
-        File bitacora_usuario = new File("C:\\MEIA\\bitacora_usuario.txt");
 
         ArrayList bitacora = ReadFile(bitacora_usuario); // usuarios en bitacora
         ArrayList aux_usuario = ReadFile(usuario); // usuarios en usuario.txt
@@ -197,7 +195,7 @@ public class HandleFiles {
             // crear o actulizar
             if (desc_usuario.createNewFile()) {
                 PrintWriter descWriter = new PrintWriter(desc_usuario);
-                descWriter.print("nombre_simbolico: bitacora_usuario\n"
+                descWriter.print("nombre_simbolico: usuario\n"
                         + "fecha_creacion: " + fecha + "\n"
                         + "usuario_creacion: " + username + "\n"
                         + "fecha_modificacion: " + fecha + "\n"
@@ -258,6 +256,45 @@ public class HandleFiles {
 
     public void writeUser(Usuario input) {
         HandleBitacora(input);
+    }
+
+    public boolean uniqueKey(String username) {
+
+        ArrayList bitacora = ReadFile(bitacora_usuario); // usuarios en bitacora
+        ArrayList aux_usuario = ReadFile(usuario); // usuarios en usuario.txt
+
+        for (var object : aux_usuario) {
+            if (object.toString().startsWith(username)) {
+                return false;
+            }
+        }
+
+        for (var object : bitacora) {
+            if (object.toString().startsWith(username)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean login(String username, String password) {
+
+        ArrayList bitacora = ReadFile(bitacora_usuario); // usuarios en bitacora
+        ArrayList aux_usuario = ReadFile(usuario); // usuarios en usuario.txt
+        
+        for (var object : aux_usuario) {
+            if (object.toString().contains(username) && object.toString().contains(password)) {
+                return true;
+            }
+        }
+
+        for (var object : bitacora) {
+            if (object.toString().contains(username) && object.toString().contains(password)) {
+                return true;
+            }
+        }
+        return false;
+
     }
 
 }
