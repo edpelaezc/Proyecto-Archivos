@@ -8,7 +8,7 @@ package Backup;
 import java.io.*;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-
+import ADT.Usuario;
 /**
  *
  * @author llaaj
@@ -115,7 +115,16 @@ public class BackupManagement extends javax.swing.JFrame {
         String pathOrigen = "C:\\MEIA";
         String pathDestino = TFRoute.getText();
         
-        copiarDirectorios(new File(pathOrigen), new File(pathDestino));
+        if (pathDestino != "") {
+            copiarDirectorios(new File(pathOrigen), new File(pathDestino));
+            Usuario usuario = new Usuario();
+            HandleBitacora(usuario, pathDestino);
+            
+        }
+        else {
+            JOptionPane.showMessageDialog(null, 
+                    "La ruta escogida no es válida");
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
     
     private void copiarDirectorios(File d1, File d2){
@@ -135,7 +144,7 @@ public class BackupManagement extends javax.swing.JFrame {
                 copiarFicheros(d1, d2);
             }
         } catch(Exception e){
-            
+            System.out.println(e);
         }
        
     }
