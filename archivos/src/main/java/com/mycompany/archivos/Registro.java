@@ -231,6 +231,9 @@ public class Registro extends javax.swing.JFrame {
                     handler.conteo() ? 1 : 0);
 
             handler.writeUser(temp);
+            
+            // cerrar registro             
+            this.dispose();
 
         } else {
             JOptionPane.showMessageDialog(null, "CAMPOS INVÁLIDOS\n" + FormatFields(validacion));
