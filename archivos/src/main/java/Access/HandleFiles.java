@@ -14,7 +14,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Maneja los archivos para ingreso de usuarios. 
+ * Maneja los archivos para ingreso de usuarios.
+ *
  * @author edanP
  */
 public class HandleFiles {
@@ -25,8 +26,10 @@ public class HandleFiles {
     File desc_bitacora_usuario = new File("C:\\MEIA\\desc_bitacora_usuario.txt");
 
     /**
-     * Conteo de usuarios. Utilizado para validar el ingreso del administrador y de usuarios comunes.
-     * @return 
+     * Conteo de usuarios. Utilizado para validar el ingreso del administrador y
+     * de usuarios comunes.
+     *
+     * @return
      */
     public boolean conteo() {
         ArrayList bitacora = ReadFile(bitacora_usuario);
@@ -36,7 +39,10 @@ public class HandleFiles {
     }
 
     /**
-     * Maneja la escritura en el archivo bitacora usuario, si excede el máximo de reorganización este método ejecutará HandleUsuario, para trasladar los datos.
+     * Maneja la escritura en el archivo bitacora usuario, si excede el máximo
+     * de reorganización este método ejecutará HandleUsuario, para trasladar los
+     * datos.
+     *
      * @param usuario Usuario que se insertará.
      */
     private void HandleBitacora(Usuario usuario) {
@@ -149,6 +155,7 @@ public class HandleFiles {
 
     /**
      * Lee el archivo indicado
+     *
      * @param input Archivo a leer
      * @return Arraylist que contiene las lineas del archivo.
      */
@@ -186,9 +193,11 @@ public class HandleFiles {
     }
 
     /**
-     * Maneja la escritura de usuarios, puede crear o actualizar tanto el descriptor como el archivo de datos de usuario.
-     * @param username Usuario que modifica el archivo. 
-     * @param fecha Fecha de modificación del archivo. 
+     * Maneja la escritura de usuarios, puede crear o actualizar tanto el
+     * descriptor como el archivo de datos de usuario.
+     *
+     * @param username Usuario que modifica el archivo.
+     * @param fecha Fecha de modificación del archivo.
      */
     private void HandleUsuario(String username, String fecha) {
 
@@ -258,6 +267,7 @@ public class HandleFiles {
 
     /**
      * Método para crear Usuarios
+     *
      * @param line Linea contenida en el archivo, separada por "|"
      * @return Usuario con sus parámetros inicializados.
      */
@@ -278,7 +288,9 @@ public class HandleFiles {
     }
 
     /**
-     * Escribe un registro en bitacora o en usuario dependiendo del máximo de reorganización del archivo de bitacora. 
+     * Escribe un registro en bitacora o en usuario dependiendo del máximo de
+     * reorganización del archivo de bitacora.
+     *
      * @param input Usuario a escribir
      */
     public void writeUser(Usuario input) {
@@ -286,9 +298,11 @@ public class HandleFiles {
     }
 
     /**
-     * Verifica que la llave única del registro a insertar no sea repetida. 
-     * @param username Llave única. 
-     * @return true si se puede insertar ese registro; false si la llave está repetida. 
+     * Verifica que la llave única del registro a insertar no sea repetida.
+     *
+     * @param username Llave única.
+     * @return true si se puede insertar ese registro; false si la llave está
+     * repetida.
      */
     public boolean uniqueKey(String username) {
 
@@ -310,29 +324,32 @@ public class HandleFiles {
     }
 
     /**
-     * Verifica si el usuario y contraseña son correctos y permite el acceso al usuario.
+     * Verifica si el usuario y contraseña son correctos y permite el acceso al
+     * usuario.
+     *
      * @param username Nombre de usuario
      * @param password Contraseña. (Se cifra para hacer la comparación)
-     * @return true si el usuario hace match, false si no existe o ingreso mal sus credenciales. 
+     * @return true si el usuario hace match, false si no existe o ingreso mal
+     * sus credenciales.
      */
-    public boolean login(String username, String password) {
+    public Usuario login(String username, String password) {
 
         ArrayList bitacora = ReadFile(bitacora_usuario); // usuarios en bitacora
         ArrayList aux_usuario = ReadFile(usuario); // usuarios en usuario.txt
-        
+
         for (var object : aux_usuario) {
             if (object.toString().contains(username) && object.toString().contains(password)) {
-                return true;
+                return createUsuario(object.toString());
             }
         }
 
         for (var object : bitacora) {
             if (object.toString().contains(username) && object.toString().contains(password)) {
-                return true;
+                return createUsuario(object.toString());
             }
         }
-        return false;
-
+        
+        return null;
     }
 
 }
