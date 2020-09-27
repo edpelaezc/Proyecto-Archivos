@@ -231,8 +231,7 @@ public class Registro extends javax.swing.JFrame {
                     moverFoto(fotoTField.getText(), usuarioTField.getText()),
                     handler.conteo() ? 1 : 0);
 
-            handler.writeUser(temp);
-            Data.Instance().user = temp;
+            handler.writeUser(temp);            
             
             // cerrar registro             
             this.dispose();
