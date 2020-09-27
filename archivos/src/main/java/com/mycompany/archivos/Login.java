@@ -16,12 +16,18 @@ import javax.swing.JOptionPane;
 public class Login extends javax.swing.JFrame {
 
     HandleFiles handler = new HandleFiles();
-    MD5 md5 = new MD5();            
+    MD5 md5 = new MD5();
+
     /**
      * Creates new form Login
      */
     public Login() {
         initComponents();
+    }
+
+    public void limpiarTxt() {
+        usuarioTField.setText("");
+        contraseñaTField.setText("");
     }
 
     /**
@@ -131,11 +137,12 @@ public class Login extends javax.swing.JFrame {
     private void ingresarButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ingresarButtonMouseClicked
         // TODO add your handling code here:
         if (!"".equals(usuarioTField.getText()) && contraseñaTField.getPassword().length > 0) {
-            if (handler.login(usuarioTField.getText(), MD5.encryptPassword(new String(contraseñaTField.getPassword())))) {                
+            if (handler.login(usuarioTField.getText(), MD5.encryptPassword(new String(contraseñaTField.getPassword())))) {
                 System.out.println("CORRECTO");
 
             } else {
                 JOptionPane.showMessageDialog(null, "USUARIO O CONTRASEÑA INVÁLIDOS");
+                limpiarTxt();
             }
         }
     }//GEN-LAST:event_ingresarButtonMouseClicked
@@ -166,7 +173,7 @@ public class Login extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-       
+
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
