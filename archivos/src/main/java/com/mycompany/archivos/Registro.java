@@ -5,8 +5,8 @@
  */
 package com.mycompany.archivos;
 
-import ADT.HandleFiles;
-import ADT.Usuario;
+import Access.HandleFiles;
+import Access.Usuario;
 import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
