@@ -9,6 +9,7 @@ import java.io.*;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import ADT.Usuario;
+import Backup.HandleFile;
 /**
  *
  * @author llaaj
@@ -118,7 +119,8 @@ public class BackupManagement extends javax.swing.JFrame {
         if (pathDestino != "") {
             copiarDirectorios(new File(pathOrigen), new File(pathDestino));
             Usuario usuario = new Usuario();
-            HandleBitacora(usuario.getUsuario(), pathDestino);
+            HandleFile hf = new HandleFile();
+            hf.HandleBitacora(usuario.getUsuario(), pathDestino);
             
         }
         else {
