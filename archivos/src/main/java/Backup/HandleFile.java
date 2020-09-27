@@ -19,6 +19,9 @@ public class HandleFile {
     File bitacora_backup = new File("C:\\MEIA\\bitacora_backup");
     File desc_bitacora_backup = new File("C:\\MEIA\\desc_bitacora_backup");
     
+    public HandleFile(){
+    }
+    
     public void HandleBitacora(String usuario, String ruta_absoluta){
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
