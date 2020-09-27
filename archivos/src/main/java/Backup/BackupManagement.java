@@ -9,6 +9,7 @@ import java.io.*;
 import javax.swing.*;
 import ADT.Usuario;
 import Backup.HandleFile;
+import Admin.Admin;
 /**
  *
  * @author llaaj
@@ -98,44 +99,51 @@ public class BackupManagement extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Abre el diálogo de selección de carpeta para escoger en cuál carpeta
+     * almacenar el backup
+     * @param evt 
+     */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
         JFileChooser dialogo = new JFileChooser();
         dialogo.setCurrentDirectory(new java.io.File("."));
         dialogo.setDialogTitle("Escoge una carpeta para realizar el backup");
-        dialogo.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        dialogo.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY); // configurar para solo escoger directorios y no ficheros
         dialogo.setAcceptAllFileFilterUsed(false);
         
-        File BackupDirectory;
-        String rutaArchivo;
+        File backupDirectory;
+        String directoryPath;
         int valor = dialogo.showOpenDialog(this);
         
         if (valor == JFileChooser.APPROVE_OPTION) {
-            BackupDirectory = dialogo.getSelectedFile();
-            rutaArchivo = BackupDirectory.getPath();
-            TFRoute.setText(rutaArchivo + "\\MEIA_Backup");
+            backupDirectory = dialogo.getSelectedFile();
+            directoryPath = backupDirectory.getPath();
+            TFRoute.setText(directoryPath + "\\MEIA_Backup"); // se creará MEIA_Backup en el directorio escogido
         }
         
-        if (TFRoute.getText().length() > 200) {
+        if (TFRoute.getText().length() > 200) { // no permite rutas más grandes que 200 caracteres
             JOptionPane.showMessageDialog(null, 
                     "La ruta no debe exceder de los 200 caracteres");
             TFRoute.setText("");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    /**
+     * Disparador de los eventos de backup
+     * @param evt 
+     */
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
         String pathOrigen = "C:\\MEIA";
         String pathDestino = TFRoute.getText();
         
         if (pathDestino != "") {
-            copiarDirectorios(new File(pathOrigen), new File(pathDestino));
-            //Usuario usuario = new Usuario();
             String usuario = "";
+            //Usuario usuario = new Usuario();
             HandleFile hf = new HandleFile();
             //hf.HandleBitacora(usuario.getUsuario(), pathDestino);
             hf.HandleBitacora(usuario, pathDestino);
             
+            copiarDirectorios(new File(pathOrigen), new File(pathDestino));
         }
         else {
             JOptionPane.showMessageDialog(null, 
@@ -143,16 +151,29 @@ public class BackupManagement extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    /**
+     * Regresa a la vista de Administración de usuarios
+     * @param evt 
+     */
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-        
+        Admin jframe = new Admin();
+        jframe.show();
+         
+        setVisible(false);
+        dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
     
+    /**
+     * Recorre recursivamente los directorios y ficheros del directorio origen d1
+     * y los copia al directorio destino d2
+     * @param d1 Directorio origen
+     * @param d2 Directorio destino
+     */
     private void copiarDirectorios(File d1, File d2){
         try {
             if (d1.isDirectory()) {
                 if (!d2.exists()) {
-                    d2.mkdir();
+                    d2.mkdir(); // si d2 no existe, lo crea
                 }
             
                 String[] ficheros = d1.list();
@@ -170,6 +191,11 @@ public class BackupManagement extends javax.swing.JFrame {
        
     }
     
+    /**
+     * Copia los ficheros encontrados en los directorios
+     * @param f1 Fichero origen
+     * @param f2 Fichero destino
+     */
     private void copiarFicheros(File f1, File f2){
         try {
             InputStream in = new FileInputStream(f1);
