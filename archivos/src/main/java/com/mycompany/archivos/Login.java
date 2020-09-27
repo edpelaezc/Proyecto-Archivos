@@ -7,7 +7,9 @@ package com.mycompany.archivos;
 
 import Access.HandleFiles;
 import Access.MD5;
+import Access.Usuario;
 import javax.swing.JOptionPane;
+import Data.Data;
 
 /**
  *
@@ -132,7 +134,9 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     /**
-     * Si el usuario no tiene una cuenta, al hacer click en el botón se dirige al form de Registro.
+     * Si el usuario no tiene una cuenta, al hacer click en el botón se dirige
+     * al form de Registro.
+     *
      * @param evt Click
      */
     private void registroButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registroButtonMouseClicked
@@ -143,14 +147,16 @@ public class Login extends javax.swing.JFrame {
 
     /**
      * Proceso de inicio de sesión
+     *
      * @param evt Click
      */
     private void ingresarButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ingresarButtonMouseClicked
         // TODO add your handling code here:
         if (!"".equals(usuarioTField.getText()) && contraseñaTField.getPassword().length > 0) {
-            if (handler.login(usuarioTField.getText(), MD5.encryptPassword(new String(contraseñaTField.getPassword())))) {
+            Usuario temp = handler.login(usuarioTField.getText(), MD5.encryptPassword(new String(contraseñaTField.getPassword())));
+            if (temp != null) {
                 System.out.println("CORRECTO");
-
+                Data.Instance().user = temp; // acceder desde cualquier form al usuario actual          
             } else {
                 JOptionPane.showMessageDialog(null, "USUARIO O CONTRASEÑA INVÁLIDOS");
                 limpiarTxt();

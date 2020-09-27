@@ -17,6 +17,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import org.codehaus.plexus.util.FileUtils;
+import Data.Data;
 
 /**
  *
@@ -231,6 +232,7 @@ public class Registro extends javax.swing.JFrame {
                     handler.conteo() ? 1 : 0);
 
             handler.writeUser(temp);
+            Data.Instance().user = temp;
             
             // cerrar registro             
             this.dispose();
