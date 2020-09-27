@@ -423,6 +423,11 @@ public class Registro extends javax.swing.JFrame {
         return email.matches(regex);
     }
     
+    /**
+     * Validar el teléfono ingresado.
+     * @param telefono Teléfono ingreado por el usuario.
+     * @return true si tiene formato correcto; de lo contrario false. 
+     */
     private boolean tryParse(String telefono){    
         try {
             Integer.parseInt(telefono);
