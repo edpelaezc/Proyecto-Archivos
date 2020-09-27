@@ -193,6 +193,12 @@ public class Registro extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Verifica si los datos están correctos para poder registrar al nuevo
+     * usuario.
+     *
+     * @param evt Click
+     */
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
 
         Object[] validacion = validarContraseña(new String(contraseñaTField.getPassword()));
@@ -203,6 +209,8 @@ public class Registro extends javax.swing.JFrame {
                 && (Boolean) validacion[0] == true
                 && contieneUsuario(new String(contraseñaTField.getPassword())) == false
                 && handler.uniqueKey(usuarioTField.getText())
+                && validEmail(alternoTField.getText())
+                && tryParse(telefonoTField.getText())
                 && validarFecha(nacimientoTField.getText()) == true
                 && alternoTField.getText().length() < 40
                 && fotoTField.getText().length() < 182) {
@@ -229,6 +237,12 @@ public class Registro extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton1MouseClicked
 
+    /**
+     * Selecciona la foto del usuario y muestra la dirección absoluta en su
+     * respectivo TField.
+     *
+     * @param evt
+     */
     private void fotoButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fotoButtonMouseClicked
 
         JFileChooser dialog = new JFileChooser();
@@ -286,13 +300,19 @@ public class Registro extends javax.swing.JFrame {
         if (handler.uniqueKey(usuarioTField.getText()) == false) {
             error += "EL USUARIO YA EXISTE\n";
         }
+        if (validEmail(alternoTField.getText()) == false) {
+            error += "Formato de correo incorrecto\n";
+        }
+        if (tryParse(telefonoTField.getText()) == false) {
+            error += "Teléfono inválido\n";
+        }
 
         // verficar fallo en contraseña
         if (fallo[1].toString().equals("DEBIL")) {
             error += "CONTRASEÑA DÉBIL";
         } else if (contieneUsuario(new String(contraseñaTField.getPassword())) == true) {
             error += "La contraseña contiene el nombre de usuario\n";
-        } else if(contraseñaTField.getPassword().length < 8 || contraseñaTField.getPassword().length > 40) {
+        } else if (contraseñaTField.getPassword().length < 8 || contraseñaTField.getPassword().length > 40) {
             error += "El campo \"Contraseña\" debe tener 8-40 caracteres\n";
         }
 
@@ -391,6 +411,25 @@ public class Registro extends javax.swing.JFrame {
             return true;
         }
         return false;
+    }
+
+    /**
+     * Validar el formato correcto del correo.
+     * @param email Correo proporcionado por el usuario.
+     * @return true si tiene formato correcto; de lo contrario false 
+     */
+    private boolean validEmail(String email) {        
+        String regex = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
+        return email.matches(regex);
+    }
+    
+    private boolean tryParse(String telefono){    
+        try {
+            Integer.parseInt(telefono);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     /**

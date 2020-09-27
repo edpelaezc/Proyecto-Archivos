@@ -7,7 +7,7 @@ package ADT;
 
 
 /**
- *
+ * Clase usuario para mapear los usuarios y poder registrarlos en los archivos.
  * @author edanP
  */
 public class Usuario implements Comparable<Usuario> {
@@ -23,6 +23,19 @@ public class Usuario implements Comparable<Usuario> {
     private String path_fotografia;
     private int estatus;    
 
+    /**
+     * Constructor del objeto Usuario
+     * @param usuario Llave única
+     * @param nombre
+     * @param apellido
+     * @param password
+     * @param rol
+     * @param fecha_nacimiento
+     * @param correo_alterno
+     * @param telefono
+     * @param path_fotografia
+     * @param estatus 
+     */
     public Usuario(String usuario, String nombre, String apellido, String password, int rol, String fecha_nacimiento, String correo_alterno, String telefono, String path_fotografia, int estatus) {
         this.usuario = usuario;
         this.nombre = nombre;
@@ -185,7 +198,7 @@ public class Usuario implements Comparable<Usuario> {
     }   
 
     /**
-     * Override para poder comparar los usuarios por su llave única - Nombre de usuario.
+     * Override para poder comparar los usuarios por su llave única -> Nombre de usuario.
      * @param o Usuario
      * @return 
      */

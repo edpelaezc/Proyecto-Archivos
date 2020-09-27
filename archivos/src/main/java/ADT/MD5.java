@@ -9,7 +9,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
- *
+ * Clase para encriptar la contraseña de los usuarios. 
  * @author edanP
  */
 public class MD5 {

@@ -25,6 +25,9 @@ public class Login extends javax.swing.JFrame {
         initComponents();
     }
 
+    /**
+     * Limpiar los TField después de un inicio de sesión erróneo
+     */
     public void limpiarTxt() {
         usuarioTField.setText("");
         contraseñaTField.setText("");
@@ -128,12 +131,20 @@ public class Login extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Si el usuario no tiene una cuenta, al hacer click en el botón se dirige al form de Registro.
+     * @param evt Click
+     */
     private void registroButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registroButtonMouseClicked
         // TODO add your handling code here:
         Registro registroFrame = new Registro();
         registroFrame.setVisible(true);
     }//GEN-LAST:event_registroButtonMouseClicked
 
+    /**
+     * Proceso de inicio de sesión
+     * @param evt Click
+     */
     private void ingresarButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ingresarButtonMouseClicked
         // TODO add your handling code here:
         if (!"".equals(usuarioTField.getText()) && contraseñaTField.getPassword().length > 0) {
