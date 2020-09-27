@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 import javax.swing.JFormattedTextField;
 import static javax.swing.JOptionPane.*;
 import javax.swing.*;
+import Backup.BackupManagement;
 
 public class Admin extends javax.swing.JFrame {
 
@@ -48,6 +49,7 @@ public class Admin extends javax.swing.JFrame {
         admin = new javax.swing.JLabel();
         name = new javax.swing.JTextField();
         last_name = new javax.swing.JTextField();
+        backup = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -154,6 +156,14 @@ public class Admin extends javax.swing.JFrame {
 
         last_name.setToolTipText("other email");
 
+        backup.setText("Bakup");
+        backup.setEnabled(false);
+        backup.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backupActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -193,7 +203,10 @@ public class Admin extends javax.swing.JFrame {
                                         .addComponent(jLabel8)
                                         .addGap(29, 29, 29)
                                         .addComponent(last_name))
-                                    .addComponent(admin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(admin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGap(77, 77, 77)
+                                        .addComponent(backup, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel7)
                                         .addGap(59, 59, 59)
@@ -240,9 +253,14 @@ public class Admin extends javax.swing.JFrame {
                             .addComponent(phone_number, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel6))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addComponent(admin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(backup))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(25, 25, 25)
+                                .addComponent(admin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addComponent(Administrar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -362,16 +380,25 @@ public class Admin extends javax.swing.JFrame {
 
     private void AdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AdminActionPerformed
         if (Admin.isSelected()) {
+            backup.setEnable(true);
             Baja.setEnabled(false);
             Nuevo_Usuario.setEnabled(true);
             Administrar.setEnabled(true);
         }
         else{
+            backup.setEnable(false);
             Baja.setEnabled(true);
             Nuevo_Usuario.setEnabled(false);
             Administrar.setEnabled(false);            
         }
     }//GEN-LAST:event_AdminActionPerformed
+
+    private void backupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backupActionPerformed
+        BackupManagement jframe = new BackupManagement();
+            jframe.show();
+            
+
+    }//GEN-LAST:event_backupActionPerformed
 
     /**
      * @param args the command line arguments
@@ -416,6 +443,7 @@ public class Admin extends javax.swing.JFrame {
     private javax.swing.JButton Nuevo_Usuario;
     private javax.swing.JLabel User_Name;
     private javax.swing.JLabel admin;
+    private javax.swing.JButton backup;
     private javax.swing.JFormattedTextField birthday;
     private javax.swing.JTextField email;
     private javax.swing.JButton jButton1;
