@@ -19,20 +19,20 @@ public class HandleFile {
     File bitacora_backup = new File("C:\\MEIA\\bitacora_backup");
     File desc_bitacora_backup = new File("C:\\MEIA\\desc_bitacora_backup");
     
-    public void HandleBitacora(Usuario usuario, Backup backup){
+    public void HandleBitacora(String usuario, String ruta_absoluta){
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
         String fecha = dtf.format(now);
-        
+        Backup backup = new Backup(ruta_absoluta, usuario, fecha);
         try {
             if (desc_bitacora_backup.createNewFile()) {
                 PrintWriter descWriter = new PrintWriter(desc_bitacora_backup);
                 descWriter.print(
                         "nombre_simbolico: bitacora_usuario\n"
                         + "fecha_creacion: " + fecha + "\n"
-                        + "usuario_creacion: " + usuario.getUsuario() + "\n"
+                        + "usuario_creacion: " + usuario + "\n"
                         + "fecha_modificacion: " + fecha + "\n"
-                        + "usuario_modificacion: " + usuario.getUsuario() + "\n"
+                        + "usuario_modificacion: " + usuario + "\n"
                         + "#_registros: 1\n");
                 descWriter.close();
                 

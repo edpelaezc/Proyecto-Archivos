@@ -118,7 +118,7 @@ public class BackupManagement extends javax.swing.JFrame {
         if (pathDestino != "") {
             copiarDirectorios(new File(pathOrigen), new File(pathDestino));
             Usuario usuario = new Usuario();
-            HandleBitacora(usuario, pathDestino);
+            HandleBitacora(usuario.getUsuario(), pathDestino);
             
         }
         else {
