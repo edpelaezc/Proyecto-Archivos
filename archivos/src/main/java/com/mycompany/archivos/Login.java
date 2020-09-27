@@ -5,8 +5,8 @@
  */
 package com.mycompany.archivos;
 
-import ADT.HandleFiles;
-import ADT.MD5;
+import Access.HandleFiles;
+import Access.MD5;
 import javax.swing.JOptionPane;
 
 /**

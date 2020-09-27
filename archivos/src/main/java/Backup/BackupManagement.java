@@ -7,7 +7,7 @@ package Backup;
 
 import java.io.*;
 import javax.swing.*;
-import ADT.Usuario;
+import Access.Usuario;
 import Backup.HandleFile;
 /**
  *
