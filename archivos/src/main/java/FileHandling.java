@@ -36,12 +36,11 @@ public class FileHandling {
  
     try {
  
-        File inFile = new File(ruta);
-        File tempFile = new File(inFile.getAbsolutePath() + ".tmp");
- 
+        File inFile = new File(ruta);                                   
+        File tempFile = new File(inFile.getAbsolutePath() + ".tmp");    
+        tempFile.renameTo(inFile);              //Renombrar - No sirve
         BufferedReader br = new BufferedReader(new FileReader(ruta));
         PrintWriter pw = new PrintWriter(new FileWriter(tempFile));
- 
         String line = null;
         while ((line = br.readLine()) != null) {
  
