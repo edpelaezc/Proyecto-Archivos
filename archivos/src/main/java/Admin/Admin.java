@@ -380,13 +380,13 @@ public class Admin extends javax.swing.JFrame {
 
     private void AdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AdminActionPerformed
         if (Admin.isSelected()) {
-            backup.setEnable(true);
+            backup.setEnabled(true);
             Baja.setEnabled(false);
             Nuevo_Usuario.setEnabled(true);
             Administrar.setEnabled(true);
         }
         else{
-            backup.setEnable(false);
+            backup.setEnabled(false);
             Baja.setEnabled(true);
             Nuevo_Usuario.setEnabled(false);
             Administrar.setEnabled(false);            
