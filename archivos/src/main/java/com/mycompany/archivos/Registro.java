@@ -7,7 +7,6 @@ package com.mycompany.archivos;
 
 import Access.HandleFiles;
 import Access.Usuario;
-import java.awt.Toolkit;
 import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -418,7 +417,7 @@ public class Registro extends javax.swing.JFrame {
     }
     
     private void setIcon(){
-        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("icon.jpg")));
+        setIconImage(Toolkit.getDefaultToolKit().getImage(getclass().getResource("icon.jpg")));
     }
     /**
      * Validar el formato correcto del correo.
