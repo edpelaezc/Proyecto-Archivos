@@ -209,6 +209,7 @@ public class Registro extends javax.swing.JFrame {
                 && handler.uniqueKey(usuarioTField.getText())
                 && validEmail(alternoTField.getText())
                 && tryParse(telefonoTField.getText())
+                && telefonoTField.getText().length() == 8
                 && validarFecha(nacimientoTField.getText()) == true
                 && alternoTField.getText().length() < 40
                 && fotoTField.getText().length() < 182) {
