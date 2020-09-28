@@ -192,7 +192,7 @@ public class Admin extends javax.swing.JFrame {
                                 .addGap(130, 130, 130)
                                 .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGap(91, 91, 91))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -218,8 +218,8 @@ public class Admin extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(Nuevo_Usuario, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(Administrar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(Administrar, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Nuevo_Usuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -255,7 +255,7 @@ public class Admin extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(phone_number, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel6))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 89, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
@@ -264,11 +264,11 @@ public class Admin extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(25, 25, 25)
                                 .addComponent(admin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Administrar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Nuevo_Usuario)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                .addComponent(Administrar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Nuevo_Usuario)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(Boton_Baja)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -280,6 +280,10 @@ public class Admin extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Ingreso de nuevos valores 
+     * @param evt 
+     */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String oldPass = String.valueOf(old_Pass.getPassword());
         int tam = birthday.getText().length();
@@ -315,6 +319,10 @@ public class Admin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    /**
+     * Ingreso telefónico
+     * @param evt 
+     */
     private void phone_numberKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_phone_numberKeyTyped
         char number = evt.getKeyChar();
         if(!(Character.isDigit(number)))
@@ -323,12 +331,20 @@ public class Admin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_phone_numberKeyTyped
 
+     /**
+      * Ingreso de fecha de nacimiento
+      * @param evt 
+      */
     private void birthdayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_birthdayActionPerformed
         String format = new SimpleDateFormat("dd/MM/yy").format(new Date());
         JFormattedTextField dateTextField = new JFormattedTextField(format);
         
     }//GEN-LAST:event_birthdayActionPerformed
 
+    /**
+     *  Confirmación de fecha de nacimiento
+     * @param evt 
+     */
     private void birthdayFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_birthdayFocusLost
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         try {
@@ -343,10 +359,18 @@ public class Admin extends javax.swing.JFrame {
         } 
     }//GEN-LAST:event_birthdayFocusLost
 
+    /**
+     * Dar de baja al usuario
+     * @param evt 
+     */
     private void Boton_BajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Boton_BajaActionPerformed
         showMessageDialog(null, "Se dará de baja al usuario...");        
     }//GEN-LAST:event_Boton_BajaActionPerformed
 
+    /**
+     * Permiso para dar de baja al usuario
+     * @param evt 
+     */
     private void BajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BajaActionPerformed
          if (Baja.isSelected()) {
              Admin.setEnabled(false);
@@ -358,6 +382,10 @@ public class Admin extends javax.swing.JFrame {
          }
     }//GEN-LAST:event_BajaActionPerformed
 
+    /**
+     * Creación de nuevo usuario
+     * @param evt 
+     */
     private void Nuevo_UsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Nuevo_UsuarioActionPerformed
         
         
