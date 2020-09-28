@@ -13,6 +13,7 @@ import Backup.BackupManagement;
 import Data.Data;
 import com.mycompany.archivos.Registro;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
@@ -519,7 +520,7 @@ public class Admin extends javax.swing.JFrame {
     }//GEN-LAST:event_backupActionPerformed
 
     private void setIcon(){
-        setIconImage(Toolkit.getDefaultToolKit().getImage(getclass().getResource("icon.jpg")));
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("icon.jpg")));
     }
     /**
      * @param args the command line arguments

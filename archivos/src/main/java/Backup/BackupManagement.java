@@ -11,6 +11,7 @@ import Access.Usuario;
 import Backup.HandleFile;
 import Admin.Admin;
 import Data.Data;
+import java.awt.Toolkit;
 /**
  *
  * @author llaaj
@@ -218,7 +219,7 @@ public class BackupManagement extends javax.swing.JFrame {
     }
     
     private void setIcon(){
-        setIconImage(Toolkit.getDefaultToolKit().getImage(getclass().getResource("icon.jpg")));
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("icon.jpg")));
     }
     /**
      * @param args the command line arguments

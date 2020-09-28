@@ -11,6 +11,7 @@ import Access.Usuario;
 import Admin.Admin;
 import javax.swing.JOptionPane;
 import Data.Data;
+import java.awt.Toolkit;
 
 /**
  *
@@ -206,7 +207,7 @@ public class Login extends javax.swing.JFrame {
     }
     
     private void setIcon(){
-        setIconImage(Toolkit.getDefaultToolKit().getImage(getclass().getResource("icon.jpg")));
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("icon.jpg")));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
