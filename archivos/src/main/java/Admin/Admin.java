@@ -383,7 +383,7 @@ public class Admin extends javax.swing.JFrame {
                 Usuario_Nuevo[6],
                 Usuario_Nuevo[7],
                 Usuario_Nuevo[8],
-                0      
+                "0"    
             };
         manejo.Write_Text(Usuario_Nuevo, new_values, ruta);
         showMessageDialog(null, "Se ha dado de baja al usuario " + Usuario_Nuevo[0]);
@@ -400,7 +400,7 @@ public class Admin extends javax.swing.JFrame {
     private void BajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BajaActionPerformed
         int isAdmin = Data.Data.Instance().user.getRol(); 
         if (Baja.isSelected() && isAdmin == 1) {
-            if (Usuario_Nuevo[4]) {
+            if (Usuario_Nuevo[4] == "1") {
                 showMessageDialog(null, "Eres administrador, no puedes darte de baja.");   
             }
             else{
