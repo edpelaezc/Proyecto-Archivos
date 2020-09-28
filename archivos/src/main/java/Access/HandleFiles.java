@@ -65,7 +65,7 @@ public class HandleFiles {
                         + "#_registros: 1\n"
                         + "registros_activos: 1\n"
                         + "registros_inactivos: 0\n"
-                        + "max_reorganizacion: 5");
+                        + "max_reorganizacion: 2");
                 descWriter.close();
 
                 // insertar en archivo bitacora_usuario.txt para registro
@@ -89,7 +89,7 @@ public class HandleFiles {
                 int cont = Integer.parseInt(aux[1]);
 
                 // insertar en bitacora usuario
-                if (cont < 5) {
+                if (cont < 2) {
                     //actualizar campos
                     desc.set(3, "fecha_modificacion: " + fecha);
 

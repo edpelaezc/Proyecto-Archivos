@@ -156,6 +156,7 @@ public class Login extends javax.swing.JFrame {
     private void ingresarButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ingresarButtonMouseClicked
         // TODO add your handling code here:
         if (!"".equals(usuarioTField.getText()) && contraseñaTField.getPassword().length > 0) {
+            System.out.println(MD5.encryptPassword(new String(contraseñaTField.getPassword())));
             Usuario temp = handler.login(usuarioTField.getText(), MD5.encryptPassword(new String(contraseñaTField.getPassword())));
             if (temp != null) {
                 System.out.println("CORRECTO");
