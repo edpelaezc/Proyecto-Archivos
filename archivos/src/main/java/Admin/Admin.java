@@ -37,7 +37,7 @@ public class Admin extends javax.swing.JFrame {
         
         int isAdmin = Data.Instance().user.getRol();
         if (isAdmin == 1) {
-            AdminTxt.setText("Administrador");
+            AdminTxt.setText("Administrador: " + Data.Instance().user.getUsuario());
             backup.setEnabled(true);
             Baja.setEnabled(false);
             Nuevo_Usuario.setEnabled(true);
