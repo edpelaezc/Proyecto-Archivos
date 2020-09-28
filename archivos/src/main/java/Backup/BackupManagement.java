@@ -22,6 +22,7 @@ public class BackupManagement extends javax.swing.JFrame {
      */
     public BackupManagement() {
         initComponents();
+        setIcon();
     }
 
     /**
@@ -214,6 +215,10 @@ public class BackupManagement extends javax.swing.JFrame {
         } catch (IOException ioe){
             ioe.printStackTrace();
         }
+    }
+    
+    private void setIcon(){
+        setIconImage(Toolkit.getDefaultToolKit().getImage(getclass().getResource("icon.jpg")));
     }
     /**
      * @param args the command line arguments

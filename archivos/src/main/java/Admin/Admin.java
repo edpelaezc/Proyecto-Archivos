@@ -23,7 +23,7 @@ public class Admin extends javax.swing.JFrame {
 
     public Admin() {
         initComponents();
-        
+        setIcon();
         BufferedImage img = null;
         try {
             img = ImageIO.read(new File(Data.Instance().user.getPath_fotografia()));
@@ -518,6 +518,9 @@ public class Admin extends javax.swing.JFrame {
 
     }//GEN-LAST:event_backupActionPerformed
 
+    private void setIcon(){
+        setIconImage(Toolkit.getDefaultToolKit().getImage(getclass().getResource("icon.jpg")));
+    }
     /**
      * @param args the command line arguments
      */

@@ -29,6 +29,7 @@ public class Registro extends javax.swing.JFrame {
      */
     public Registro() {
         initComponents();
+        setIcon();
     }
 
     /**
@@ -414,7 +415,10 @@ public class Registro extends javax.swing.JFrame {
         }
         return false;
     }
-
+    
+    private void setIcon(){
+        setIconImage(Toolkit.getDefaultToolKit().getImage(getclass().getResource("icon.jpg")));
+    }
     /**
      * Validar el formato correcto del correo.
      * @param email Correo proporcionado por el usuario.

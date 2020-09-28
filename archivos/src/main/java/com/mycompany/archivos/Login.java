@@ -25,6 +25,7 @@ public class Login extends javax.swing.JFrame {
      */
     public Login() {
         initComponents();
+        setIcon();
     }
 
     /**
@@ -202,6 +203,10 @@ public class Login extends javax.swing.JFrame {
                 new Login().setVisible(true);
             }
         });
+    }
+    
+    private void setIcon(){
+        setIconImage(Toolkit.getDefaultToolKit().getImage(getclass().getResource("icon.jpg")));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
