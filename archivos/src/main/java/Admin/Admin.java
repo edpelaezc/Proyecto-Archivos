@@ -9,7 +9,7 @@ import javax.swing.JFormattedTextField;
 import static javax.swing.JOptionPane.*;
 import javax.swing.*;
 import Backup.BackupManagement;
-import com.mycompany.archivos;
+import com.mycompany.archivos.Registro;
 
 public class Admin extends javax.swing.JFrame {
 
@@ -392,8 +392,8 @@ public class Admin extends javax.swing.JFrame {
      * @param evt 
      */
     private void Nuevo_UsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Nuevo_UsuarioActionPerformed
-        com.mycompany.archivos registro = new com.mycompany.archivos();
-        registro.Registro.show();
+        Registro registro = new Registro();
+        registro.setVisible(true);
         
         //Llamar jForm de creación de usuario
     }//GEN-LAST:event_Nuevo_UsuarioActionPerformed
