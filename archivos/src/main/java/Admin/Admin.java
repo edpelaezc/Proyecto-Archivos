@@ -9,6 +9,7 @@ import javax.swing.JFormattedTextField;
 import static javax.swing.JOptionPane.*;
 import javax.swing.*;
 import Backup.BackupManagement;
+import com.mycompany.archivos;
 
 public class Admin extends javax.swing.JFrame {
 
@@ -17,12 +18,14 @@ public class Admin extends javax.swing.JFrame {
         initComponents();
         int isAdmin = Data.Data.Instance().user.getRol();
             if (isAdmin == 1) {
+                AdminTxt.setText("Administrador");
                 backup.setEnabled(true);
                 Baja.setEnabled(false);
                 Nuevo_Usuario.setEnabled(true);
                 Administrar.setEnabled(true);
             }
             else{
+                AdminTxt.setText("Usuario");
                 backup.setEnabled(false);
                 Baja.setEnabled(true);
                 Nuevo_Usuario.setEnabled(false);
@@ -62,6 +65,7 @@ public class Admin extends javax.swing.JFrame {
         name = new javax.swing.JTextField();
         last_name = new javax.swing.JTextField();
         backup = new javax.swing.JButton();
+        AdminTxt = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -193,7 +197,8 @@ public class Admin extends javax.swing.JFrame {
                                 .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(91, 91, 91))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(AdminTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(phone_number)
@@ -226,9 +231,10 @@ public class Admin extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
-                    .addComponent(User_Name, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(User_Name, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(AdminTxt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -386,9 +392,9 @@ public class Admin extends javax.swing.JFrame {
      * @param evt 
      */
     private void Nuevo_UsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Nuevo_UsuarioActionPerformed
+        com.mycompany.archivos registro = new com.mycompany.archivos();
+        registro.Registro.show();
         
-        
-        showMessageDialog(null, "Creando nuevo usuario..."); 
         //Llamar jForm de creación de usuario
     }//GEN-LAST:event_Nuevo_UsuarioActionPerformed
     
@@ -452,6 +458,7 @@ public class Admin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel AdminTxt;
     private javax.swing.JButton Administrar;
     private javax.swing.JRadioButton Baja;
     private javax.swing.JButton Boton_Baja;

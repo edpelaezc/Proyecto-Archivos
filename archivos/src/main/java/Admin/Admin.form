@@ -45,7 +45,8 @@
                           </Group>
                           <Group type="102" attributes="0">
                               <Component id="jLabel1" max="32767" attributes="0"/>
-                              <EmptySpace min="-2" pref="91" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="AdminTxt" min="-2" pref="100" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -92,9 +93,10 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+              <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jLabel1" pref="23" max="32767" attributes="0"/>
                   <Component id="User_Name" alignment="0" max="32767" attributes="0"/>
+                  <Component id="AdminTxt" alignment="0" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -310,6 +312,8 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="backupActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="AdminTxt">
     </Component>
   </SubComponents>
 </Form>
