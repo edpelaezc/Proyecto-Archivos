@@ -8,13 +8,17 @@ package Data;
 import Access.Usuario;
 
 /**
- *
+ * Patrón singleton, usado para persistir el usuario actual en la aplicación.
  * @author edanP
  */
 public class Data {
 
     private static Data instance = null;
 
+    /**
+     * Crear instancia de singleton
+     * @return 
+     */
     public static Data Instance() {        
         if (instance == null) {
             instance = new Data();

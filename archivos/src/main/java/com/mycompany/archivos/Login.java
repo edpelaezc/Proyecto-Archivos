@@ -19,7 +19,6 @@ import Data.Data;
 public class Login extends javax.swing.JFrame {
 
     HandleFiles handler = new HandleFiles();
-    MD5 md5 = new MD5();
 
     /**
      * Creates new form Login

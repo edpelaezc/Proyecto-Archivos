@@ -6,6 +6,13 @@ import java.util.regex.Pattern;
 import static javax.swing.JOptionPane.showMessageDialog;
 
 public class FileHandling {
+    /**
+     * Obtención de  
+     * @param ruta
+     * @param usuario
+     * @return 
+     */
+    
     public String[] Read_Text(String ruta, String usuario)
     {
         String[] txt = {};
@@ -26,6 +33,12 @@ public class FileHandling {
         }
         return txt;
     }
+    /**
+     * Escribir en archivo los cambios realizados al usuario
+     * @param old_Line
+     * @param new_Line
+     * @param ruta 
+     */
     public void Write_Text(String[] old_Line, String[] new_Line, String ruta){
         String nueva_linea = Arrays.toString(new_Line).replace("[", "").replace("]", "");
         String vieja_linea = Arrays.toString(old_Line).replace("[", "").replace("]", "");
@@ -34,6 +47,12 @@ public class FileHandling {
         Remove_Line(vieja_linea.trim(), nueva_linea.trim(), ruta);
     }
     
+    /**
+     * Sustitución de linea usuario en archivo
+     * @param lineToRemove
+     * @param newLine
+     * @param ruta 
+     */
     private void Remove_Line(String lineToRemove, String newLine, String ruta) {
  
     try {
