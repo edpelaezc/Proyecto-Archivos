@@ -370,7 +370,7 @@ public class Admin extends javax.swing.JFrame {
      * @param evt 
      */
     private void Boton_BajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Boton_BajaActionPerformed
-        if (Usuario_Nuevo.count() > 0) {
+        if (Usuario_Nuevo.length > 0) {
             showMessageDialog(null, "Se dará de baja al usuario " + Usuario_Nuevo[0]);
             FileHandling manejo = new FileHandling();
             String ruta = "C:\\MEIA\\bitacora_usuario.txt";
