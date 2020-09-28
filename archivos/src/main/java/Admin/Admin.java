@@ -501,7 +501,7 @@ public class Admin extends javax.swing.JFrame {
         birthday.setText(valores[5]);
         email.setText(valores[6]);
         phone_number.setText(valores[7]);
-        int isAdmin = Data.Data.Instance().user.getRol();
+        int isAdmin = Data.Instance().user.getRol();
         if (isAdmin == 1) {
             Baja.setEnabled(true);
         }
