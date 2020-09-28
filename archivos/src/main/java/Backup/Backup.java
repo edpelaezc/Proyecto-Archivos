@@ -16,7 +16,7 @@ public class Backup {
     
     /**
      * Constructor de objeto Backup
-     * @param ruta_absoulta ruta destino del backup
+     * @param ruta_absoluta ruta destino del backup     
      * @param usuario nombre de usuario del administrador
      * @param fecha_transaccion fecha actual
      */

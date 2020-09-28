@@ -17,7 +17,7 @@ public class Data {
 
     /**
      * Crear instancia de singleton
-     * @return 
+     * @return Instancia singleton
      */
     public static Data Instance() {        
         if (instance == null) {

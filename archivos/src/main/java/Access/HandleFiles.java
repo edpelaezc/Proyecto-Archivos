@@ -29,7 +29,7 @@ public class HandleFiles {
      * Conteo de usuarios. Utilizado para validar el ingreso del administrador y
      * de usuarios comunes.
      *
-     * @return
+     * @return true si hay usuarios, de lo contrario false
      */
     public boolean conteo() {
         ArrayList bitacora = ReadFile(bitacora_usuario);

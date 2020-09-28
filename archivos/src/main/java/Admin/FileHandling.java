@@ -8,9 +8,9 @@ import static javax.swing.JOptionPane.showMessageDialog;
 public class FileHandling {
     /**
      * Obtención de  
-     * @param ruta
-     * @param usuario
-     * @return 
+     * @param ruta Ruta archivo
+     * @param usuario Nombre usuario
+     * @return Usuario en array
      */
     
     public String[] Read_Text(String ruta, String usuario)
@@ -35,9 +35,9 @@ public class FileHandling {
     }
     /**
      * Escribir en archivo los cambios realizados al usuario
-     * @param old_Line
-     * @param new_Line
-     * @param ruta 
+     * @param old_Line Registro antiguo
+     * @param new_Line Registro editado
+     * @param ruta Ruta en el archivo que se escribirá
      */
     public void Write_Text(String[] old_Line, String[] new_Line, String ruta){
         String nueva_linea = Arrays.toString(new_Line).replace("[", "").replace("]", "");

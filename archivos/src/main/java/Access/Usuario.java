@@ -26,15 +26,15 @@ public class Usuario implements Comparable<Usuario> {
     /**
      * Constructor del objeto Usuario
      * @param usuario Llave única
-     * @param nombre
-     * @param apellido
-     * @param password
-     * @param rol
-     * @param fecha_nacimiento
-     * @param correo_alterno
-     * @param telefono
-     * @param path_fotografia
-     * @param estatus 
+     * @param nombre Nombre usuario
+     * @param apellido Apellido usuario
+     * @param password Contraseña usuario
+     * @param rol Rol usuario
+     * @param fecha_nacimiento Fecha de nacimiento usuario
+     * @param correo_alterno Correo usuario
+     * @param telefono Telefono usuario
+     * @param path_fotografia Foto usuario
+     * @param estatus Estatus usuario
      */
     public Usuario(String usuario, String nombre, String apellido, String password, int rol, String fecha_nacimiento, String correo_alterno, String telefono, String path_fotografia, int estatus) {
         this.usuario = usuario;
@@ -198,9 +198,9 @@ public class Usuario implements Comparable<Usuario> {
     }   
 
     /**
-     * Override para poder comparar los usuarios por su llave única -> Nombre de usuario.
+     * Override para poder comparar los usuarios por su llave única nombre de usuario.
      * @param o Usuario
-     * @return 
+     * @return Compara usuarios para sort en ArrayList
      */
     @Override
     public int compareTo(Usuario o) {
