@@ -220,9 +220,9 @@ public class Registro extends javax.swing.JFrame {
 
             // ingresar usuario               
             Usuario temp = new Usuario(
-                    usuarioTField.getText(),
-                    nombreTField.getText(),
-                    apellidoTField.getText(),
+                    usuarioTField.getText().replaceAll(" ", ""),
+                    nombreTField.getText().replaceAll(" ", ""),
+                    apellidoTField.getText().replaceAll(" ", ""),
                     new String(contraseñaTField.getPassword()),
                     handler.conteo() ? 1 : 0,
                     nacimientoTField.getText(),
