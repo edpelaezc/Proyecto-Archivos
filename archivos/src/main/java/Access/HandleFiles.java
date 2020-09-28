@@ -329,8 +329,7 @@ public class HandleFiles {
      *
      * @param username Nombre de usuario
      * @param password Contraseña. (Se cifra para hacer la comparación)
-     * @return true si el usuario hace match, false si no existe o ingreso mal
-     * sus credenciales.
+     * @return Usuario inicializado si existe, de lo contrario null
      */
     public Usuario login(String username, String password) {
 
