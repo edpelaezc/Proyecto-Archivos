@@ -437,13 +437,7 @@ public class Registro extends javax.swing.JFrame {
         } catch (Exception e) {
             return false;
         }
-    }
-    
-    /**
-     * 
-     */
-    private void clean(){
-    }
+    }   
 
     /**
      * Obtener la foto de perfil del usuario y guardarla en el directorio del
