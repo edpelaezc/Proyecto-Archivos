@@ -8,6 +8,7 @@ package com.mycompany.archivos;
 import Access.HandleFiles;
 import Access.MD5;
 import Access.Usuario;
+import Admin.Admin;
 import javax.swing.JOptionPane;
 import Data.Data;
 
@@ -156,7 +157,12 @@ public class Login extends javax.swing.JFrame {
             Usuario temp = handler.login(usuarioTField.getText(), MD5.encryptPassword(new String(contraseñaTField.getPassword())));
             if (temp != null) {
                 System.out.println("CORRECTO");
-                Data.Instance().user = temp; // acceder desde cualquier form al usuario actual          
+                Data.Instance().user = temp; // usuario actual
+                
+                // conceder acceso
+                Admin adminFrame = new Admin();
+                adminFrame.setVisible(true);
+                this.dipose();
             } else {
                 JOptionPane.showMessageDialog(null, "USUARIO O CONTRASEÑA INVÁLIDOS");
                 limpiarTxt();
