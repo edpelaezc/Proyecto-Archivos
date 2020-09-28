@@ -224,12 +224,12 @@ public class Registro extends javax.swing.JFrame {
                     nombreTField.getText(),
                     apellidoTField.getText(),
                     new String(contraseñaTField.getPassword()),
-                    1,
+                    handler.conteo() ? 1 : 0,
                     nacimientoTField.getText(),
                     alternoTField.getText(),
                     telefonoTField.getText(),
                     moverFoto(fotoTField.getText(), usuarioTField.getText()),
-                    handler.conteo() ? 1 : 0);
+                    1);
 
             handler.writeUser(temp);            
             

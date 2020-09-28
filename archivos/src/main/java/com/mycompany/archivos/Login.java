@@ -162,7 +162,7 @@ public class Login extends javax.swing.JFrame {
                 // conceder acceso
                 Admin adminFrame = new Admin();
                 adminFrame.setVisible(true);
-                this.dipose();
+                this.dispose();
             } else {
                 JOptionPane.showMessageDialog(null, "USUARIO O CONTRASEÑA INVÁLIDOS");
                 limpiarTxt();
