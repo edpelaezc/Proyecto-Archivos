@@ -1,5 +1,6 @@
 package Admin;
 
+import Access.MD5;
 import java.text.ParseException;
 import java.util.Date;
 import java.text.SimpleDateFormat;
@@ -14,23 +15,23 @@ import com.mycompany.archivos.Registro;
 public class Admin extends javax.swing.JFrame {
 
     String[] Usuario_Nuevo = {};
+
     public Admin() {
         initComponents();
         int isAdmin = Data.Data.Instance().user.getRol();
-            if (isAdmin == 1) {
-                AdminTxt.setText("Administrador");
-                backup.setEnabled(true);
-                Baja.setEnabled(false);
-                Nuevo_Usuario.setEnabled(true);
-                Administrar.setEnabled(true);
-            }
-            else{
-                AdminTxt.setText("Usuario");
-                backup.setEnabled(false);
-                Baja.setEnabled(true);
-                Nuevo_Usuario.setEnabled(false);
-                Administrar.setEnabled(false);            
-            }
+        if (isAdmin == 1) {
+            AdminTxt.setText("Administrador");
+            backup.setEnabled(true);
+            Baja.setEnabled(false);
+            Nuevo_Usuario.setEnabled(true);
+            Administrar.setEnabled(true);
+        } else {
+            AdminTxt.setText("Usuario");
+            backup.setEnabled(false);
+            Baja.setEnabled(true);
+            Nuevo_Usuario.setEnabled(false);
+            Administrar.setEnabled(false);
+        }
     }
 
     /**
@@ -287,69 +288,97 @@ public class Admin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     /**
-     * Ingreso de nuevos valores 
-     * @param evt 
+     * Ingreso de nuevos valores
+     *
+     * @param evt
      */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String oldPass = String.valueOf(old_Pass.getPassword());
         int tam = birthday.getText().length();
-        if(!(oldPass.equals(Usuario_Nuevo[3]))) {
-            showMessageDialog(null, "La contraseña antigua no coincide con la actual.");
-        }
-        else if (birthday.getText().length() < 10) {
+
+        if (!"".equals(oldPass)) {
+            if (!MD5.encryptPassword(oldPass).equals(Usuario_Nuevo[3].toString())) {
+                showMessageDialog(null, "La contraseña antigua no coincide con la actual.");
+            } else if (birthday.getText().length() < 10) {
                 showMessageDialog(null, "La fecha lleva formato dd-MM-yyyy");
+            } else if (phone_number.getText().length() < 8) {
+                showMessageDialog(null, "El número telefónico debe de contener 8 dígitos.");
+            } else if (!(email.getText().contains("@"))) {
+                showMessageDialog(null, "El correo debe contener un dominio.");
+            } else {
+                String[] new_values = {
+                    Usuario_Nuevo[0], //Usuario
+                    name.getText(), //Nombre
+                    last_name.getText(), //Apellido
+                    String.valueOf(new_Pass.getPassword()), //Nueva contraseña
+                    Usuario_Nuevo[4], //Rol
+                    birthday.getText(), //Cumpleaños
+                    email.getText(), //email
+                    phone_number.getText(), //Telefono
+                    Usuario_Nuevo[8], //Ruta foto perfil
+                    Usuario_Nuevo[9] //Status
+                };
+                FileHandling manejo = new FileHandling();
+                String ruta = "C:\\MEIA\\bitacora_usuario.txt";
+                manejo.Write_Text(Usuario_Nuevo, new_values, ruta);
+                showMessageDialog(null, "Usuario modificado");
+            }
+        } else {
+            if (birthday.getText().length() < 10) {
+                showMessageDialog(null, "La fecha lleva formato dd-MM-yyyy");
+            } else if (phone_number.getText().length() < 8) {
+                showMessageDialog(null, "El número telefónico debe de contener 8 dígitos.");
+            } else if (!(email.getText().contains("@"))) {
+                showMessageDialog(null, "El correo debe contener un dominio.");
+            } else {
+                String[] new_values = {
+                    Usuario_Nuevo[0], //Usuario
+                    name.getText(), //Nombre
+                    last_name.getText(), //Apellido
+                    String.valueOf(new_Pass.getPassword()), //Nueva contraseña
+                    Usuario_Nuevo[4], //Rol
+                    birthday.getText(), //Cumpleaños
+                    email.getText(), //email
+                    phone_number.getText(), //Telefono
+                    Usuario_Nuevo[8], //Ruta foto perfil
+                    Usuario_Nuevo[9] //Status
+                };
+                FileHandling manejo = new FileHandling();
+                String ruta = "C:\\MEIA\\bitacora_usuario.txt";
+                manejo.Write_Text(Usuario_Nuevo, new_values, ruta);
+                showMessageDialog(null, "Usuario modificado");
+            }
         }
-        else if (phone_number.getText().length() < 8) {
-            showMessageDialog(null, "El número telefónico debe de contener 8 dígitos.");
-        }
-        else if (!(email.getText().contains("@"))) {
-            showMessageDialog(null, "El correo debe contener un dominio.");
-        }
-        else{
-            String[] new_values = {
-            Usuario_Nuevo[0],                       //Usuario
-            name.getText(),                         //Nombre
-            last_name.getText(),                    //Apellido
-            String.valueOf(new_Pass.getPassword()), //Nueva contraseña
-            Usuario_Nuevo[4],                       //Rol
-            birthday.getText(),                     //Cumpleaños
-            email.getText(),                        //email
-            phone_number.getText(),                 //Telefono
-            Usuario_Nuevo[8],                       //Ruta foto perfil
-            Usuario_Nuevo[9]                        //Status
-        };
-        FileHandling manejo = new FileHandling();
-        String ruta = "C:\\MEIA\\bitacora_usuario.txt";
-        manejo.Write_Text(Usuario_Nuevo, new_values, ruta);
-        showMessageDialog(null, "Usuario modificado");
-        }
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * Ingreso telefónico
-     * @param evt 
+     *
+     * @param evt
      */
     private void phone_numberKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_phone_numberKeyTyped
         char number = evt.getKeyChar();
-        if(!(Character.isDigit(number)))
-        {
+        if (!(Character.isDigit(number))) {
             evt.consume();
         }
     }//GEN-LAST:event_phone_numberKeyTyped
 
-     /**
-      * Ingreso de fecha de nacimiento
-      * @param evt 
-      */
+    /**
+     * Ingreso de fecha de nacimiento
+     *
+     * @param evt
+     */
     private void birthdayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_birthdayActionPerformed
         String format = new SimpleDateFormat("dd/MM/yy").format(new Date());
         JFormattedTextField dateTextField = new JFormattedTextField(format);
-        
+
     }//GEN-LAST:event_birthdayActionPerformed
 
     /**
-     *  Confirmación de fecha de nacimiento
-     * @param evt 
+     * Confirmación de fecha de nacimiento
+     *
+     * @param evt
      */
     private void birthdayFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_birthdayFocusLost
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -362,12 +391,13 @@ public class Admin extends javax.swing.JFrame {
             }
         } catch (ParseException ex) {
             Logger.getLogger(Admin.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+        }
     }//GEN-LAST:event_birthdayFocusLost
 
     /**
      * Dar de baja al usuario
-     * @param evt 
+     *
+     * @param evt
      */
     private void Boton_BajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Boton_BajaActionPerformed
         if (Usuario_Nuevo.length > 0) {
@@ -383,46 +413,45 @@ public class Admin extends javax.swing.JFrame {
                 Usuario_Nuevo[6],
                 Usuario_Nuevo[7],
                 Usuario_Nuevo[8],
-                "0"    
+                "0"
             };
-        manejo.Write_Text(Usuario_Nuevo, new_values, ruta);
-        showMessageDialog(null, "Se ha dado de baja al usuario " + Usuario_Nuevo[0]);
-        }
-        else{
+            manejo.Write_Text(Usuario_Nuevo, new_values, ruta);
+            showMessageDialog(null, "Se ha dado de baja al usuario " + Usuario_Nuevo[0]);
+        } else {
             showMessageDialog(null, "Porfavor seleccione usuario que desea dar de baja.");
         }
     }//GEN-LAST:event_Boton_BajaActionPerformed
 
     /**
      * Permiso para dar de baja al usuario
-     * @param evt 
+     *
+     * @param evt
      */
     private void BajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BajaActionPerformed
-        int isAdmin = Data.Data.Instance().user.getRol(); 
+        int isAdmin = Data.Data.Instance().user.getRol();
         if (Baja.isSelected() && isAdmin == 1) {
             if (Usuario_Nuevo[4] == "1") {
-                showMessageDialog(null, "Eres administrador, no puedes darte de baja.");   
+                showMessageDialog(null, "Eres administrador, no puedes darte de baja.");
+            } else {
+                Boton_Baja.setEnabled(true);
             }
-            else{
-            Boton_Baja.setEnabled(true);
-            }
-        }
-        else {
-            Boton_Baja.setEnabled(false);             
+        } else {
+            Boton_Baja.setEnabled(false);
         }
     }//GEN-LAST:event_BajaActionPerformed
 
     /**
      * Creación de nuevo usuario
-     * @param evt 
+     *
+     * @param evt
      */
     private void Nuevo_UsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Nuevo_UsuarioActionPerformed
         Registro registro = new Registro();
         registro.setVisible(true);
-        
+
         //Llamar jForm de creación de usuario
     }//GEN-LAST:event_Nuevo_UsuarioActionPerformed
-    
+
     //Muestra en textbox los valores del usuario que se desea administrar
     private void AdministrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AdministrarActionPerformed
         String Usuario = JOptionPane.showInputDialog(null, "Ingrese el nombre del usuario que desea administrar:");
@@ -438,12 +467,12 @@ public class Admin extends javax.swing.JFrame {
         email.setText(valores[6]);
         phone_number.setText(valores[7]);
     }//GEN-LAST:event_AdministrarActionPerformed
-    
-    
+
+
     private void backupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backupActionPerformed
         BackupManagement jframe = new BackupManagement();
-            jframe.show();
-            
+        jframe.show();
+
 
     }//GEN-LAST:event_backupActionPerformed
 
