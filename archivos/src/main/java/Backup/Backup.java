@@ -20,7 +20,7 @@ public class Backup {
      * @param usuario nombre de usuario del administrador
      * @param fecha_transaccion fecha actual
      */
-    public Backup(String ruta_absoulta, String usuario, String fecha_transaccion){
+    public Backup(String ruta_absoluta, String usuario, String fecha_transaccion){
         this.ruta_absoluta = ruta_absoluta;
         this.usuario = usuario;
         this.fecha_transaccion = fecha_transaccion;
