@@ -137,7 +137,7 @@ public class BackupManagement extends javax.swing.JFrame {
         String pathOrigen = "C:\\MEIA";
         String pathDestino = TFRoute.getText();
         
-        if (pathDestino != "") {
+        if (!pathDestino.equals("")) {
             Usuario usuario = Data.Instance().user;
             HandleFile hf = new HandleFile();
             //hf.HandleBitacora(usuario.getUsuario(), pathDestino);
