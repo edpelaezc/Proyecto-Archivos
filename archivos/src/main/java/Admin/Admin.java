@@ -335,7 +335,7 @@ public class Admin extends javax.swing.JFrame {
                     Usuario_Nuevo[0], //Usuario
                     name.getText(), //Nombre
                     last_name.getText(), //Apellido
-                    String.valueOf(new_Pass.getPassword()), //Nueva contraseña
+                    Usuario_Nuevo[3], //Nueva contraseña
                     Usuario_Nuevo[4], //Rol
                     birthday.getText(), //Cumpleaños
                     email.getText(), //email

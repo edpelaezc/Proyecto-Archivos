@@ -57,9 +57,9 @@ public class FileHandling {
  
     try {
  
-        File inFile = new File(ruta);                                   
-        File tempFile = new File(inFile.getAbsolutePath() + ".tmp");    
-        tempFile.renameTo(inFile);              //Renombrar - No sirve
+        File inFile = new File(ruta);                    
+        String nombre = inFile.getAbsolutePath();       
+        File tempFile = new File(nombre + ".tmp");           
         BufferedReader br = new BufferedReader(new FileReader(ruta));
         PrintWriter pw = new PrintWriter(new FileWriter(tempFile));
         String line = null;
@@ -73,6 +73,7 @@ public class FileHandling {
         pw.println(newLine.trim());
         pw.close();
         br.close();
+        inFile.delete();
 
     } catch (FileNotFoundException ex) {
         ex.printStackTrace();

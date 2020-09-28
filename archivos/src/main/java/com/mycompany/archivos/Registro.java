@@ -10,14 +10,11 @@ import Access.Usuario;
 import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.regex.Pattern;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import org.codehaus.plexus.util.FileUtils;
-import Data.Data;
 
 /**
  *
@@ -220,9 +217,9 @@ public class Registro extends javax.swing.JFrame {
 
             // ingresar usuario               
             Usuario temp = new Usuario(
-                    usuarioTField.getText().replaceAll(" ", ""),
-                    nombreTField.getText().replaceAll(" ", ""),
-                    apellidoTField.getText().replaceAll(" ", ""),
+                    usuarioTField.getText(),
+                    nombreTField.getText(),
+                    apellidoTField.getText(),
                     new String(contraseñaTField.getPassword()),
                     handler.conteo() ? 1 : 0,
                     nacimientoTField.getText(),
@@ -439,6 +436,12 @@ public class Registro extends javax.swing.JFrame {
         } catch (Exception e) {
             return false;
         }
+    }
+    
+    /**
+     * 
+     */
+    private void clean(){
     }
 
     /**
