@@ -372,14 +372,13 @@ public class Admin extends javax.swing.JFrame {
      * @param evt 
      */
     private void BajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BajaActionPerformed
-         if (Baja.isSelected()) {
-             Admin.setEnabled(false);
+        int isAdmin = Data.Data.Instance().user.getRol(); 
+        if (Baja.isSelected() && isAdmin == 1) {
             Boton_Baja.setEnabled(true);
         }
-         else{
-            Admin.setEnabled(true);
+        else {
             Boton_Baja.setEnabled(false);             
-         }
+        }
     }//GEN-LAST:event_BajaActionPerformed
 
     /**
