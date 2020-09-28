@@ -15,6 +15,19 @@ public class Admin extends javax.swing.JFrame {
     String[] Usuario_Nuevo = {};
     public Admin() {
         initComponents();
+        int isAdmin = Data.Data.Instance().user.getRol();
+            if (isAdmin == 1) {
+                backup.setEnabled(true);
+                Baja.setEnabled(false);
+                Nuevo_Usuario.setEnabled(true);
+                Administrar.setEnabled(true);
+            }
+            else{
+                backup.setEnabled(false);
+                Baja.setEnabled(true);
+                Nuevo_Usuario.setEnabled(false);
+                Administrar.setEnabled(false);            
+            }
     }
 
     /**
@@ -379,20 +392,10 @@ public class Admin extends javax.swing.JFrame {
     }//GEN-LAST:event_AdministrarActionPerformed
 
     private void AdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AdminActionPerformed
-        if (Admin.isSelected()) {
-            backup.setEnabled(true);
-            Baja.setEnabled(false);
-            Nuevo_Usuario.setEnabled(true);
-            Administrar.setEnabled(true);
-        }
-        else{
-            backup.setEnabled(false);
-            Baja.setEnabled(true);
-            Nuevo_Usuario.setEnabled(false);
-            Administrar.setEnabled(false);            
-        }
+        
     }//GEN-LAST:event_AdminActionPerformed
-
+    
+    
     private void backupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backupActionPerformed
         BackupManagement jframe = new BackupManagement();
             jframe.show();

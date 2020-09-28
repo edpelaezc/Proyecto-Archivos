@@ -10,6 +10,7 @@ import javax.swing.*;
 import Access.Usuario;
 import Backup.HandleFile;
 import Admin.Admin;
+import Data.Data;
 /**
  *
  * @author llaaj
@@ -137,11 +138,10 @@ public class BackupManagement extends javax.swing.JFrame {
         String pathDestino = TFRoute.getText();
         
         if (pathDestino != "") {
-            String usuario = "";
-            //Usuario usuario = new Usuario();
+            Usuario usuario = Data.Instance().user;
             HandleFile hf = new HandleFile();
             //hf.HandleBitacora(usuario.getUsuario(), pathDestino);
-            hf.HandleBitacora(usuario, pathDestino);
+            hf.HandleBitacora(usuario.getUsuario(), pathDestino);
             
             copiarDirectorios(new File(pathOrigen), new File(pathDestino));
         }
