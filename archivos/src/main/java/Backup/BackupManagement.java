@@ -144,6 +144,9 @@ public class BackupManagement extends javax.swing.JFrame {
             hf.HandleBitacora(usuario.getUsuario(), pathDestino);
             
             copiarDirectorios(new File(pathOrigen), new File(pathDestino));
+            
+            JOptionPane.showMessageDialog(null, 
+                    "Backup realizado exitosamente");
         }
         else {
             JOptionPane.showMessageDialog(null, 
