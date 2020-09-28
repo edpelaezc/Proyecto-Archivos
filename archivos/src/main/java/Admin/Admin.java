@@ -53,7 +53,6 @@ public class Admin extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         Boton_Baja = new javax.swing.JButton();
         Baja = new javax.swing.JRadioButton();
-        Admin = new javax.swing.JRadioButton();
         Nuevo_Usuario = new javax.swing.JButton();
         Administrar = new javax.swing.JButton();
         User_Name = new javax.swing.JLabel();
@@ -138,13 +137,6 @@ public class Admin extends javax.swing.JFrame {
             }
         });
 
-        Admin.setText("Administrador");
-        Admin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                AdminActionPerformed(evt);
-            }
-        });
-
         Nuevo_Usuario.setText("Nuevo");
         Nuevo_Usuario.setEnabled(false);
         Nuevo_Usuario.addActionListener(new java.awt.event.ActionListener() {
@@ -201,8 +193,7 @@ public class Admin extends javax.swing.JFrame {
                                 .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(Admin))
+                                .addGap(91, 91, 91))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(phone_number)
@@ -236,8 +227,7 @@ public class Admin extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Admin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
                     .addComponent(User_Name, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -390,10 +380,6 @@ public class Admin extends javax.swing.JFrame {
         email.setText(valores[6]);
         phone_number.setText(valores[7]);
     }//GEN-LAST:event_AdministrarActionPerformed
-
-    private void AdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AdminActionPerformed
-        
-    }//GEN-LAST:event_AdminActionPerformed
     
     
     private void backupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backupActionPerformed
@@ -439,7 +425,6 @@ public class Admin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JRadioButton Admin;
     private javax.swing.JButton Administrar;
     private javax.swing.JRadioButton Baja;
     private javax.swing.JButton Boton_Baja;
