@@ -40,7 +40,7 @@ public class Usuario implements Comparable<Usuario> {
         this.usuario = usuario;
         this.nombre = nombre;
         this.apellido = apellido;
-        this.password = MD5.encryptPassword(password);
+        this.password = password.length() == 32 ? password : MD5.encryptPassword(password);
         this.rol = rol;
         this.fecha_nacimiento = fecha_nacimiento;
         this.correo_alterno = correo_alterno;
