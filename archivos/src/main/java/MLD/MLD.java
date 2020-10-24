@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
+import Data.Data;
 import java.util.HashSet;
 import java.util.Set;
 import static javax.swing.JOptionPane.showMessageDialog;
@@ -39,7 +40,7 @@ public class MLD extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        user = new javax.swing.JLabel();
+        lbl_user = new javax.swing.JLabel();
         list_txt = new javax.swing.JTextField();
         usuario = new javax.swing.JTextField();
         description = new javax.swing.JTextField();
@@ -54,7 +55,7 @@ public class MLD extends javax.swing.JFrame {
             }
         });
 
-        user.setText("Usuario");
+        lbl_user.setText("Usuario");
 
         list_txt.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -113,7 +114,7 @@ public class MLD extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(user, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbl_user, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(list_txt, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(description, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -129,7 +130,7 @@ public class MLD extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(lbl_Date, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
-                    .addComponent(user, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lbl_user, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(25, 25, 25)
                 .addComponent(list_txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(15, 15, 15)
@@ -206,6 +207,8 @@ public class MLD extends javax.swing.JFrame {
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");  
         String strDate = dateFormat.format(date);  
         lbl_Date.setText("Fecha: " + strDate);
+        
+        lbl_user.setText(Data.Instance().user.getNombre());
     }//GEN-LAST:event_formComponentShown
 
     /**
@@ -247,9 +250,9 @@ public class MLD extends javax.swing.JFrame {
     private javax.swing.JTextField description;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JLabel lbl_Date;
+    private javax.swing.JLabel lbl_user;
     private javax.swing.JTextField list_txt;
     private javax.swing.JTextField num_usr;
-    private javax.swing.JLabel user;
     private javax.swing.JTextField usuario;
     // End of variables declaration//GEN-END:variables
 }
