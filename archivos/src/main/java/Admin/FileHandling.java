@@ -18,7 +18,13 @@ public class FileHandling {
     File desc_usuario = new File("C:\\MEIA\\desc_usuario.txt");
     File bitacora_usuario = new File("C:\\MEIA\\bitacora_usuario.txt");
     File desc_bitacora_usuario = new File("C:\\MEIA\\desc_bitacora_usuario.txt");
+    File Mantenimiento_listas_Distribuidas = new File("C:\\MEIA\\lista.txt");
 
+    public void Write_MLD(){
+        
+    
+    }
+    
     public String[] Read_Text(String ruta, String usuario) {
         String[] txt = {};
         try {

@@ -14,6 +14,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import Data.Data;
+import java.sql.Array;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import static javax.swing.JOptionPane.showMessageDialog;
@@ -44,9 +46,14 @@ public class MLD extends javax.swing.JFrame {
         list_txt = new javax.swing.JTextField();
         usuario = new javax.swing.JTextField();
         description = new javax.swing.JTextField();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        num_usr = new javax.swing.JTextField();
+        status = new javax.swing.JRadioButton();
         lbl_Date = new javax.swing.JLabel();
+        Up = new javax.swing.JButton();
+        num_usr = new javax.swing.JFormattedTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addComponentListener(new java.awt.event.ComponentAdapter() {
@@ -85,27 +92,37 @@ public class MLD extends javax.swing.JFrame {
             }
         });
 
-        jRadioButton1.setText("Status");
-
-        num_usr.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                num_usrFocusGained(evt);
-            }
-        });
-        num_usr.addActionListener(new java.awt.event.ActionListener() {
+        status.setText("Status");
+        status.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                num_usrActionPerformed(evt);
-            }
-        });
-        num_usr.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                num_usrKeyTyped(evt);
+                statusActionPerformed(evt);
             }
         });
 
         lbl_Date.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbl_Date.setText("Fecha");
         lbl_Date.setToolTipText("");
+
+        Up.setText("Subir");
+        Up.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                UpActionPerformed(evt);
+            }
+        });
+
+        num_usr.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                num_usrKeyTyped(evt);
+            }
+        });
+
+        jLabel1.setText("Usuario");
+
+        jLabel2.setText("Nombre Lista");
+
+        jLabel3.setText("Número Usuario");
+
+        jLabel4.setText("Descripción");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -115,34 +132,65 @@ public class MLD extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lbl_user, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(list_txt, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(description, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jRadioButton1)
-                    .addComponent(num_usr, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 231, Short.MAX_VALUE)
-                .addComponent(lbl_Date, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel4))
+                                .addGap(37, 37, 37))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addGap(25, 25, 25)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(num_usr, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(list_txt, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(usuario, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(description, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(status, javax.swing.GroupLayout.Alignment.LEADING))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(56, 56, 56)
+                        .addComponent(Up))
+                    .addComponent(lbl_Date, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lbl_Date, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
-                    .addComponent(lbl_user, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(25, 25, 25)
-                .addComponent(list_txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(15, 15, 15)
-                .addComponent(usuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(description, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(num_usr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(22, 22, 22)
-                .addComponent(jRadioButton1)
-                .addContainerGap(85, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lbl_user, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(list_txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2))
+                        .addGap(15, 15, 15)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(usuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(description, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(num_usr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3))
+                        .addGap(22, 22, 22)
+                        .addComponent(status)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(lbl_Date, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
+                        .addGap(291, 291, 291)
+                        .addComponent(Up)))
+                .addContainerGap())
         );
+
+        status.getAccessibleContext().setAccessibleDescription("Status will set at (#)");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -188,20 +236,6 @@ public class MLD extends javax.swing.JFrame {
     });
     }//GEN-LAST:event_descriptionFocusGained
 
-    private void num_usrFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_num_usrFocusGained
-
-    }//GEN-LAST:event_num_usrFocusGained
-
-    private void num_usrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_num_usrActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_num_usrActionPerformed
-
-    private void num_usrKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_num_usrKeyTyped
-        if (!(num_usr.getText().matches("[0-9]+"))) {
-            evt.consume();
-        }
-    }//GEN-LAST:event_num_usrKeyTyped
-
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
         Date date = Calendar.getInstance().getTime();  
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");  
@@ -210,6 +244,38 @@ public class MLD extends javax.swing.JFrame {
         
         lbl_user.setText(Data.Instance().user.getNombre());
     }//GEN-LAST:event_formComponentShown
+
+    private void UpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpActionPerformed
+        int status = 0;
+        if (this.status.isSelected()) {
+            status = 1;
+        }        
+        String[] MLD_values = {
+            list_txt.getText(),
+            usuario.getText(), 
+            description.getText(), 
+            num_usr.getText(), 
+            Integer.toString(status)
+        };
+            String full_Data = Arrays.toString(MLD_values);
+            showMessageDialog(null, full_Data.replace("[", "").replace("]", ""));
+    }//GEN-LAST:event_UpActionPerformed
+
+    private void statusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statusActionPerformed
+        if (status.isSelected()) {
+            status.setText("Status (1)");
+        }
+        else{
+            status.setText("Status (0)");                
+        }
+    }//GEN-LAST:event_statusActionPerformed
+
+    private void num_usrKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_num_usrKeyTyped
+        char number = evt.getKeyChar();
+        if (!(Character.isDigit(number))) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_num_usrKeyTyped
 
     /**
      * @param args the command line arguments
@@ -247,12 +313,17 @@ public class MLD extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Up;
     private javax.swing.JTextField description;
-    private javax.swing.JRadioButton jRadioButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel lbl_Date;
     private javax.swing.JLabel lbl_user;
     private javax.swing.JTextField list_txt;
-    private javax.swing.JTextField num_usr;
+    private javax.swing.JFormattedTextField num_usr;
+    private javax.swing.JRadioButton status;
     private javax.swing.JTextField usuario;
     // End of variables declaration//GEN-END:variables
 }

@@ -13,7 +13,6 @@ import Backup.BackupManagement;
 import Data.Data;
 import com.mycompany.archivos.Registro;
 import java.awt.Image;
-import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
