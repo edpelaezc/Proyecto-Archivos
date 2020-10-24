@@ -136,6 +136,16 @@ public class Admin extends javax.swing.JFrame {
             ex.printStackTrace();
         }
         phone_number.setToolTipText("Phone ");
+        phone_number.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                phone_numberFocusLost(evt);
+            }
+        });
+        phone_number.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                phone_numberActionPerformed(evt);
+            }
+        });
         phone_number.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 phone_numberKeyTyped(evt);
@@ -516,6 +526,14 @@ public class Admin extends javax.swing.JFrame {
         BackupManagement jframe = new BackupManagement();
         jframe.show();
     }//GEN-LAST:event_backupActionPerformed
+
+    private void phone_numberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_phone_numberActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_phone_numberActionPerformed
+
+    private void phone_numberFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_phone_numberFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_phone_numberFocusLost
 
     private void setIcon(){
         ImageIcon img = new ImageIcon("C:\\MEIA\\Imagenes\\icon.jpg");
