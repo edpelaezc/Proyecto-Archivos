@@ -97,6 +97,7 @@
                                   </Group>
                                   <Component id="backup" alignment="1" min="-2" pref="106" max="-2" attributes="0"/>
                                   <Component id="jButton1" alignment="0" min="-2" pref="106" max="-2" attributes="0"/>
+                                  <Component id="MLD" alignment="1" min="-2" pref="106" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -169,6 +170,8 @@
                           <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
+                      <Component id="MLD" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="backup" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="Administrar" min="-2" max="-2" attributes="0"/>
@@ -344,6 +347,15 @@
     <Component class="javax.swing.JLabel" name="AdminTxt">
     </Component>
     <Component class="javax.swing.JLabel" name="imageLabel">
+    </Component>
+    <Component class="javax.swing.JButton" name="MLD">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="MLD"/>
+        <Property name="enabled" type="boolean" value="false"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MLDActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

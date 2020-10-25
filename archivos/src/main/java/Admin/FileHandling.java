@@ -3,6 +3,11 @@ package Admin;
 import java.io.*;
 import java.util.Arrays;
 import java.util.regex.Pattern;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+import java.io.File;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import static javax.swing.JOptionPane.showMessageDialog;
 
 public class FileHandling {
@@ -18,20 +23,31 @@ public class FileHandling {
     File desc_usuario = new File("C:\\MEIA\\desc_usuario.txt");
     File bitacora_usuario = new File("C:\\MEIA\\bitacora_usuario.txt");
     File desc_bitacora_usuario = new File("C:\\MEIA\\desc_bitacora_usuario.txt");
-    File Mantenimiento_listas_Distribuidas = new File("C:\\MEIA\\lista.txt");
-
-    public void Write_MLD(){
-        
+   
     
-    }
     
     public String Get_ListMLD(String key){
         String line = "";
-        
-        
+        File Mantenimiento_listas_Distribuidas = new File("C://MEIA//lista.txt");
+        Scanner myReader;
+        try {
+            myReader = new Scanner(Mantenimiento_listas_Distribuidas);     
+            while (myReader.hasNextLine()) {
+            String data = myReader.nextLine();
+            if (data.startsWith(key)) {
+                line = data;
+                myReader.close();
+                return line;
+            }
+        }
+        myReader.close();
+        return line;
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(FileHandling.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return line;
     }
-    
+
     public String[] Read_Text(String ruta, String usuario) {
         String[] txt = {};
         try {
@@ -59,7 +75,7 @@ public class FileHandling {
             }
 
         } catch (Exception e) {
-            showMessageDialog(null, e);
+            showMessageDialog(null, e.getMessage());
         }
         return txt;
     }

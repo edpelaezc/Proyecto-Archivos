@@ -11,6 +11,7 @@ import static javax.swing.JOptionPane.*;
 import javax.swing.*;
 import Backup.BackupManagement;
 import Data.Data;
+import MLD.MLD;
 import com.mycompany.archivos.Registro;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -84,6 +85,7 @@ public class Admin extends javax.swing.JFrame {
         backup = new javax.swing.JButton();
         AdminTxt = new javax.swing.JLabel();
         imageLabel = new javax.swing.JLabel();
+        MLD = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -201,6 +203,14 @@ public class Admin extends javax.swing.JFrame {
             }
         });
 
+        MLD.setText("MLD");
+        MLD.setEnabled(false);
+        MLD.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MLDActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -263,7 +273,8 @@ public class Admin extends javax.swing.JFrame {
                                         .addComponent(Nuevo_Usuario, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(Administrar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(backup, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(MLD, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(10, 10, 10)))
                 .addContainerGap())
         );
@@ -316,6 +327,8 @@ public class Admin extends javax.swing.JFrame {
                             .addComponent(last_name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel8))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(MLD)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(backup)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(Administrar)
@@ -534,6 +547,11 @@ public class Admin extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_phone_numberFocusLost
 
+    private void MLDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MLDActionPerformed
+    MLD mld = new MLD();
+    mld.show();
+    }//GEN-LAST:event_MLDActionPerformed
+
     private void setIcon(){
         ImageIcon img = new ImageIcon("C:\\MEIA\\Imagenes\\icon.jpg");
         this.setIconImage(img.getImage());    }
@@ -577,6 +595,7 @@ public class Admin extends javax.swing.JFrame {
     private javax.swing.JButton Administrar;
     private javax.swing.JRadioButton Baja;
     private javax.swing.JButton Boton_Baja;
+    private javax.swing.JButton MLD;
     private javax.swing.JButton Nuevo_Usuario;
     private javax.swing.JLabel User_Name;
     private javax.swing.JLabel admin;

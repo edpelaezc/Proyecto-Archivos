@@ -35,6 +35,7 @@ public class MLD extends javax.swing.JFrame {
         initComponents();
     }
 
+    int cont_usr = 0;
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -50,12 +51,14 @@ public class MLD extends javax.swing.JFrame {
         status = new javax.swing.JRadioButton();
         lbl_Date = new javax.swing.JLabel();
         delete = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
+        list_Name = new javax.swing.JLabel();
         date_create = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         find = new javax.swing.JButton();
         modify = new javax.swing.JButton();
         usr_count = new javax.swing.JLabel();
+        usr_txt = new javax.swing.JTextField();
+        Usuario = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addComponentListener(new java.awt.event.ComponentAdapter() {
@@ -95,13 +98,14 @@ public class MLD extends javax.swing.JFrame {
         lbl_Date.setToolTipText("");
 
         delete.setText("Eliminar");
+        delete.setEnabled(false);
         delete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 deleteActionPerformed(evt);
             }
         });
 
-        jLabel2.setText("Nombre Lista");
+        list_Name.setText("Nombre Lista");
 
         date_create.setText("Fecha Creación: ");
 
@@ -115,6 +119,7 @@ public class MLD extends javax.swing.JFrame {
         });
 
         modify.setText("Modificar");
+        modify.setEnabled(false);
         modify.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 modifyActionPerformed(evt);
@@ -123,6 +128,19 @@ public class MLD extends javax.swing.JFrame {
 
         usr_count.setText("Número Usuario: ");
 
+        usr_txt.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                usr_txtFocusGained(evt);
+            }
+        });
+        usr_txt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                usr_txtActionPerformed(evt);
+            }
+        });
+
+        Usuario.setText("Usuario");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -130,34 +148,34 @@ public class MLD extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lbl_user, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(list_Name))
+                                .addGap(174, 174, 174)
+                                .addComponent(lbl_Date, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(Usuario))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(status)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(usr_count, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(date_create, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                    .addComponent(jLabel4)
+                                    .addGap(62, 62, 62)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(description, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(list_txt, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(usr_txt, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(modify, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(find, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(status)
-                            .addGap(249, 249, 249)
-                            .addComponent(delete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(lbl_user, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel2))
-                                    .addGap(174, 174, 174)
-                                    .addComponent(lbl_Date, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(usr_count, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(date_create, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addComponent(jLabel4)
-                                        .addGap(62, 62, 62)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(description, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(list_txt, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                            .addGap(0, 0, Short.MAX_VALUE))))
+                            .addComponent(find, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(delete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -169,15 +187,19 @@ public class MLD extends javax.swing.JFrame {
                         .addComponent(lbl_user, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(30, 30, 30)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
+                            .addComponent(list_Name)
                             .addComponent(list_txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(Usuario)
+                            .addComponent(usr_txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(description, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4))
-                        .addGap(29, 29, 29)
+                        .addGap(18, 18, 18)
                         .addComponent(usr_count)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(date_create)
                         .addGap(18, 18, 18)
                         .addComponent(status)
@@ -229,7 +251,6 @@ public class MLD extends javax.swing.JFrame {
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");  
         String strDate = dateFormat.format(date);  
         lbl_Date.setText("Fecha: " + strDate);
-        
         lbl_user.setText(Data.Instance().user.getNombre());
     }//GEN-LAST:event_formComponentShown
 
@@ -239,28 +260,25 @@ public class MLD extends javax.swing.JFrame {
             if (this.status.isSelected()){  status = 1;   }  
             
             String key = list_txt.getText() + Data.Instance().user.getNombre();
-            
             FileHandling manejo = new FileHandling();
             String usr = manejo.Get_ListMLD(key);
             try{
                 String[] values_usr = usr.split(Pattern.quote("|"));
-                list_txt.setText(values_usr[1]);
-                description.setText(values_usr[3]);
-                usr_count.setText(values_usr[4]);
-                date_create.setText(values_usr[5]);
-                if (values_usr[6] == "1") {
-                    this.status.setSelected(true);
+                if (values_usr[0].equals(key)) {
+                    String[] new_Line = {};
+                    String ruta = "C:\\MEIA\\lista.txt";
+                    manejo.Write_Text(values_usr, new_Line, ruta);
                 }
                 else{
-                    this.status.setSelected(false);
+                    showMessageDialog(null, "No se encuentran listas asociadas a su cuenta.");
                 }
             }
             catch(Exception  e){
-                showMessageDialog(null, "No se encuentran valores con llave " + key + "\n" + e.getMessage());
+                showMessageDialog(null, "No se han agregado listas previas.");
             }
         }
         else{
-            showMessageDialog(null, "Ingrese nombre de la lista");
+            showMessageDialog(null, "Ingrese nombre de la lista.");
         }
     }//GEN-LAST:event_deleteActionPerformed
 
@@ -274,26 +292,79 @@ public class MLD extends javax.swing.JFrame {
     }//GEN-LAST:event_statusActionPerformed
 
     private void findActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_findActionPerformed
-        // TODO add your handling code here:
+        String key = list_txt.getText() + Data.Instance().user.getNombre(); 
+        if (!(list_txt.getText().equals(""))) {
+            FileHandling manejo = new FileHandling();
+            String usr = manejo.Get_ListMLD(key);
+            try{
+                String[] values_usr = usr.split(Pattern.quote("|"));
+                list_txt.setText(values_usr[1]);
+                description.setText(values_usr[3]);
+                usr_count.setText(usr_count.getText() + values_usr[4]);
+                cont_usr = Integer.parseInt(values_usr[4].trim());
+                date_create.setText(date_create.getText() + values_usr[5]);
+                if (values_usr[6] == "1") {
+                    this.status.setSelected(true);
+                }
+                else{
+                    this.status.setSelected(false);
+                }
+                this.delete.enable(true);
+                this.modify.enable(true);
+            }catch(Exception e){
+                showMessageDialog(null, "No se han agregado listas previas.");
+            }
+            
+        }
+        else{
+            showMessageDialog(null, "Ingrese nombre de la lista.");
+        }
     }//GEN-LAST:event_findActionPerformed
 
     private void modifyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modifyActionPerformed
         int status = 0;
-        if (this.status.isSelected()){  status = 1;   }  
-        
-        String key = list_txt.getText() + Data.Instance().user.getNombre();    
-        Date date = Calendar.getInstance().getTime();  
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");  
-        String strDate = dateFormat.format(date);  
-        String[] MLD_values = {
-            key,    
-            list_txt.getText(),
-            Data.Instance().user.getNombre(),
-            description.getText(),
-            strDate,
-            Integer.toString(status)
-        };
+        if (this.status.isSelected()){  status = 1;   }   
+        String key = list_txt.getText() + Data.Instance().user.getNombre(); 
+        if (!(list_txt.getText().equals(""))) {
+            FileHandling manejo = new FileHandling();
+            String usr = manejo.Get_ListMLD(key);
+            try{
+                String[] old_Line = usr.split(Pattern.quote("|"));
+                Date date = Calendar.getInstance().getTime();  
+                DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");  
+                String strDate = dateFormat.format(date);
+                cont_usr = cont_usr + 1;
+                String new_count = Integer.toString(cont_usr + 1);
+                String ruta = "C:\\MEIA\\lista.txt";
+                String[] new_Line = {
+                    key,
+                    list_txt.getText(),
+                    Data.Instance().user.getNombre(),
+                    description.getText(),
+                    new_count,
+                    strDate,
+                    Integer.toString(status)
+                };
+                manejo.Write_Text(old_Line, new_Line, ruta);
+                String new_Data = Arrays.toString(new_Line);
+                showMessageDialog(null, new_Data);
+            }catch(Exception e){
+                showMessageDialog(null, "No se han agregado listas previas.\n" + e.getMessage());
+            }
+            
+        }
+        else{
+            showMessageDialog(null, "Ingrese nombre de la lista.");
+        }
     }//GEN-LAST:event_modifyActionPerformed
+
+    private void usr_txtFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_usr_txtFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_usr_txtFocusGained
+
+    private void usr_txtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usr_txtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_usr_txtActionPerformed
 
     /**
      * @param args the command line arguments
@@ -331,17 +402,19 @@ public class MLD extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Usuario;
     private javax.swing.JLabel date_create;
     private javax.swing.JButton delete;
     private javax.swing.JTextField description;
     private javax.swing.JButton find;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel lbl_Date;
     private javax.swing.JLabel lbl_user;
+    private javax.swing.JLabel list_Name;
     private javax.swing.JTextField list_txt;
     private javax.swing.JButton modify;
     private javax.swing.JRadioButton status;
     private javax.swing.JLabel usr_count;
+    private javax.swing.JTextField usr_txt;
     // End of variables declaration//GEN-END:variables
 }
