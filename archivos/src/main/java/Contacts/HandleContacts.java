@@ -235,7 +235,24 @@ public class HandleContacts {
         }
     }
 
+    public boolean uniqueKey(String username, String contact) {
 
+        ArrayList bitacora = ReadFile(bitacora_contactos); // usuarios en bitacora
+        ArrayList aux_usuario = ReadFile(contactos); // usuarios en usuario.txt
+
+        for (var object : aux_usuario) {
+            if (object.toString().contains(username) && object.toString().contains(contact)) {
+                return false;
+            }
+        }
+
+        for (var object : bitacora) {
+            if (object.toString().contains(username) && object.toString().contains(contact)) {
+                return false;
+            }
+        }
+        return true;
+    }
 
 
 }
