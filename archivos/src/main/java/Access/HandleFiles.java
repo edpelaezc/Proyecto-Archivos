@@ -24,7 +24,7 @@ public class HandleFiles {
     File desc_usuario = new File("C:\\MEIA\\desc_usuario.txt");
     File bitacora_usuario = new File("C:\\MEIA\\bitacora_usuario.txt");
     File desc_bitacora_usuario = new File("C:\\MEIA\\desc_bitacora_usuario.txt");
-
+    int maximo = 2;
     /**
      * Conteo de usuarios. Utilizado para validar el ingreso del administrador y
      * de usuarios comunes.
@@ -65,7 +65,7 @@ public class HandleFiles {
                         + "#_registros: 1\n"
                         + "registros_activos: 1\n"
                         + "registros_inactivos: 0\n"
-                        + "max_reorganizacion: 2");
+                        + "max_reorganizacion: " + maximo);
                 descWriter.close();
 
                 // insertar en archivo bitacora_usuario.txt para registro
@@ -89,7 +89,7 @@ public class HandleFiles {
                 int cont = Integer.parseInt(aux[1]);
 
                 // insertar en bitacora usuario
-                if (cont < 2) {
+                if (cont < maximo) {
                     //actualizar campos
                     desc.set(3, "fecha_modificacion: " + fecha);
 
@@ -227,7 +227,7 @@ public class HandleFiles {
                         + "usuario_creacion: " + username + "\n"
                         + "fecha_modificacion: " + fecha + "\n"
                         + "usuario_modificacion: " + username + "\n"
-                        + "#_registros: 5\n"
+                        + "#_registros: " + maximo + "\n"
                         + "registros_activos: 5\n"
                         + "registros_inactivos: 0\n");
                 descWriter.close();
@@ -243,7 +243,7 @@ public class HandleFiles {
 
                 // actualizar conteo                
                 aux = desc.get(5).toString().split(" ");
-                aux[1] = String.valueOf(Integer.parseInt(aux[1]) + 5);
+                aux[1] = String.valueOf(Integer.parseInt(aux[1]) + maximo);
                 desc.set(5, aux[0] + " " + aux[1]); // numero de registros                  
 
                 PrintWriter descWriter = new PrintWriter(desc_usuario);
