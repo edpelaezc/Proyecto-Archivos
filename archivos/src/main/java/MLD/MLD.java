@@ -276,7 +276,10 @@ public class MLD extends javax.swing.JFrame {
                 if (values_usr[0].equals(key)) {
                     String new_Line = "";
                     String ruta = "C:\\MEIA\\lista.txt";
-                    manejo.Remove_Line(usr, new_Line, ruta);
+                    while(usr != ""){
+                        manejo.Remove_Line(usr, new_Line, ruta);
+                        usr = manejo.Get_ListMLD(key);
+                    }
                     showMessageDialog(null, "Lista " + values_usr[1] + " eliminada correctamente");
                 }
                 else{
