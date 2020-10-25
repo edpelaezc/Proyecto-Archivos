@@ -272,11 +272,12 @@ public class MLD extends javax.swing.JFrame {
             FileHandling manejo = new FileHandling();
             String usr = manejo.Get_ListMLD(key);
             try{
-                String[] values_usr = usr.split(Pattern.quote("|"));
+                String[] values_usr = usr.split(Pattern.quote(Pattern.quote("|")));
                 if (values_usr[0].equals(key)) {
                     String[] new_Line = {};
                     String ruta = "C:\\MEIA\\lista.txt";
                     manejo.Write_Text(values_usr, new_Line, ruta);
+                    showMessageDialog(null, "Lista " + values_usr[1] + " eliminada correctamente");
                 }
                 else{
                     showMessageDialog(null, "No se encuentran listas asociadas a su cuenta.");
@@ -309,9 +310,9 @@ public class MLD extends javax.swing.JFrame {
                 String[] values_usr = usr.split(Pattern.quote("|"));
                 list_txt.setText(values_usr[1]);
                 description.setText(values_usr[3]);
-                usr_count.setText(usr_count.getText() + values_usr[4]);
+                usr_count.setText("Número Usuario: " + values_usr[4]);
                 cont_usr = Integer.parseInt(values_usr[4].trim());
-                date_create.setText(date_create.getText() + values_usr[5]);
+                date_create.setText("Fecha creación:" + values_usr[5]);
                 if (values_usr[6] == "1") {
                     this.status.setSelected(true);
                 }
@@ -337,9 +338,20 @@ public class MLD extends javax.swing.JFrame {
         if (!(list_txt.getText().equals("")) && !(description.getText().equals("")) ) {
             if (!(usr_txt.getText().equals(""))) {
                 Modify_List(key, status, usr_txt.getText());
+                showMessageDialog(null, "Lista modificada exitosamente."
+                + "\nNuevos valores:"
+                + "\nNombre Lista: " + list_txt.getText()
+                + "\nDescripción: " + description.getText()
+                + "\nNuevo usuario: " + usr_txt.getText()
+                );
             }
             else{
                 Modify_List(key, status, "");
+                showMessageDialog(null, "Lista modificada exitosamente."
+                + "\nNuevos valores:"
+                + "\nNombre Lista: " + list_txt.getText()
+                + "\nDescripción: " + description.getText()
+                );
             }
         }
         else{
@@ -356,30 +368,38 @@ public class MLD extends javax.swing.JFrame {
     }//GEN-LAST:event_usr_txtActionPerformed
 
     private void CreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreateActionPerformed
-        String key = list_txt.getText() + "Kevin"; 
-        int status = 0;
-        if (this.status.isSelected()){  status = 1;   }
-        
-        if (!(list_txt.getText().equals("")) && !(description.getText().equals(""))) {
-            String [] list_values = {};
-            if (!(usr_txt.getText().equals(""))) {
-                list_values = Create_List("0", status, key);
+        String key = list_txt.getText() + "Kevin";
+        FileHandling manejo = new FileHandling();
+        String linea = manejo.Get_ListMLD(key);
+        if (linea == "") {
+            int status = 0;
+            if (this.status.isSelected()){  status = 1;   }
+            if (!(list_txt.getText().equals("")) && !(description.getText().equals(""))) {
+                String list_values = "";
+                String [] new_values = {};
+                if (!(usr_txt.getText().equals(""))) {
+                    list_values = Create_List("1", status, key);
+                }
+                else{
+                    list_values = Create_List("0", status, key);
+                }
+                new_values = list_values.split(Pattern.quote("|"));
+                showMessageDialog(null,
+                "\tLista: " + list_txt.getText() +" creada!"
+                + "\nNombre Lista: " + new_values[1] 
+                + "\nUsuario: " + new_values[2] 
+                + "\nDescripción: " + new_values[3]
+                + "\nCantidad Usuarios: " + new_values[4]
+                + "\nFecha Creación: " + new_values[5]
+                + "\nStatus: " + new_values[6]
+                );
             }
             else{
-                list_values = Create_List("1", status, key);
+                showMessageDialog(null, "Por favor coloque un nombre y descripción a la lista.");
             }
-            showMessageDialog(null,
-            "\tLista: " + list_txt.getText() +" creada!"
-            + "\nNombre Lista: " + list_values[1] 
-            + "\nUsuario: " + list_values[2] 
-            + "\nDescripción: " + list_values[3]
-            + "\nCantidad Usuarios: " + list_values[4]
-            + "\nFecha Creación: " + list_values[5]
-            + "\nStatus: " + list_values[6]
-            );
         }
         else{
-            showMessageDialog(null, "Por favor coloque un nombre y descripción a la lista.");
+            showMessageDialog(null, "Ya existe la lista " + list_txt.getText());
         }
     }//GEN-LAST:event_CreateActionPerformed
 
@@ -425,9 +445,10 @@ public class MLD extends javax.swing.JFrame {
             Date date = Calendar.getInstance().getTime();  
             DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");  
             String strDate = dateFormat.format(date);
+            if (!(new_usr.equals(""))) {
             cont_usr = cont_usr + 1;
-            String new_count = Integer.toString(cont_usr + 1);
-            String ruta = "C:\\MEIA\\lista.txt";
+            }
+            String new_count = Integer.toString(cont_usr);   
             String[] new_Line = {
                 key,
                 list_txt.getText(),
@@ -437,6 +458,7 @@ public class MLD extends javax.swing.JFrame {
                 strDate,
                 Integer.toString(status)
             };
+            String ruta = "C:\\MEIA\\lista.txt";
             manejo.Write_Text(old_Line, new_Line, ruta);
             String new_Data = Arrays.toString(new_Line);
             showMessageDialog(null, new_Data);
@@ -452,25 +474,21 @@ public class MLD extends javax.swing.JFrame {
      * @param status
      * @param key 
      */
-    public String[] Create_List(String usr, int status, String key){
+    public String Create_List(String usr, int status, String key){
             Date date = Calendar.getInstance().getTime();  
             DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");  
             String strDate = dateFormat.format(date);
-            String[] list_values = {
-                key,
-                list_txt.getText(),
-                usr_txt.getText(),
-                description.getText(),
-                usr,
-                strDate,
-                Integer.toString(status)
-            
-            };
-            String line = Arrays.toString(list_values).replace("[", "").replace("]", "");
-            line = line.replace(",", "|");
+            String new_values = 
+                    key + "|" 
+                    + list_txt.getText() + "|"
+                    + usr_txt.getText() + "|"
+                    + description.getText() + "|"
+                    + usr + "|"
+                    + strDate + "|"
+                    + Integer.toString(status);
             FileHandling manejo = new FileHandling();
-            manejo.Write_MLD(line);
-            return list_values;
+            manejo.Write_MLD(new_values);
+            return new_values;
     }
     
 
