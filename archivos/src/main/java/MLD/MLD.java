@@ -50,12 +50,12 @@ public class MLD extends javax.swing.JFrame {
         status = new javax.swing.JRadioButton();
         lbl_Date = new javax.swing.JLabel();
         delete = new javax.swing.JButton();
-        num_usr = new javax.swing.JFormattedTextField();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        date_create = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         find = new javax.swing.JButton();
         modify = new javax.swing.JButton();
+        usr_count = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addComponentListener(new java.awt.event.ComponentAdapter() {
@@ -101,15 +101,9 @@ public class MLD extends javax.swing.JFrame {
             }
         });
 
-        num_usr.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                num_usrKeyTyped(evt);
-            }
-        });
-
         jLabel2.setText("Nombre Lista");
 
-        jLabel3.setText("Número Usuario");
+        date_create.setText("Fecha Creación: ");
 
         jLabel4.setText("Descripción");
 
@@ -127,6 +121,8 @@ public class MLD extends javax.swing.JFrame {
             }
         });
 
+        usr_count.setText("Número Usuario: ");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -141,29 +137,27 @@ public class MLD extends javax.swing.JFrame {
                             .addComponent(find, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(lbl_user, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel2)
-                                    .addGap(44, 44, 44)
-                                    .addComponent(list_txt, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(lbl_Date, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(status)
+                            .addGap(249, 249, 249)
+                            .addComponent(delete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGroup(layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel4)
-                                    .addGap(37, 37, 37))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addComponent(jLabel3)
-                                    .addGap(25, 25, 25)))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(num_usr, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(description, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(status, javax.swing.GroupLayout.Alignment.LEADING))
-                            .addGap(56, 56, 56)
-                            .addComponent(delete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(lbl_user, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel2))
+                                    .addGap(174, 174, 174)
+                                    .addComponent(lbl_Date, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(usr_count, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(date_create, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addComponent(jLabel4)
+                                        .addGap(62, 62, 62)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(description, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(list_txt, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addGap(0, 0, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -173,19 +167,19 @@ public class MLD extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lbl_user, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(list_txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2))
+                        .addGap(30, 30, 30)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(list_txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(description, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4))
+                        .addGap(29, 29, 29)
+                        .addComponent(usr_count)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(date_create)
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(num_usr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3))
-                        .addGap(22, 22, 22)
                         .addComponent(status)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -242,30 +236,31 @@ public class MLD extends javax.swing.JFrame {
     private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
         if (!(list_txt.getText().equals(""))) {
             int status = 0;
-            if (this.status.isSelected()) {
-                status = 1;
-            }        
+            if (this.status.isSelected()){  status = 1;   }  
+            
             String key = list_txt.getText() + Data.Instance().user.getNombre();
-            String[] MLD_values = {
-                list_txt.getText(),
-                description.getText(),
-                Integer.toString(status)
-            };
-            //FileHandling manejo = new FileHandling();
-            //String usr = manejo.Get_ListMLD(key);
+            
+            FileHandling manejo = new FileHandling();
+            String usr = manejo.Get_ListMLD(key);
             try{
-                //String[] values_usr = usr.split(Pattern.quote("|"));
+                String[] values_usr = usr.split(Pattern.quote("|"));
+                list_txt.setText(values_usr[1]);
+                description.setText(values_usr[3]);
+                usr_count.setText(values_usr[4]);
+                date_create.setText(values_usr[5]);
+                if (values_usr[6] == "1") {
+                    this.status.setSelected(true);
+                }
+                else{
+                    this.status.setSelected(false);
+                }
             }
             catch(Exception  e){
                 showMessageDialog(null, "No se encuentran valores con llave " + key + "\n" + e.getMessage());
             }
-
-            String full_Data = Arrays.toString(MLD_values);
-            showMessageDialog(null, full_Data.replace("[", "").replace("]", ""));
-            showMessageDialog(null, "Llave: " + key);
         }
         else{
-        showMessageDialog(null, "Ingrese nombre de la lista");
+            showMessageDialog(null, "Ingrese nombre de la lista");
         }
     }//GEN-LAST:event_deleteActionPerformed
 
@@ -278,19 +273,26 @@ public class MLD extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_statusActionPerformed
 
-    private void num_usrKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_num_usrKeyTyped
-        char number = evt.getKeyChar();
-        if (!(Character.isDigit(number))) {
-            evt.consume();
-        }
-    }//GEN-LAST:event_num_usrKeyTyped
-
     private void findActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_findActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_findActionPerformed
 
     private void modifyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modifyActionPerformed
-        // TODO add your handling code here:
+        int status = 0;
+        if (this.status.isSelected()){  status = 1;   }  
+        
+        String key = list_txt.getText() + Data.Instance().user.getNombre();    
+        Date date = Calendar.getInstance().getTime();  
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");  
+        String strDate = dateFormat.format(date);  
+        String[] MLD_values = {
+            key,    
+            list_txt.getText(),
+            Data.Instance().user.getNombre(),
+            description.getText(),
+            strDate,
+            Integer.toString(status)
+        };
     }//GEN-LAST:event_modifyActionPerformed
 
     /**
@@ -329,17 +331,17 @@ public class MLD extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel date_create;
     private javax.swing.JButton delete;
     private javax.swing.JTextField description;
     private javax.swing.JButton find;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel lbl_Date;
     private javax.swing.JLabel lbl_user;
     private javax.swing.JTextField list_txt;
     private javax.swing.JButton modify;
-    private javax.swing.JFormattedTextField num_usr;
     private javax.swing.JRadioButton status;
+    private javax.swing.JLabel usr_count;
     // End of variables declaration//GEN-END:variables
 }
