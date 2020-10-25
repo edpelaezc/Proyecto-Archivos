@@ -124,10 +124,8 @@ public class FileHandling {
      * @param newLine
      * @param ruta
      */
-    private void Remove_Line(String lineToRemove, String newLine, String ruta) {
-
+    public void Remove_Line(String lineToRemove, String newLine, String ruta) {
         try {
-
             File inFile = new File(ruta);
             String nombre = inFile.getAbsolutePath();
             File tempFile = new File(nombre + ".tmp");

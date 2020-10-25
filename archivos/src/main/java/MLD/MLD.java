@@ -272,11 +272,11 @@ public class MLD extends javax.swing.JFrame {
             FileHandling manejo = new FileHandling();
             String usr = manejo.Get_ListMLD(key);
             try{
-                String[] values_usr = usr.split(Pattern.quote(Pattern.quote("|")));
+                String[] values_usr = usr.split(Pattern.quote("|"));
                 if (values_usr[0].equals(key)) {
-                    String[] new_Line = {};
+                    String new_Line = "";
                     String ruta = "C:\\MEIA\\lista.txt";
-                    manejo.Write_Text(values_usr, new_Line, ruta);
+                    manejo.Remove_Line(usr, new_Line, ruta);
                     showMessageDialog(null, "Lista " + values_usr[1] + " eliminada correctamente");
                 }
                 else{
@@ -431,10 +431,8 @@ public class MLD extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MLD().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new MLD().setVisible(true);
         });
     }
     public void Modify_List(String key, int status, String new_usr){
