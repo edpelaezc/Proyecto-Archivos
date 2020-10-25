@@ -24,6 +24,29 @@ public class FileHandling {
     File bitacora_usuario = new File("C:\\MEIA\\bitacora_usuario.txt");
     File desc_bitacora_usuario = new File("C:\\MEIA\\desc_bitacora_usuario.txt");
    
+    public void Write_MLD(String line){
+        File Mantenimiento_listas_Distribuidas = new File("C://MEIA//lista.txt");
+        if (Mantenimiento_listas_Distribuidas.exists()) {
+            BufferedWriter bw;
+            try {
+                bw = new BufferedWriter(new FileWriter(Mantenimiento_listas_Distribuidas));
+                bw.write(line);
+                bw.close();
+            } catch (IOException ex) {
+                Logger.getLogger(FileHandling.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else{
+            BufferedWriter bw;
+            try {
+                bw = new BufferedWriter(new FileWriter(Mantenimiento_listas_Distribuidas));
+                bw.write(line);
+                bw.close();
+            } catch (IOException ex) {
+                Logger.getLogger(FileHandling.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
     
     
     public String Get_ListMLD(String key){
@@ -41,7 +64,6 @@ public class FileHandling {
             }
         }
         myReader.close();
-        return line;
         } catch (FileNotFoundException ex) {
             Logger.getLogger(FileHandling.class.getName()).log(Level.SEVERE, null, ex);
         }

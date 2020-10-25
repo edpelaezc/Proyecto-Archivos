@@ -10,15 +10,10 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import Data.Data;
-import java.sql.Array;
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.regex.Pattern;
 import static javax.swing.JOptionPane.showMessageDialog;
 
@@ -59,6 +54,7 @@ public class MLD extends javax.swing.JFrame {
         usr_count = new javax.swing.JLabel();
         usr_txt = new javax.swing.JTextField();
         Usuario = new javax.swing.JLabel();
+        Create = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addComponentListener(new java.awt.event.ComponentAdapter() {
@@ -141,6 +137,13 @@ public class MLD extends javax.swing.JFrame {
 
         Usuario.setText("Usuario");
 
+        Create.setText("Crear");
+        Create.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CreateActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -175,7 +178,8 @@ public class MLD extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(modify, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(find, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(delete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(delete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(Create, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -200,16 +204,21 @@ public class MLD extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(usr_count)
                         .addGap(18, 18, 18)
-                        .addComponent(date_create)
+                        .addComponent(date_create))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lbl_Date, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(155, 155, 155)
+                        .addComponent(delete)
                         .addGap(18, 18, 18)
+                        .addComponent(modify)))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(status)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(lbl_Date, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
-                        .addGap(197, 197, 197)
-                        .addComponent(delete)
-                        .addGap(18, 18, 18)
-                        .addComponent(modify)
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(Create)
                         .addGap(18, 18, 18)
                         .addComponent(find)))
                 .addContainerGap())
@@ -251,7 +260,7 @@ public class MLD extends javax.swing.JFrame {
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");  
         String strDate = dateFormat.format(date);  
         lbl_Date.setText("Fecha: " + strDate);
-        lbl_user.setText(Data.Instance().user.getNombre());
+        lbl_user.setText("Kevin");
     }//GEN-LAST:event_formComponentShown
 
     private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
@@ -259,7 +268,7 @@ public class MLD extends javax.swing.JFrame {
             int status = 0;
             if (this.status.isSelected()){  status = 1;   }  
             
-            String key = list_txt.getText() + Data.Instance().user.getNombre();
+            String key = list_txt.getText() + "Kevin";
             FileHandling manejo = new FileHandling();
             String usr = manejo.Get_ListMLD(key);
             try{
@@ -292,9 +301,9 @@ public class MLD extends javax.swing.JFrame {
     }//GEN-LAST:event_statusActionPerformed
 
     private void findActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_findActionPerformed
-        String key = list_txt.getText() + Data.Instance().user.getNombre(); 
         if (!(list_txt.getText().equals(""))) {
             FileHandling manejo = new FileHandling();
+            String key = list_txt.getText() + "Kevin";
             String usr = manejo.Get_ListMLD(key);
             try{
                 String[] values_usr = usr.split(Pattern.quote("|"));
@@ -309,8 +318,8 @@ public class MLD extends javax.swing.JFrame {
                 else{
                     this.status.setSelected(false);
                 }
-                this.delete.enable(true);
-                this.modify.enable(true);
+                delete.setEnabled(true);
+                modify.setEnabled(true);
             }catch(Exception e){
                 showMessageDialog(null, "No se han agregado listas previas.");
             }
@@ -324,7 +333,7 @@ public class MLD extends javax.swing.JFrame {
     private void modifyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modifyActionPerformed
         int status = 0;
         if (this.status.isSelected()){  status = 1;   }   
-        String key = list_txt.getText() + Data.Instance().user.getNombre(); 
+        String key = list_txt.getText() + "Kevin"; 
         if (!(list_txt.getText().equals(""))) {
             FileHandling manejo = new FileHandling();
             String usr = manejo.Get_ListMLD(key);
@@ -339,7 +348,7 @@ public class MLD extends javax.swing.JFrame {
                 String[] new_Line = {
                     key,
                     list_txt.getText(),
-                    Data.Instance().user.getNombre(),
+                    usr_txt.getText(),
                     description.getText(),
                     new_count,
                     strDate,
@@ -365,6 +374,49 @@ public class MLD extends javax.swing.JFrame {
     private void usr_txtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usr_txtActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_usr_txtActionPerformed
+
+    private void CreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreateActionPerformed
+        String key = list_txt.getText() + "Kevin"; 
+        int status = 0;
+        if (this.status.isSelected()){  status = 1;   }
+        
+        if (!(list_txt.getText().equals("")) && !(description.getText().equals("")) && !(usr_txt.getText().equals(""))) {
+            
+            Date date = Calendar.getInstance().getTime();  
+            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");  
+            String strDate = dateFormat.format(date);
+            String[] list_values = {
+                key,
+                list_txt.getText(),
+                usr_txt.getText(),
+                description.getText(),
+                "0",
+                strDate,
+                Integer.toString(status)
+            
+            };
+            String line = Arrays.toString(list_values).replace("[", "").replace("]", "");
+            line = line.replace(",", "|").replace(" ", "");
+            FileHandling manejo = new FileHandling();
+            manejo.Write_MLD(line);
+            showMessageDialog(null,
+                    "Lista: " + list_txt.getText() +" creada!"
+                    + "\nNombre Lista: " + list_values[1] 
+                    + "\nUsuario: " + list_values[2] 
+                    + "\nDescripción: " + list_values[3]
+                    + "\nCantidad Usuarios: " + list_values[4]
+                    + "\nFecha Creación: " + list_values[5]
+                    + "\nStatus: " + list_values[6]
+            );
+            
+        }
+        else{
+            showMessageDialog(null, "Por favor llene todos los campos");
+        }
+        
+
+
+    }//GEN-LAST:event_CreateActionPerformed
 
     /**
      * @param args the command line arguments
@@ -402,6 +454,7 @@ public class MLD extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Create;
     private javax.swing.JLabel Usuario;
     private javax.swing.JLabel date_create;
     private javax.swing.JButton delete;
