@@ -25,6 +25,13 @@ public class FileHandling {
     
     }
     
+    public String Get_ListMLD(String key){
+        String line = "";
+        
+        
+        return line;
+    }
+    
     public String[] Read_Text(String ruta, String usuario) {
         String[] txt = {};
         try {
