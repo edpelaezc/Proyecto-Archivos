@@ -59,8 +59,6 @@ public class FileHandling {
             String data = myReader.nextLine();
             if (data.startsWith(key)) {
                 line = data;
-                myReader.close();
-                return line;
             }
         }
         myReader.close();

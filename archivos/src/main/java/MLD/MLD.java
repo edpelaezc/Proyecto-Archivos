@@ -276,7 +276,7 @@ public class MLD extends javax.swing.JFrame {
                 if (values_usr[0].equals(key)) {
                     String new_Line = "";
                     String ruta = "C:\\MEIA\\lista.txt";
-                    while(usr != ""){
+                    while(!"".equals(usr)){
                         manejo.Remove_Line(usr, new_Line, ruta);
                         usr = manejo.Get_ListMLD(key);
                     }
@@ -309,6 +309,7 @@ public class MLD extends javax.swing.JFrame {
             FileHandling manejo = new FileHandling();
             String key = list_txt.getText() + "Kevin";
             String usr = manejo.Get_ListMLD(key);
+            
             try{
                 String[] values_usr = usr.split(Pattern.quote("|"));
                 list_txt.setText(values_usr[1]);
