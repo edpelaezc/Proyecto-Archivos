@@ -28,10 +28,62 @@ public class ListaUsuario {
         if (registro != null) {
             escribirBloque(key, descripcion);
             escribirIndice(key);
+            
+            ArrayList desc = ReadFile(bloque);
+            if (desc.size() % maximo == 0) {
+                eliminarFisicamente();
+            }
             return true;
         }
         else {
             return false;
+        }
+    }
+    
+    private void eliminarFisicamente(){
+        ArrayList bloq = ReadFile(bloque);
+        ArrayList index = ReadFile(indice);
+        
+        ArrayList newBloq = new ArrayList<String>();
+        for (int i = 0; i < bloq.size(); i++) {
+            String[] registro = bloq.get(i).toString().split("|");
+            if (registro[3] == "1") {
+                newBloq.add(bloq.get(i));
+            }
+        }
+        
+        ArrayList newIndex = new ArrayList<String>();
+        for (int i = 0; i < index.size(); i++) {
+            String[] registro = index.get(i).toString().split("|");
+            if (registro[4] == "1") {
+                newIndex.add(index.get(i));
+            }
+        }
+        
+        try {
+            if (bloque.delete()) {
+                bloque.createNewFile();
+                
+                // modificar archivo
+                PrintWriter pw = new PrintWriter(bloque);
+                for (int i = 0; i < newBloq.size(); i++) {
+                    pw.println(newBloq.get(i).toString());
+                }
+                pw.close();
+            }
+            
+            if (indice.delete()) {
+                indice.createNewFile();
+                
+                // modificar archivo
+                PrintWriter pw = new PrintWriter(indice);
+                for (int i = 0; i < newIndex.size(); i++) {
+                    pw.println(newIndex.get(i).toString());
+                }
+                pw.close();
+            }
+        } catch (IOException e){
+            e.printStackTrace();
         }
     }
     
@@ -81,7 +133,6 @@ public class ListaUsuario {
     
     public Boolean modificar(String key, String descripcion){
         // leer archivos
-        ArrayList listIndice = ReadFile(indice);
         ArrayList listBloque = ReadFile(bloque);
         
         String[] registro = buscarRegistroEnBloque(listBloque, key);
