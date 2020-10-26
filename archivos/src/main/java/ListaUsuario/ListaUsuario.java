@@ -56,7 +56,7 @@ public class ListaUsuario {
         ArrayList newBloq = new ArrayList<String>();
         for (int i = 0; i < bloq.size(); i++) {
             String[] registro = bloq.get(i).toString().split("\\|");
-            if (registro[3] == "1") {
+            if (registro[3].equals("1")) {
                 newBloq.add(bloq.get(i));
             }
         }
@@ -64,7 +64,7 @@ public class ListaUsuario {
         ArrayList newIndex = new ArrayList<String>();
         for (int i = 0; i < index.size(); i++) {
             String[] registro = index.get(i).toString().split("\\|");
-            if (registro[4] == "1") {
+            if (registro[4].equals("1")) {
                 newIndex.add(index.get(i));
             }
         }
@@ -74,22 +74,26 @@ public class ListaUsuario {
                 bloque.createNewFile();
                 
                 // modificar archivo
-                PrintWriter pw = new PrintWriter(bloque);
-                for (int i = 0; i < newBloq.size(); i++) {
-                    pw.println(newBloq.get(i).toString());
+                FileWriter writer = new FileWriter(bloque, false);
+                BufferedWriter bwriter = new BufferedWriter(writer);
+                for (int k = 0; k < newBloq.size(); k++) {
+                    bwriter.write(newBloq.get(k).toString() + "\n");
                 }
-                pw.close();
+                bwriter.close();
+                writer.close();
             }
             
             if (indice.delete()) {
                 indice.createNewFile();
                 
                 // modificar archivo
-                PrintWriter pw = new PrintWriter(indice);
-                for (int i = 0; i < newIndex.size(); i++) {
-                    pw.println(newIndex.get(i).toString());
+                FileWriter writer = new FileWriter(indice, false);
+                BufferedWriter iwriter = new BufferedWriter(writer);
+                for (int k = 0; k < newIndex.size(); k++) {
+                    iwriter.write(newIndex.get(k).toString() + "\n");
                 }
-                pw.close();
+                iwriter.close();
+                writer.close();
             }
         } catch (IOException e){
             e.printStackTrace();
