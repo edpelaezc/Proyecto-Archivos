@@ -13,6 +13,7 @@ import Backup.BackupManagement;
 import Contacts.AdminContactos;
 import Data.Data;
 import MLD.MLD;
+import ListaUsuario.Mantenimiento;
 import com.mycompany.archivos.Login;
 import com.mycompany.archivos.Registro;
 import java.awt.Image;
@@ -90,6 +91,7 @@ public class Admin extends javax.swing.JFrame {
         MLD = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         contactosButton = new javax.swing.JButton();
+        LU = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -228,6 +230,13 @@ public class Admin extends javax.swing.JFrame {
             }
         });
 
+        LU.setText("Lista usuario");
+        LU.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LUActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -293,7 +302,8 @@ public class Admin extends javax.swing.JFrame {
                                     .addComponent(backup, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE)
                                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE)
                                     .addComponent(MLD, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE)
-                                    .addComponent(contactosButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                    .addComponent(contactosButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(LU, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addGap(16, 16, 16))))
         );
         layout.setVerticalGroup(
@@ -345,6 +355,8 @@ public class Admin extends javax.swing.JFrame {
                             .addComponent(last_name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel8))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(LU)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(contactosButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(MLD)
@@ -585,6 +597,12 @@ public class Admin extends javax.swing.JFrame {
         contactos.setVisible(true);
     }//GEN-LAST:event_contactosButtonActionPerformed
 
+    private void LUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LUActionPerformed
+        // TODO add your handling code here:
+        Mantenimiento lista_usuarios = new Mantenimiento();
+        lista_usuarios.setEnabled(true);
+    }//GEN-LAST:event_LUActionPerformed
+
     private void setIcon(){
         ImageIcon img = new ImageIcon("C:\\MEIA\\Imagenes\\icon.jpg");
         this.setIconImage(img.getImage());    }
@@ -628,6 +646,7 @@ public class Admin extends javax.swing.JFrame {
     private javax.swing.JButton Administrar;
     private javax.swing.JRadioButton Baja;
     private javax.swing.JButton Boton_Baja;
+    private javax.swing.JButton LU;
     private javax.swing.JButton MLD;
     private javax.swing.JButton Nuevo_Usuario;
     private javax.swing.JLabel User_Name;

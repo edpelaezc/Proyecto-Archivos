@@ -99,6 +99,7 @@
                                   <Component id="jButton1" alignment="0" pref="106" max="32767" attributes="0"/>
                                   <Component id="MLD" alignment="0" pref="106" max="32767" attributes="0"/>
                                   <Component id="contactosButton" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="LU" alignment="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -170,6 +171,8 @@
                           <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
+                      <Component id="LU" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="contactosButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="MLD" min="-2" max="-2" attributes="0"/>
@@ -373,6 +376,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="contactosButtonActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="LU">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Lista usuario"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="LUActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>
