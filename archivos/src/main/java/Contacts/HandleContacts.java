@@ -263,8 +263,8 @@ public class HandleContacts {
         ArrayList<String> aux_usuario = ReadFile(usuario);
         ArrayList<String> l_bitacora_usuario = ReadFile(bitacora_usuario);
         ArrayList<String> ct = ReadFile(contactos);
-        ArrayList<String> bt = ReadFile(bitacora_contactos);        
-        
+        ArrayList<String> bt = ReadFile(bitacora_contactos);
+
         // para agregar
         for (var object : aux_usuario) {
             if (object.contains(searchString)) {
@@ -277,8 +277,8 @@ public class HandleContacts {
                 return createUsuario(object);
             }
         }
-        
-        for (var object: ct) {
+
+        for (var object : ct) {
             String[] fields = object.split("\\|");
             if (fields[1].contains(searchString)) {
                 for (var item : aux_usuario) {
@@ -286,15 +286,15 @@ public class HandleContacts {
                 }
             }
         }
-        
-        for (var object: bt) {
+
+        for (var object : bt) {
             String[] fields = object.split("\\|");
             if (fields[1].contains(searchString)) {
                 for (var item : l_bitacora_usuario) {
                     return createUsuario(item);
                 }
             }
-        }        
+        }
 
         return null;
     }
@@ -342,6 +342,10 @@ public class HandleContacts {
             }
         }
 
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+        String fecha = dtf.format(now);
+
         // eliminar registro de bitacora
         if (bita) {
             try {
@@ -349,35 +353,57 @@ public class HandleContacts {
                 PrintWriter userWriter = new PrintWriter(bitacora_contactos);
                 for (int i = 0; i < bitacora.size(); i++) {
                     if (bitacora.get(i).toString() != match) {
-                        userWriter.println(bitacora.get(i).toString());   
-                    }                  
+                        userWriter.println(bitacora.get(i).toString());
+                    }
                 }
                 userWriter.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            
+
             return true;
-            
+
         } else if (maestro) {
+
+            ArrayList desc = ReadFile(desc_contactos);
+            String[] aux;
+
+            //actualizar campos
+            desc.set(3, "fecha_modificacion: " + fecha);
+
+            // actualizar usuario modificacion
+            desc.set(4, "usuario_modificacion: " + usuario);
+
+            // actualizar conteo
+            aux = desc.get(5).toString().split(" ");
+            aux[1] = String.valueOf(Integer.parseInt(aux[1]) - 1);
+            desc.set(5, aux[0] + " " + aux[1]); // numero de registros   
+
             try {
+                // descriptor contactos
+                PrintWriter descWriter = new PrintWriter(desc_contactos);
+                for (int i = 0; i < 8; i++) {
+                    descWriter.println(desc.get(i).toString());
+                }
+                descWriter.close();
+
                 // escribir usuario ordenados por su clave única
                 PrintWriter userWriter = new PrintWriter(contactos);
                 for (int i = 0; i < aux_contactos.size(); i++) {
                     if (aux_contactos.get(i).toString() != match) {
-                        userWriter.println(aux_contactos.get(i).toString());                        
-                    }                   
+                        userWriter.println(aux_contactos.get(i).toString());
+                    }
                 }
                 userWriter.close();
             } catch (IOException e) {
                 e.printStackTrace();
-            }            
-            
+            }
+
             return true;
-            
+
         } else {
             return false;
-        }       
+        }
     }
 
 }
