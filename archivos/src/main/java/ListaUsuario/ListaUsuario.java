@@ -461,8 +461,6 @@ public class ListaUsuario {
                 String[] registro = buscarRegistroEnLista(lista, nReg);
                 String registroInicial = registro[0];
 
-                FileWriter writer = new FileWriter(indice, true);
-
                 // buscar su posicion
                 ArrayList index = ReadFile(indice);
                 Boolean encontrado = false;
@@ -497,9 +495,12 @@ public class ListaUsuario {
                         }
 
                         // modificar archivo
-                        PrintWriter indexWriter = new PrintWriter(writer);
+                        indice.delete();
+                        indice.createNewFile();
+                        FileWriter writer = new FileWriter(indice, false);
+                        BufferedWriter indexWriter = new BufferedWriter(writer);
                         for (int k = 0; k < index.size(); k++) {
-                            indexWriter.println(desc.get(k).toString());
+                            indexWriter.write(index.get(k).toString());
                         }
                         indexWriter.close();
 
@@ -513,11 +514,7 @@ public class ListaUsuario {
                         Integer sig = Integer.parseInt(registro[3]);
                         registro = buscarRegistroEnLista(lista, sig);
                     }
-                    else{
-                        // la llave ya existe
-                    }
-
-
+                    
                     escribirDescIndice(usuario, registroInicial);
                 }
             }
