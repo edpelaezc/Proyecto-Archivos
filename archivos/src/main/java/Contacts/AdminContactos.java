@@ -4,6 +4,11 @@
  * and open the template in the editor.
  */
 package Contacts;
+import Data.Data;
+import Access.Usuario;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -11,6 +16,9 @@ package Contacts;
  */
 public class AdminContactos extends javax.swing.JFrame {
 
+    
+    HandleContacts handler = new HandleContacts();
+    Usuario aux = null;
     /**
      * Creates new form AdminContactos
      */
@@ -27,21 +35,175 @@ public class AdminContactos extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        buscarTField = new javax.swing.JTextField();
+        buscarButton = new javax.swing.JButton();
+        usernameTField = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        Nombre = new javax.swing.JLabel();
+        nombreTField = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        apellidoTField = new javax.swing.JTextField();
+        eliminarButton = new javax.swing.JButton();
+        agregarButton = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabel1.setText("CONTACTOS");
+
+        jLabel2.setText("Usuario");
+
+        buscarButton.setText("Buscar");
+        buscarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscarButtonActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText("Username");
+
+        Nombre.setText("Nombre");
+
+        jLabel4.setText("Apellido");
+
+        eliminarButton.setText("Eliminar");
+        eliminarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eliminarButtonActionPerformed(evt);
+            }
+        });
+
+        agregarButton.setText("Agregar");
+        agregarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                agregarButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(agregarButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(eliminarButton))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(27, 27, 27)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel2)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(buscarTField, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jLabel3)
+                                                .addGap(18, 18, 18))
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                .addComponent(Nombre)
+                                                .addGap(34, 34, 34)))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                            .addComponent(jLabel4)
+                                            .addGap(34, 34, 34)))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(usernameTField)
+                                        .addComponent(nombreTField)
+                                        .addComponent(apellidoTField))))
+                            .addGap(18, 18, 18)
+                            .addComponent(buscarButton))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(147, 147, 147)
+                            .addComponent(jLabel1))))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addComponent(jLabel1)
+                .addGap(30, 30, 30)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(buscarTField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buscarButton))
+                .addGap(40, 40, 40)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(usernameTField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Nombre)
+                    .addComponent(nombreTField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(apellidoTField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(eliminarButton)
+                    .addComponent(agregarButton))
+                .addGap(34, 34, 34))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void buscarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarButtonActionPerformed
+        // TODO add your handling code here:       
+        aux = handler.search(buscarTField.getText());
+        
+        if (aux != null && (aux.getUsuario() != Data.Instance().user.getUsuario())) {
+            // llenar campos
+            usernameTField.setText(aux.getUsuario());
+            nombreTField.setText(aux.getNombre());
+            apellidoTField.setText(aux.getApellido());            
+        } else {
+            if (aux == null) {
+                JOptionPane.showMessageDialog(null, "EL USUARIO NO EXISTE");                                
+            } else {
+                JOptionPane.showMessageDialog(null, "NO PUEDE AGREGARSE A USTED MISMO");                                
+            }
+        }
+    }//GEN-LAST:event_buscarButtonActionPerformed
+
+    private void agregarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarButtonActionPerformed
+        // TODO add your handling code here:
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+        String fecha = dtf.format(now);
+        
+        if (handler.uniqueKey(Data.Instance().user.getUsuario(), aux.getUsuario())) {
+            handler.writeContact(new Contacto(
+                    Data.Instance().user.getUsuario(), 
+                    aux.getUsuario(),
+                    fecha, 
+                    Data.Instance().user.getUsuario(), 
+                    1)
+            );
+            JOptionPane.showMessageDialog(null, "CONTACTO AGREGADO");     
+            usernameTField.setText("");
+            nombreTField.setText("");
+            apellidoTField.setText("");
+        } else {
+            JOptionPane.showMessageDialog(null, "ESTE CONTACTO YA EXISTE");                                        
+        }
+    }//GEN-LAST:event_agregarButtonActionPerformed
+
+    private void eliminarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarButtonActionPerformed
+        // TODO add your handling code here:
+        if (handler.removeContact(Data.Instance().user.getUsuario(), aux.getUsuario())) {
+            JOptionPane.showMessageDialog(null, "CONTACTO ELIMINADO");                                        
+        } else {
+            JOptionPane.showMessageDialog(null, "NO EXISTE EL CONTACTO");                                        
+        }
+    }//GEN-LAST:event_eliminarButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -79,5 +241,17 @@ public class AdminContactos extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Nombre;
+    private javax.swing.JButton agregarButton;
+    private javax.swing.JTextField apellidoTField;
+    private javax.swing.JButton buscarButton;
+    private javax.swing.JTextField buscarTField;
+    private javax.swing.JButton eliminarButton;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JTextField nombreTField;
+    private javax.swing.JTextField usernameTField;
     // End of variables declaration//GEN-END:variables
 }

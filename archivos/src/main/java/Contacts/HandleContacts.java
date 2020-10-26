@@ -1,16 +1,18 @@
 package Contacts;
 
+import Contacts.AdminContactos;
 
 import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
-
+import Access.HandleFiles;
 import Access.Usuario;
 import Contacts.Contacto;
 
 public class HandleContacts {
+
     File contactos = new File("C:\\MEIA\\contactos.txt");
     File desc_contactos = new File("C:\\MEIA\\desc_contactos.txt");
     File bitacora_contactos = new File("C:\\MEIA\\bitacora_contactos.txt");
@@ -129,7 +131,7 @@ public class HandleContacts {
 
                 } else {
                     // insertar en usuario todo lo que hay en bitácora
-                    HandleUsuario(contacto.getUsuario(), fecha);
+                    HandleUsuario(contacto, fecha);
 
                     // insertar en bitácora el nuevo
                     PrintWriter writer = new PrintWriter(bitacora_contactos);
@@ -169,7 +171,7 @@ public class HandleContacts {
         );
     }
 
-    private void HandleUsuario(String username, String fecha) {
+    private void HandleUsuario(Contacto contacto, String fecha) {
 
         ArrayList bitacora = ReadFile(bitacora_contactos); // usuarios en bitacora
         ArrayList aux_usuario = ReadFile(contactos); // usuarios en usuario.txt
@@ -194,9 +196,9 @@ public class HandleContacts {
                 PrintWriter descWriter = new PrintWriter(desc_contactos);
                 descWriter.print("nombre_simbolico: contactos\n"
                         + "fecha_creacion: " + fecha + "\n"
-                        + "usuario_creacion: " + username + "\n"
+                        + "usuario_creacion: " + contacto.getUsuario() + "\n"
                         + "fecha_modificacion: " + fecha + "\n"
-                        + "usuario_modificacion: " + username + "\n"
+                        + "usuario_modificacion: " + contacto.getUsuario() + "\n"
                         + "#_registros: " + maximo + "\n"
                         + "registros_activos:" + maximo + "\n"
                         + "registros_inactivos: 0\n");
@@ -209,7 +211,7 @@ public class HandleContacts {
                 desc.set(3, "fecha_modificacion: " + fecha);
 
                 // actualizar usuario modificacion
-                desc.set(4, "usuario_modificacion: " + username);
+                desc.set(4, "usuario_modificacion: " + contacto.getUsuario());
 
                 // actualizar conteo
                 aux = desc.get(5).toString().split(" ");
@@ -254,5 +256,128 @@ public class HandleContacts {
         return true;
     }
 
+    public Usuario search(String searchString) {
+
+        File usuario = new File("C:\\MEIA\\usuario.txt");
+        File bitacora_usuario = new File("C:\\MEIA\\bitacora_usuario.txt");
+        ArrayList<String> aux_usuario = ReadFile(usuario);
+        ArrayList<String> l_bitacora_usuario = ReadFile(bitacora_usuario);
+        ArrayList<String> ct = ReadFile(contactos);
+        ArrayList<String> bt = ReadFile(bitacora_contactos);        
+        
+        // para agregar
+        for (var object : aux_usuario) {
+            if (object.contains(searchString)) {
+                return createUsuario(object);
+            }
+        }
+
+        for (var object : l_bitacora_usuario) {
+            if (object.contains(searchString)) {
+                return createUsuario(object);
+            }
+        }
+        
+        for (var object: ct) {
+            String[] fields = object.split("\\|");
+            if (fields[1].contains(searchString)) {
+                for (var item : aux_usuario) {
+                    return createUsuario(item);
+                }
+            }
+        }
+        
+        for (var object: bt) {
+            String[] fields = object.split("\\|");
+            if (fields[1].contains(searchString)) {
+                for (var item : l_bitacora_usuario) {
+                    return createUsuario(item);
+                }
+            }
+        }        
+
+        return null;
+    }
+
+    private Usuario createUsuario(String line) {
+        String[] fields = line.split("\\|");
+        return new Usuario(
+                fields[0],
+                fields[1],
+                fields[2],
+                fields[3],
+                Integer.parseInt(fields[4]),
+                fields[5],
+                fields[6],
+                fields[7],
+                fields[8],
+                Integer.parseInt(fields[9])
+        );
+    }
+
+    public void writeContact(Contacto input) {
+        HandleBitacora(input);
+    }
+
+    public boolean removeContact(String usuario, String contacto) {
+        ArrayList bitacora = ReadFile(bitacora_contactos); // usuarios en bitacora
+        ArrayList aux_contactos = ReadFile(contactos); // usuarios en usuario.txt        
+        boolean bita = false;
+        boolean maestro = false;
+        String match = "";
+
+        // usuarios en bitacora
+        for (var item : bitacora) {
+            if (item.toString().contains(usuario) && item.toString().contains(contacto)) {
+                match = item.toString();
+                bita = true;
+            }
+        }
+
+        // usuarios en maestro
+        for (var item : aux_contactos) {
+            if (item.toString().contains(usuario) && item.toString().contains(contacto)) {
+                match = item.toString();
+                maestro = true;
+            }
+        }
+
+        // eliminar registro de bitacora
+        if (bita) {
+            try {
+                // escribir usuario ordenados por su clave única
+                PrintWriter userWriter = new PrintWriter(bitacora_contactos);
+                for (int i = 0; i < bitacora.size(); i++) {
+                    if (bitacora.get(i).toString() != match) {
+                        userWriter.println(bitacora.get(i).toString());   
+                    }                  
+                }
+                userWriter.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            
+            return true;
+            
+        } else if (maestro) {
+            try {
+                // escribir usuario ordenados por su clave única
+                PrintWriter userWriter = new PrintWriter(contactos);
+                for (int i = 0; i < aux_contactos.size(); i++) {
+                    if (aux_contactos.get(i).toString() != match) {
+                        userWriter.println(aux_contactos.get(i).toString());                        
+                    }                   
+                }
+                userWriter.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }            
+            
+            return true;
+            
+        } else {
+            return false;
+        }       
+    }
 
 }
