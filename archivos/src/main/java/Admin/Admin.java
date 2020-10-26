@@ -560,12 +560,13 @@ public class Admin extends javax.swing.JFrame {
 
     private void MLDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MLDActionPerformed
         MLD mld = new MLD();
-        mld.show();
+        mld.setEnabled(true);
     }//GEN-LAST:event_MLDActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         Login login = new Login();
-        login.show();
+        login.setEnabled(true);
+        this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void setIcon(){
