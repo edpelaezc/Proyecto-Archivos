@@ -200,7 +200,7 @@ public class HandleContacts {
                         + "fecha_modificacion: " + fecha + "\n"
                         + "usuario_modificacion: " + contacto.getUsuario() + "\n"
                         + "#_registros: " + maximo + "\n"
-                        + "registros_activos:" + maximo + "\n"
+                        + "registros_activos: " + maximo + "\n"
                         + "registros_inactivos: 0\n");
                 descWriter.close();
             } else {
@@ -217,6 +217,11 @@ public class HandleContacts {
                 aux = desc.get(5).toString().split(" ");
                 aux[1] = String.valueOf(Integer.parseInt(aux[1]) + maximo);
                 desc.set(5, aux[0] + " " + aux[1]); // numero de registros
+                
+                // actualizar conteo
+                aux = desc.get(6).toString().split(" ");
+                aux[1] = String.valueOf(Integer.parseInt(aux[1]) + maximo);
+                desc.set(6, aux[0] + " " + aux[1]); // numero de registros                
 
                 PrintWriter descWriter = new PrintWriter(desc_contactos);
                 for (int i = 0; i < 8; i++) {
@@ -373,7 +378,7 @@ public class HandleContacts {
                 
                 // descriptor contactos
                 PrintWriter descWriter = new PrintWriter(desc_bitacora_contactos);
-                for (int i = 0; i < 8; i++) {
+                for (int i = 0; i < 9; i++) {
                     descWriter.println(desc.get(i).toString());
                 }
                 descWriter.close();
