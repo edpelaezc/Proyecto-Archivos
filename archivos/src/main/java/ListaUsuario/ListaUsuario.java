@@ -198,7 +198,7 @@ public class ListaUsuario {
                 indWriter.print("1|1.1|" + key + "|0|1");
                 indWriter.close();
                 
-                escribirDescIndice(usuario);
+                escribirDescIndice(usuario, "1");
             } else {
 
                 // Leer
@@ -212,7 +212,7 @@ public class ListaUsuario {
                 }
                 
                 String[] campos = lista.get(lista.size() - 1).toString().split("|");
-                int lastReg = Integer.parseInt(campos[0]);
+                Integer lastReg = Integer.parseInt(campos[0]);
                 lastReg++;
                 
                 // buscar cuál es el índice del registro inicial
@@ -226,9 +226,10 @@ public class ListaUsuario {
                 FileWriter writer = new FileWriter(indice, true);
                 BufferedWriter bw = new BufferedWriter(writer);
                 
+                String registroInicial = registro[0];
                 // buscar su posicion
                 Boolean encontrado = false;
-                
+                Integer count = 0;
                 while(!encontrado){
                     if (key.compareTo(registro[2]) < 0) {
                         encontrado = true;
@@ -240,9 +241,13 @@ public class ListaUsuario {
                         bw.close();
                         writer.close();
                         
-                        // cambiar registro inicial
+                        if (count == 0) {
+                            // cambiar registro inicial
+                            registroInicial = lastReg.toString();
+                        }
                     }
                     else if (key.compareTo(registro[2]) > 0){
+                        count++;
                         Integer sig = Integer.parseInt(registro[3]);
                         registro = buscarRegistroEnLista(lista, sig);
                     }
@@ -251,7 +256,7 @@ public class ListaUsuario {
                     }
                 }
                 
-                escribirDescIndice(usuario);
+                escribirDescIndice(usuario, registroInicial);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -283,33 +288,30 @@ public class ListaUsuario {
 
             // buscar registro inicial
             String[] registro = buscarRegistroEnLista(lista, nReg);
-
+            String registroInicial = registro[0];
+            
             FileWriter writer = new FileWriter(indice, true);
-            BufferedWriter bw = new BufferedWriter(writer);
 
             // buscar su posicion
             ArrayList index = ReadFile(indice);
             Boolean encontrado = false;
-
+            Integer count = 0;
             while(!encontrado){
                 if (key.compareTo(registro[2]) < 0) {
                     encontrado = true;
 
-                    String reg = "";
-                    for (int i = 0; i < registro.length; i++) {
-                        reg += registro[i];
-                    }
+                    String reg = registro[0]+registro[1]+registro[2]+registro[3]
+                            +registro[4];
                     int i = index.indexOf(reg);
                     
                     // eliminacion logica
                     registro[4] = "0";
-                    String newReg = "";
-                    for (int j = 0; j < registro.length; j++) {
-                        newReg += registro[j];
-                    }
+                    String newReg = registro[0]+registro[1]+registro[2]+registro[3]
+                            +registro[4];
                     String newSiguiente = registro[3];
+                    
                     // escribir
-                    index.set(i, reg);
+                    index.set(i, newReg);
                     
                     // cambiar orden
                     String nRegBorrado = registro[0];
@@ -318,12 +320,25 @@ public class ListaUsuario {
                         String[] regAnterior = index.get(i).toString().split("|");
                         if (regAnterior[3] == nRegBorrado && regAnterior[4] != "0") {
                             regAnterior[3] = newSiguiente;
+                            index.set(i, regAnterior[0]+regAnterior[1]
+                                    +regAnterior[2]+regAnterior[3]+regAnterior[4]);
                         }
                     }
                     
+                    // modificar archivo
+                    PrintWriter indexWriter = new PrintWriter(writer);
+                    for (int k = 0; k < index.size(); k++) {
+                        indexWriter.println(desc.get(k).toString());
+                    }
+                    indexWriter.close();
+                    
                     // cambiar registro inicial
+                    if (count == 0) {
+                        registroInicial = registro[3];
+                    }
                 }
                 else if (key.compareTo(registro[2]) > 0){
+                    count++;
                     Integer sig = Integer.parseInt(registro[3]);
                     registro = buscarRegistroEnLista(lista, sig);
                 }
@@ -332,7 +347,7 @@ public class ListaUsuario {
                 }
                 
                 
-                escribirDescIndice(usuario);
+                escribirDescIndice(usuario, registroInicial);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -419,7 +434,7 @@ public class ListaUsuario {
         
     }
     
-    private void escribirDescIndice(String usuario){
+    private void escribirDescIndice(String usuario, String regInicial){
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
         String fecha = dtf.format(now);
@@ -464,6 +479,7 @@ public class ListaUsuario {
                 desc.set(6, "registros_activos: " + activos);
                 desc.set(7, "registros_inactivos: " + inactivos);
                 
+                desc.set(9, "registro_inicial: " + regInicial);
                 // modificar archivo
                 PrintWriter descWriter = new PrintWriter(desc_bloque);
                 for (int i = 0; i < desc.size(); i++) {
