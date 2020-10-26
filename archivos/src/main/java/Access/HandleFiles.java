@@ -244,7 +244,12 @@ public class HandleFiles {
                 // actualizar conteo                
                 aux = desc.get(5).toString().split(" ");
                 aux[1] = String.valueOf(Integer.parseInt(aux[1]) + maximo);
-                desc.set(5, aux[0] + " " + aux[1]); // numero de registros                  
+                desc.set(5, aux[0] + " " + aux[1]); // numero de registros              
+                
+                // actualizar conteo                
+                aux = desc.get(6).toString().split(" ");
+                aux[1] = String.valueOf(Integer.parseInt(aux[1]) + maximo);
+                desc.set(6, aux[0] + " " + aux[1]); // numero de registros                                  
 
                 PrintWriter descWriter = new PrintWriter(desc_usuario);
                 for (int i = 0; i < 8; i++) {
