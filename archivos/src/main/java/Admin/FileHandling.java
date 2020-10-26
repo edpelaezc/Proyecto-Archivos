@@ -3,6 +3,11 @@ package Admin;
 import java.io.*;
 import java.util.Arrays;
 import java.util.regex.Pattern;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+import java.io.File;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import static javax.swing.JOptionPane.showMessageDialog;
 
 public class FileHandling {
@@ -18,6 +23,50 @@ public class FileHandling {
     File desc_usuario = new File("C:\\MEIA\\desc_usuario.txt");
     File bitacora_usuario = new File("C:\\MEIA\\bitacora_usuario.txt");
     File desc_bitacora_usuario = new File("C:\\MEIA\\desc_bitacora_usuario.txt");
+   
+    public void Write_MLD(String line){
+        File Mantenimiento_listas_Distribuidas = new File("C://MEIA//lista.txt");
+        if (Mantenimiento_listas_Distribuidas.exists()) {
+            BufferedWriter bw;
+            try {
+                bw = new BufferedWriter(new FileWriter(Mantenimiento_listas_Distribuidas));
+                bw.write(line);
+                bw.close();
+            } catch (IOException ex) {
+                Logger.getLogger(FileHandling.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else{
+            BufferedWriter bw;
+            try {
+                bw = new BufferedWriter(new FileWriter(Mantenimiento_listas_Distribuidas));
+                bw.write(line);
+                bw.close();
+            } catch (IOException ex) {
+                Logger.getLogger(FileHandling.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    
+    
+    public String Get_ListMLD(String key){
+        String line = "";
+        File Mantenimiento_listas_Distribuidas = new File("C://MEIA//lista.txt");
+        Scanner myReader;
+        try {
+            myReader = new Scanner(Mantenimiento_listas_Distribuidas);     
+            while (myReader.hasNextLine()) {
+            String data = myReader.nextLine();
+            if (data.startsWith(key)) {
+                line = data;
+            }
+        }
+        myReader.close();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(FileHandling.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return line;
+    }
 
     public String[] Read_Text(String ruta, String usuario) {
         String[] txt = {};
@@ -46,7 +95,7 @@ public class FileHandling {
             }
 
         } catch (Exception e) {
-            showMessageDialog(null, e);
+            showMessageDialog(null, e.getMessage());
         }
         return txt;
     }
@@ -73,10 +122,8 @@ public class FileHandling {
      * @param newLine
      * @param ruta
      */
-    private void Remove_Line(String lineToRemove, String newLine, String ruta) {
-
+    public void Remove_Line(String lineToRemove, String newLine, String ruta) {
         try {
-
             File inFile = new File(ruta);
             String nombre = inFile.getAbsolutePath();
             File tempFile = new File(nombre + ".tmp");
