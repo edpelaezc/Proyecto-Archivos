@@ -347,8 +347,37 @@ public class HandleContacts {
         String fecha = dtf.format(now);
 
         // eliminar registro de bitacora
-        if (bita) {
+        if (bita) {            
+            
+            ArrayList desc = ReadFile(desc_bitacora_contactos);
+            String[] aux;
+
+            //actualizar campos
+            desc.set(3, "fecha_modificacion: " + fecha);
+
+            // actualizar usuario modificacion
+            desc.set(4, "usuario_modificacion: " + usuario);
+
+            // actualizar conteo
+            aux = desc.get(5).toString().split(" ");
+            aux[1] = String.valueOf(Integer.parseInt(aux[1]) - 1);
+            desc.set(5, aux[0] + " " + aux[1]); // numero de registros  
+            
+            // actualizar conteo
+            aux = desc.get(6).toString().split(" ");
+            aux[1] = String.valueOf(Integer.parseInt(aux[1]) - 1);
+            desc.set(6, aux[0] + " " + aux[1]); // numero de registros   
+            
+            
             try {
+                
+                // descriptor contactos
+                PrintWriter descWriter = new PrintWriter(desc_bitacora_contactos);
+                for (int i = 0; i < 8; i++) {
+                    descWriter.println(desc.get(i).toString());
+                }
+                descWriter.close();
+                
                 // escribir usuario ordenados por su clave única
                 PrintWriter userWriter = new PrintWriter(bitacora_contactos);
                 for (int i = 0; i < bitacora.size(); i++) {
@@ -378,6 +407,11 @@ public class HandleContacts {
             aux = desc.get(5).toString().split(" ");
             aux[1] = String.valueOf(Integer.parseInt(aux[1]) - 1);
             desc.set(5, aux[0] + " " + aux[1]); // numero de registros   
+            
+            // actualizar conteo
+            aux = desc.get(6).toString().split(" ");
+            aux[1] = String.valueOf(Integer.parseInt(aux[1]) - 1);
+            desc.set(6, aux[0] + " " + aux[1]); // numero de registros              
 
             try {
                 // descriptor contactos
