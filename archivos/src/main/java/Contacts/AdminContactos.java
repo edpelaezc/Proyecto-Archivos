@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package Contacts;
+
 import Data.Data;
 import Access.Usuario;
 import java.time.LocalDateTime;
@@ -16,9 +17,9 @@ import javax.swing.JOptionPane;
  */
 public class AdminContactos extends javax.swing.JFrame {
 
-    
     HandleContacts handler = new HandleContacts();
     Usuario aux = null;
+
     /**
      * Creates new form AdminContactos
      */
@@ -158,17 +159,17 @@ public class AdminContactos extends javax.swing.JFrame {
     private void buscarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarButtonActionPerformed
         // TODO add your handling code here:       
         aux = handler.search(buscarTField.getText());
-        
+
         if (aux != null && (aux.getUsuario() != Data.Instance().user.getUsuario())) {
             // llenar campos
             usernameTField.setText(aux.getUsuario());
             nombreTField.setText(aux.getNombre());
-            apellidoTField.setText(aux.getApellido());            
+            apellidoTField.setText(aux.getApellido());
         } else {
             if (aux == null) {
-                JOptionPane.showMessageDialog(null, "EL USUARIO NO EXISTE");                                
+                JOptionPane.showMessageDialog(null, "EL USUARIO NO EXISTE");
             } else {
-                JOptionPane.showMessageDialog(null, "NO PUEDE AGREGARSE A USTED MISMO");                                
+                JOptionPane.showMessageDialog(null, "NO PUEDE AGREGARSE A USTED MISMO");
             }
         }
     }//GEN-LAST:event_buscarButtonActionPerformed
@@ -178,31 +179,37 @@ public class AdminContactos extends javax.swing.JFrame {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
         String fecha = dtf.format(now);
-        
+
         if (handler.uniqueKey(Data.Instance().user.getUsuario(), aux.getUsuario())) {
             handler.writeContact(new Contacto(
-                    Data.Instance().user.getUsuario(), 
+                    Data.Instance().user.getUsuario(),
                     aux.getUsuario(),
-                    fecha, 
-                    Data.Instance().user.getUsuario(), 
+                    fecha,
+                    Data.Instance().user.getUsuario(),
                     1)
             );
-            JOptionPane.showMessageDialog(null, "CONTACTO AGREGADO");     
+            JOptionPane.showMessageDialog(null, "CONTACTO AGREGADO");
             usernameTField.setText("");
             nombreTField.setText("");
             apellidoTField.setText("");
+            buscarTField.setText("");
         } else {
-            JOptionPane.showMessageDialog(null, "ESTE CONTACTO YA EXISTE");                                        
+            JOptionPane.showMessageDialog(null, "ESTE CONTACTO YA EXISTE");
         }
     }//GEN-LAST:event_agregarButtonActionPerformed
 
     private void eliminarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarButtonActionPerformed
         // TODO add your handling code here:
         if (handler.removeContact(Data.Instance().user.getUsuario(), aux.getUsuario())) {
-            JOptionPane.showMessageDialog(null, "CONTACTO ELIMINADO");                                        
+            JOptionPane.showMessageDialog(null, "CONTACTO ELIMINADO");
         } else {
-            JOptionPane.showMessageDialog(null, "NO EXISTE EL CONTACTO");                                        
+            JOptionPane.showMessageDialog(null, "NO EXISTE EL CONTACTO");
         }
+
+        usernameTField.setText("");
+        nombreTField.setText("");
+        apellidoTField.setText("");
+        buscarTField.setText("");
     }//GEN-LAST:event_eliminarButtonActionPerformed
 
     /**
