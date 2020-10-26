@@ -24,8 +24,17 @@ public class ListaUsuario {
     int maximo = 5;
     
     public Boolean insertar(String key, String descripcion){
-        String[] registro = buscar(key);
-        if (registro != null) {
+        ArrayList ind = ReadFile(indice);
+        String[] registro = null;
+        for (int i = 0; i < ind.size(); i++) {
+            String[] partes = ind.get(i).toString().split("\\|");
+            if (partes[2].compareTo(key) == 0) {
+                registro = partes;
+            }
+        }
+        
+        
+        if (registro == null) {
             escribirBloque(key, descripcion);
             escribirIndice(key);
             
@@ -46,7 +55,7 @@ public class ListaUsuario {
         
         ArrayList newBloq = new ArrayList<String>();
         for (int i = 0; i < bloq.size(); i++) {
-            String[] registro = bloq.get(i).toString().split("|");
+            String[] registro = bloq.get(i).toString().split("\\|");
             if (registro[3] == "1") {
                 newBloq.add(bloq.get(i));
             }
@@ -54,7 +63,7 @@ public class ListaUsuario {
         
         ArrayList newIndex = new ArrayList<String>();
         for (int i = 0; i < index.size(); i++) {
-            String[] registro = index.get(i).toString().split("|");
+            String[] registro = index.get(i).toString().split("\\|");
             if (registro[4] == "1") {
                 newIndex.add(index.get(i));
             }
@@ -87,7 +96,28 @@ public class ListaUsuario {
         }
     }
     
-    public String[] buscar(String key){
+    public String[] busqueda(String key){
+        try {
+            FileReader fr = new FileReader(bloque);
+            BufferedReader br = new BufferedReader(fr);
+
+            ArrayList bloq = ReadFile(bloque);
+            String[] registro = null;
+            for (int i = 0; i < bloq.size(); i++) {
+                registro = bloq.get(i).toString().split("\\|");
+                if (key.equals(registro[0])) {
+                    return registro;
+                }
+            }
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        // not found
+        return null;
+    }
+    
+    private String[] buscar(String key){
         // Leer en Secuencial Indizado
         try {
             FileReader fr = new FileReader(indice);
@@ -109,6 +139,7 @@ public class ListaUsuario {
 
             Boolean encontrado = false;
             while(!encontrado){
+                
                 if (key.compareTo(registro[2]) > 0){
                     Integer sig = Integer.parseInt(registro[3]);
                     
@@ -179,12 +210,27 @@ public class ListaUsuario {
                 escribirDescBloque(user.toString());
             } else {
                 
-                String[] registro = buscar(key);
+                ArrayList ind = ReadFile(bloque);
+                String[] registro = null;
+                for (int i = 0; i < ind.size(); i++) {
+                    String[] partes = ind.get(i).toString().split("\\|");
+                    if (partes[0].compareTo(key) == 0) {
+                        registro = partes;
+                    }
+                }
+                
                 if (registro == null) {
                     // crear maestro
-                    PrintWriter descWriter = new PrintWriter(bloque);
-                    descWriter.println(user.toString());
-                    descWriter.close();
+                    ArrayList bloq = ReadFile(bloque);
+                    bloq.add(user.toString());
+                    
+                    FileWriter writer = new FileWriter(bloque, false);
+                    BufferedWriter indexWriter = new BufferedWriter(writer);
+                    for (int k = 0; k < bloq.size(); k++) {
+                        indexWriter.write(bloq.get(k).toString() + "\n");
+                    }
+                    indexWriter.close();
+                    writer.close();
                     
                     escribirDescBloque(user.toString());
                 }
@@ -206,33 +252,52 @@ public class ListaUsuario {
         Usuario user = new Usuario(key_parts[0], key_parts[1], key_parts[2], descripcion, fecha, active);
         
         try {
-
-            String[] registro = buscar(key);
-            if (registro != null) {
-                ArrayList bloq = ReadFile(bloque);
-                
-                registro = buscarRegistroEnBloque(bloq, key);
-                String reg = "";
-                for (int i = 0; i < registro.length; i++) {
-                    reg += registro[i];
-                }
-                
-                int index = bloq.indexOf(reg);
-                
-                bloq.set(index, reg);
-                
-                PrintWriter descWriter = new PrintWriter(desc_bloque);
-                for (int i = 0; i < bloq.size(); i++) {
-                    descWriter.println(bloq.get(i).toString());
-                }
-                descWriter.close();
-                
-                escribirDescBloque(user.toString());
-            }
-            else {
-                // error
-            }
             
+            if (bloque.exists()) {
+                String[] registro = buscar(key);
+                if (registro != null) {
+                    ArrayList bloq = ReadFile(bloque);
+
+                    registro = buscarRegistroEnBloque(bloq, key);
+                    String reg = "";
+                    for (int i = 0; i < registro.length; i++) {
+                        if (i == registro.length - 1) {
+                            reg += registro[i];
+                        }
+                        else {
+                            reg += registro[i] + "|";
+                        }
+                    }
+
+                    int index = bloq.indexOf(reg);
+
+                    String newreg = "";
+                    for (int i = 0; i < registro.length; i++) {
+                        if (i == registro.length - 1) {
+                            newreg += "0";
+                        }
+                        else {
+                            newreg += registro[i] + "|";
+                        }
+                    }
+                    
+                    bloq.set(index, newreg);
+
+                    
+                    FileWriter writer = new FileWriter(bloque, false);
+                    BufferedWriter indexWriter = new BufferedWriter(writer);
+                    for (int k = 0; k < bloq.size(); k++) {
+                        indexWriter.write(bloq.get(k).toString() + "\n");
+                    }
+                    indexWriter.close();
+                    writer.close();
+
+                    escribirDescBloque(key_parts[1]);
+                }
+                else {
+                    // error
+                }
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -242,10 +307,11 @@ public class ListaUsuario {
         String[] keyFields = key.split(",");
         String usuario = keyFields[1];
         try {
-            if (bloque.createNewFile()) { // NO EXISTE EL ARCHIVO
-
+            if (indice.createNewFile()) { // NO EXISTE EL ARCHIVO
+                System.out.println("File created: " + indice.getName());
+                
                 // crear Indice
-                PrintWriter indWriter = new PrintWriter(bloque);
+                PrintWriter indWriter = new PrintWriter(indice);
                 indWriter.print("1|1.1|" + key + "|0|1");
                 indWriter.close();
                 
@@ -262,7 +328,7 @@ public class ListaUsuario {
                     lista.add(linea);
                 }
                 
-                String[] campos = lista.get(lista.size() - 1).toString().split("|");
+                String[] campos = lista.get(lista.size() - 1).toString().split("\\|");
                 Integer lastReg = Integer.parseInt(campos[0]);
                 lastReg++;
                 
@@ -272,24 +338,47 @@ public class ListaUsuario {
                 Integer nReg = Integer.parseInt(campo_registro[1]);
                 
                 // buscar registro inicial
-                String[] registro = buscarRegistroEnLista(lista, nReg);
+                String[] regActual = buscarRegistroEnLista(lista, nReg);
                 
-                FileWriter writer = new FileWriter(indice, true);
-                BufferedWriter bw = new BufferedWriter(writer);
                 
-                String registroInicial = registro[0];
+                
+                String registroInicial = regActual[0];
+                
                 // buscar su posicion
                 Boolean encontrado = false;
                 Integer count = 0;
                 while(!encontrado){
-                    if (key.compareTo(registro[2]) < 0) {
+                    // comparar llaves, si es menor
+                    if (key.compareTo(regActual[2]) < 0) { 
                         encontrado = true;
                         
-                        // siguiente = [0]
-                        bw.write(lastReg + "|1." + lastReg + "|" + key 
-                                + "|" + registro[0] + "|1"
-                                + System.getProperty("line.separator"));
-                        bw.close();
+                        // cambiar el apuntador del anterior
+                        ArrayList archivoIndice = ReadFile(indice);
+                        
+                        //
+                        for (int i = 0; i < archivoIndice.size(); i++) {
+                            String[] regAnt = archivoIndice.get(i).toString().split("\\|");
+                            
+                            // comparar
+                            //  siguiente-del-anterior con indice-del-actual
+                            if (regAnt[3].equals(regActual[0])) {
+                                // ------------------numero-----|--1.numero---|--llave------|-siguiente-|--activo
+                                archivoIndice.set(i, regAnt[0]+"|"+regAnt[1]+"|"+regAnt[2]+"|"+lastReg+"|"+regAnt[4]);
+                            }
+                        }
+                        
+                        // siguiente-del-nuevo = [0]
+                        archivoIndice.add(lastReg + "|1." + lastReg + "|" + key 
+                                + "|" + regActual[0] + "|1");
+                        
+                        indice.delete();
+                        indice.createNewFile();
+                        FileWriter writer = new FileWriter(indice, false);
+                        BufferedWriter indexWriter = new BufferedWriter(writer);
+                        for (int k = 0; k < archivoIndice.size(); k++) {
+                            indexWriter.write(archivoIndice.get(k).toString() + "\n");
+                        }
+                        indexWriter.close();
                         writer.close();
                         
                         if (count == 0) {
@@ -297,10 +386,40 @@ public class ListaUsuario {
                             registroInicial = lastReg.toString();
                         }
                     }
-                    else if (key.compareTo(registro[2]) > 0){
+                    else if (key.compareTo(regActual[2]) > 0){
                         count++;
-                        Integer sig = Integer.parseInt(registro[3]);
-                        registro = buscarRegistroEnLista(lista, sig);
+                        Integer sig = Integer.parseInt(regActual[3]);
+                        
+                        if (sig == 0) {
+                            encontrado = true;
+                        
+                            // cambiar el apuntador del anterior
+                            ArrayList archivoIndice = ReadFile(indice);
+                            for (int i = 0; i < archivoIndice.size(); i++) {
+                                String[] regAnt = archivoIndice.get(i).toString().split("\\|");
+                                if (regAnt[3].equals(sig.toString())) {
+                                    archivoIndice.set(i, regAnt[0]+"|"+regAnt[1]+"|"
+                                        +regAnt[2]+"|"+lastReg+"|"+regAnt[4]);
+                                }
+                            }
+
+                            // siguiente = [0]
+                            archivoIndice.add(lastReg + "|1." + lastReg + "|" + key 
+                                    + "|0|1");
+                            
+                            indice.delete();
+                            indice.createNewFile();
+                            FileWriter writer = new FileWriter(indice, false);
+                            BufferedWriter indexWriter = new BufferedWriter(writer);
+                            for (int k = 0; k < archivoIndice.size(); k++) {
+                                indexWriter.write(archivoIndice.get(k).toString() + "\n");
+                            }
+                            indexWriter.close();
+                            writer.close();
+                        }
+                        else {
+                            regActual = buscarRegistroEnLista(lista, sig);
+                        }
                     }
                     else{
                         // la llave ya existe
@@ -318,88 +437,88 @@ public class ListaUsuario {
         String[] keyFields = key.split(",");
         String usuario = keyFields[1];
         try {
-            // Leer
-            FileReader fr = new FileReader(indice);
-            BufferedReader br = new BufferedReader(fr);
+            if (indice.exists()) {
+                // Leer
+                FileReader fr = new FileReader(indice);
+                BufferedReader br = new BufferedReader(fr);
 
-            String linea = "";
-            ArrayList lista = new ArrayList<String>();
-            while((linea = br.readLine()) != null){
-                lista.add(linea);
-            }
+                String linea = "";
+                ArrayList lista = new ArrayList<String>();
+                while((linea = br.readLine()) != null){
+                    lista.add(linea);
+                }
 
-            String[] campos = lista.get(lista.size() - 1).toString().split("|");
-            int lastReg = Integer.parseInt(campos[0]);
-            lastReg++;
+                String[] campos = lista.get(lista.size() - 1).toString().split("|");
+                int lastReg = Integer.parseInt(campos[0]);
+                lastReg++;
 
-            // buscar cuál es el índice del registro inicial
-            ArrayList desc = ReadFile(desc_indice);
-            String[] campo_registro = desc.get(9).toString().split(" ");
-            Integer nReg = Integer.parseInt(campo_registro[1]);
+                // buscar cuál es el índice del registro inicial
+                ArrayList desc = ReadFile(desc_indice);
+                String[] campo_registro = desc.get(9).toString().split(" ");
+                Integer nReg = Integer.parseInt(campo_registro[1]);
 
-            // buscar registro inicial
-            String[] registro = buscarRegistroEnLista(lista, nReg);
-            String registroInicial = registro[0];
-            
-            FileWriter writer = new FileWriter(indice, true);
+                // buscar registro inicial
+                String[] registro = buscarRegistroEnLista(lista, nReg);
+                String registroInicial = registro[0];
 
-            // buscar su posicion
-            ArrayList index = ReadFile(indice);
-            Boolean encontrado = false;
-            Integer count = 0;
-            while(!encontrado){
-                if (key.compareTo(registro[2]) < 0) {
-                    encontrado = true;
+                // buscar su posicion
+                ArrayList index = ReadFile(indice);
+                Boolean encontrado = false;
+                Integer count = 0;
+                while(!encontrado){
+                    if (key.compareTo(registro[2]) < 0) {
+                        encontrado = true;
 
-                    String reg = registro[0]+registro[1]+registro[2]+registro[3]
-                            +registro[4];
-                    int i = index.indexOf(reg);
-                    
-                    // eliminacion logica
-                    registro[4] = "0";
-                    String newReg = registro[0]+registro[1]+registro[2]+registro[3]
-                            +registro[4];
-                    String newSiguiente = registro[3];
-                    
-                    // escribir
-                    index.set(i, newReg);
-                    
-                    // cambiar orden
-                    String nRegBorrado = registro[0];
-                    
-                    for (int j = 0; j < index.size(); j++) {
-                        String[] regAnterior = index.get(i).toString().split("|");
-                        if (regAnterior[3] == nRegBorrado && regAnterior[4] != "0") {
-                            regAnterior[3] = newSiguiente;
-                            index.set(i, regAnterior[0]+regAnterior[1]
-                                    +regAnterior[2]+regAnterior[3]+regAnterior[4]);
+                        String reg = registro[0]+"|"+registro[1]+"|"+registro[2]
+                                +"|"+registro[3]+"|"+registro[4];
+                        int i = index.indexOf(reg);
+
+                        // eliminacion logica
+                        registro[4] = "0";
+                        String newReg = registro[0]+"|"+registro[1]+"|"+registro[2]
+                                +"|"+registro[3]+"|"+registro[4];
+                        String newSiguiente = registro[3];
+
+                        // escribir
+                        index.set(i, newReg);
+
+                        // cambiar orden
+                        String nRegBorrado = registro[0];
+
+                        for (int j = 0; j < index.size(); j++) {
+                            String[] regAnterior = index.get(i).toString().split("\\|");
+                            if (regAnterior[3] == nRegBorrado && regAnterior[4] != "0") {
+                                regAnterior[3] = newSiguiente;
+                                index.set(i, regAnterior[0]+"|"+regAnterior[1]+"|"
+                                        +regAnterior[2]+"|"+regAnterior[3]+"|"+regAnterior[4]);
+                            }
+                        }
+
+                        // modificar archivo
+                        indice.delete();
+                        indice.createNewFile();
+                        FileWriter writer = new FileWriter(indice, false);
+                        BufferedWriter indexWriter = new BufferedWriter(writer);
+                        for (int k = 0; k < index.size(); k++) {
+                            indexWriter.write(index.get(k).toString());
+                        }
+                        indexWriter.close();
+
+                        // cambiar registro inicial
+                        if (count == 0) {
+                            registroInicial = registro[3];
                         }
                     }
-                    
-                    // modificar archivo
-                    PrintWriter indexWriter = new PrintWriter(writer);
-                    for (int k = 0; k < index.size(); k++) {
-                        indexWriter.println(desc.get(k).toString());
+                    else if (key.compareTo(registro[2]) > 0){
+                        count++;
+                        Integer sig = Integer.parseInt(registro[3]);
+                        registro = buscarRegistroEnLista(lista, sig);
                     }
-                    indexWriter.close();
                     
-                    // cambiar registro inicial
-                    if (count == 0) {
-                        registroInicial = registro[3];
-                    }
+                    escribirDescIndice(usuario, registroInicial);
                 }
-                else if (key.compareTo(registro[2]) > 0){
-                    count++;
-                    Integer sig = Integer.parseInt(registro[3]);
-                    registro = buscarRegistroEnLista(lista, sig);
-                }
-                else{
-                    // la llave ya existe
-                }
-                
-                
-                escribirDescIndice(usuario, registroInicial);
             }
+            
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -409,8 +528,8 @@ public class ListaUsuario {
         // buscar registro inicial
         String[] registro = null;
         for (int i = 0; i < lista.size(); i++) {
-            registro = lista.get(i).toString().split("|");
-            if (registro[0] == nReg.toString()) {
+            registro = lista.get(i).toString().split("\\|");
+            if (registro[0].equals(nReg.toString())) {
                 return registro;
             }
         }
@@ -421,8 +540,8 @@ public class ListaUsuario {
         // buscar registro inicial
         String[] registro = null;
         for (int i = 0; i < lista.size(); i++) {
-            registro = lista.get(i).toString().split("|");
-            if (registro[0] == key) {
+            registro = lista.get(i).toString().split("\\|");
+            if (registro[0].equals(key)) {
                 return registro;
             }
         }
@@ -504,8 +623,8 @@ public class ListaUsuario {
                         + "#_registros: 1\n"
                         + "registros_activos: 1\n"
                         + "registros_inactivos: 0\n"
-                        + "max_reorganizacion: " + maximo
-                        + "registro_inicial: 1"
+                        + "max_reorganizacion: " + maximo + "\n"
+                        + "registro_inicial: 1" + "\n"
                         + "No. Bloques: 1");
                 descWriter.close();
                 
@@ -581,7 +700,7 @@ public class ListaUsuario {
         String[] registro = null;
         Integer count = 0;
         for (int i = 0; i < list.size(); i++) {
-            registro = list.get(i).toString().split("|");
+            registro = list.get(i).toString().split("\\|");
             if (registro[registro.length - 1] == "1") {
                 count++;
             }

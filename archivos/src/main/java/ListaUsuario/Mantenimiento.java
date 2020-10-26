@@ -145,7 +145,7 @@ public class Mantenimiento extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         ListaUsuario lu = new ListaUsuario();
-        String[] registro = lu.buscar(Lista.getText()+","+Usuario.getText()+","
+        String[] registro = lu.busqueda(Lista.getText()+","+Usuario.getText()+","
                 +Asociado.getText());
         
         if (registro != null) {

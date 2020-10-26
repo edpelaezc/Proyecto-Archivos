@@ -28,10 +28,10 @@ public class Usuario {
     
     public String toString(){
         if (this.status) 
-            return this.nombre_lista + "," + this.usuario + "," + this.usuario + "|" 
+            return this.nombre_lista + "," + this.usuario + "," + this.usuario_asociado + "|" 
                 + this.descripcion + "|" + this.fecha_creacion + "|1\n";
         
-        return this.nombre_lista + "," + this.usuario + "," + this.usuario + "|" 
+        return this.nombre_lista + "," + this.usuario + "," + this.usuario_asociado + "|" 
                 + this.descripcion + "|" + this.fecha_creacion + "|0\n";
     }
 }
