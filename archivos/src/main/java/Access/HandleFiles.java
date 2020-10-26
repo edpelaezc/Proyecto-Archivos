@@ -228,7 +228,7 @@ public class HandleFiles {
                         + "fecha_modificacion: " + fecha + "\n"
                         + "usuario_modificacion: " + username + "\n"
                         + "#_registros: " + maximo + "\n"
-                        + "registros_activos: 5\n"
+                        + "registros_activos:" + maximo + "\n"
                         + "registros_inactivos: 0\n");
                 descWriter.close();
             } else {
