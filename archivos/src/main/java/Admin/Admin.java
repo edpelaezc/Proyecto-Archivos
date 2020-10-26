@@ -582,12 +582,12 @@ public class Admin extends javax.swing.JFrame {
 
     private void MLDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MLDActionPerformed
         MLD mld = new MLD();
-        mld.setEnabled(true);
+        mld.setVisible(true);
     }//GEN-LAST:event_MLDActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         Login login = new Login();
-        login.setEnabled(true);
+        login.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -600,7 +600,7 @@ public class Admin extends javax.swing.JFrame {
     private void LUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LUActionPerformed
         // TODO add your handling code here:
         Mantenimiento lista_usuarios = new Mantenimiento();
-        lista_usuarios.setEnabled(true);
+        lista_usuarios.setVisible(true);
     }//GEN-LAST:event_LUActionPerformed
 
     private void setIcon(){
