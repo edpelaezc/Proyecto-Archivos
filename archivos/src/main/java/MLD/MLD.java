@@ -276,7 +276,7 @@ public class MLD extends javax.swing.JFrame {
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");  
         String strDate = dateFormat.format(date);  
         lbl_Date.setText("Fecha: " + strDate);
-        lbl_user.setText("Kevin");
+        lbl_user.setText(Data.Instance().user.getNombre());
     }//GEN-LAST:event_formComponentShown
 
     private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
@@ -284,7 +284,7 @@ public class MLD extends javax.swing.JFrame {
             int status = 0;
             if (this.status.isSelected()){  status = 1;   }  
             
-            String key = list_txt.getText() + "Kevin";
+            String key = list_txt.getText() + Data.Instance().user.getNombre();
             FileHandling manejo = new FileHandling();
             String usr = manejo.Get_ListMLD(key);
             try{
@@ -323,7 +323,7 @@ public class MLD extends javax.swing.JFrame {
     private void findActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_findActionPerformed
         if (!(list_txt.getText().equals(""))) {
             FileHandling manejo = new FileHandling();
-            String key = list_txt.getText() + "Kevin";
+            String key = list_txt.getText() + Data.Instance().user.getNombre();
             String usr = manejo.Get_ListMLD(key);
             
             try{
@@ -354,7 +354,7 @@ public class MLD extends javax.swing.JFrame {
     private void modifyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modifyActionPerformed
         int status = 0;
         if (this.status.isSelected()){  status = 1;   }   
-        String key = list_txt.getText() + "Kevin"; 
+        String key = list_txt.getText() + Data.Instance().user.getNombre(); 
         if (!(list_txt.getText().equals("")) && !(description.getText().equals("")) ) {
             if (!(usr_txt.getText().equals(""))) {
                 Modify_List(key, status, usr_txt.getText());
@@ -388,7 +388,7 @@ public class MLD extends javax.swing.JFrame {
     }//GEN-LAST:event_usr_txtActionPerformed
 
     private void CreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreateActionPerformed
-        String key = list_txt.getText() + "Kevin";
+        String key = list_txt.getText() + Data.Instance().user.getNombre();
         FileHandling manejo = new FileHandling();
         String linea = manejo.Get_ListMLD(key);
         if (linea == "") {
