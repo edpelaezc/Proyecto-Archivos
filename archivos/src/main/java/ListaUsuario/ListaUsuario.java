@@ -210,12 +210,27 @@ public class ListaUsuario {
                 escribirDescBloque(user.toString());
             } else {
                 
-                String[] registro = buscar(key);
+                ArrayList ind = ReadFile(bloque);
+                String[] registro = null;
+                for (int i = 0; i < ind.size(); i++) {
+                    String[] partes = ind.get(i).toString().split("\\|");
+                    if (partes[0].compareTo(key) == 0) {
+                        registro = partes;
+                    }
+                }
+                
                 if (registro == null) {
                     // crear maestro
-                    PrintWriter descWriter = new PrintWriter(bloque);
-                    descWriter.println(user.toString());
-                    descWriter.close();
+                    ArrayList bloq = ReadFile(bloque);
+                    bloq.add(user.toString());
+                    
+                    FileWriter writer = new FileWriter(bloque, false);
+                    BufferedWriter indexWriter = new BufferedWriter(writer);
+                    for (int k = 0; k < bloq.size(); k++) {
+                        indexWriter.write(bloq.get(k).toString() + "\n");
+                    }
+                    indexWriter.close();
+                    writer.close();
                     
                     escribirDescBloque(user.toString());
                 }
@@ -268,11 +283,14 @@ public class ListaUsuario {
                     
                     bloq.set(index, newreg);
 
-                    PrintWriter descWriter = new PrintWriter(bloque);
-                    for (int i = 0; i < bloq.size(); i++) {
-                        descWriter.println(bloq.get(i).toString());
+                    
+                    FileWriter writer = new FileWriter(bloque, false);
+                    BufferedWriter indexWriter = new BufferedWriter(writer);
+                    for (int k = 0; k < bloq.size(); k++) {
+                        indexWriter.write(bloq.get(k).toString() + "\n");
                     }
-                    descWriter.close();
+                    indexWriter.close();
+                    writer.close();
 
                     escribirDescBloque(key_parts[1]);
                 }
