@@ -27,18 +27,56 @@ public class Email extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        bandejaSalida = new javax.swing.JButton();
+        bandejaEntrada = new javax.swing.JButton();
+        redactarBtn = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList<>();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        bandejaSalida.setActionCommand("enviados");
+        bandejaSalida.setLabel("Bandeja de Salida");
+
+        bandejaEntrada.setText("Bandeja de Entrada");
+        bandejaEntrada.setActionCommand("recibidos");
+
+        redactarBtn.setActionCommand("enviar");
+        redactarBtn.setLabel("+ Redactar");
+
+        jScrollPane1.setViewportView(jList1);
+        jList1.getAccessibleContext().setAccessibleName("");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(bandejaEntrada)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(bandejaSalida)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 124, Short.MAX_VALUE)
+                        .addComponent(redactarBtn)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bandejaEntrada)
+                    .addComponent(bandejaSalida)
+                    .addComponent(redactarBtn))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
+                .addContainerGap())
         );
+
+        bandejaEntrada.getAccessibleContext().setAccessibleName("Bandeja de Entrada");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -79,5 +117,10 @@ public class Email extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bandejaEntrada;
+    private javax.swing.JButton bandejaSalida;
+    private javax.swing.JList<String> jList1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton redactarBtn;
     // End of variables declaration//GEN-END:variables
 }
