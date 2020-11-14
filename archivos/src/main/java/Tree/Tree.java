@@ -180,15 +180,20 @@ public class Tree {
         }
     }
 
-    /*public void preOrder(Node<Correo> root) {
+    public void preOrder(Node<Correo> root) {
         if (root != null) {
             System.out.println(root.getElement());
-            order.addLast(root);
+            order.add(root);
             preOrder(root.getLeft());
             preOrder(root.getRight());
         }
     }
 
+    public void writeTree() {
+
+    }
+
+    /*
     public void postOrder(Node<Correo> root) {
         if (root != null) {
             postOrder(root.getLeft());
