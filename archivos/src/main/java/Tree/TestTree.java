@@ -15,42 +15,13 @@ import java.util.ArrayList;
  */
 public class TestTree extends javax.swing.JFrame {
 
-    Tree tree = new Tree();
-    File correos = new File("C:\\MEIA\\correos.txt");
-    HandleFiles handler = new HandleFiles();
-
+    HandleTree handler = new HandleTree();
     /**
      * Creates new form TestTree
      */
     public TestTree() {
         initComponents();
-        readTree();
-    }
-
-    public void readTree() {
-        ArrayList temp = handler.ReadFile(correos);
-
-        for (int i = 0; i < temp.size(); i++) {
-            Correo aux = createCorreo(temp.get(i).toString());
-            if (!"0".equals(aux.getEstatus())) {
-                tree.add(aux);
-            }
-        }
-               
-        System.out.println("CARGA TERMINADA");
-    }
-
-    private Correo createCorreo(String line) {
-        String[] fields = line.split("\\|");
-        return new Correo(
-                fields[3],
-                fields[4],
-                fields[5],
-                fields[6],
-                fields[7],
-                fields[8],
-                fields[9]
-        );
+        handler.readTree();
     }
 
     /**
@@ -181,7 +152,7 @@ public class TestTree extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        tree.add(new Correo(emisorTF.getText(), receptorTF.getText(), fechaTF.getText(), asuntoTF.getText(), mensajeTF.getText(), adjuntoTF.getText(), "1"));
+        handler.tree.add(new Correo(emisorTF.getText(), receptorTF.getText(), fechaTF.getText(), asuntoTF.getText(), mensajeTF.getText(), adjuntoTF.getText(), "1"));
         /*emisorTF.setText("");
         receptorTF.setText("");
         fechaTF.setText("");
@@ -192,8 +163,8 @@ public class TestTree extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        Correo temp = tree.search(new Correo(emisorTF.getText(), receptorTF.getText(), fechaTF.getText(), asuntoTF.getText(), mensajeTF.getText(), adjuntoTF.getText(), "1"));
-        tree.logicalDelete(temp);
+        Correo temp = handler.tree.search(new Correo(emisorTF.getText(), receptorTF.getText(), fechaTF.getText(), asuntoTF.getText(), mensajeTF.getText(), adjuntoTF.getText(), "1"));
+        handler.tree.logicalDelete(temp);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**

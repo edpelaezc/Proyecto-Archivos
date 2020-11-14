@@ -22,6 +22,7 @@ import java.util.logging.Logger;
 public class Tree {
 
     public Node<Correo> root;
+    private int size = 0;
     private int numberOfNodes = 1;
     public ArrayList<Node<Correo>> order = new ArrayList<Node<Correo>>();
     File correos = new File("C:\\MEIA\\correos.txt");
@@ -35,10 +36,10 @@ public class Tree {
     public void add(Correo element) {
         if (this.root == null) {
             root = new Node<Correo>(element, null, null, null, numberOfNodes++);
-            writeTree();            
+            writeTree();
         } else {
             addElement(this.root, element);
-            writeTree();            
+            writeTree();
         }
     }
 
@@ -270,12 +271,8 @@ public class Tree {
         } catch (IOException ex) {
             Logger.getLogger(Tree.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         order = new ArrayList<Node<Correo>>();
     }
-    
-    public void reorganize() {
-    
-    }
-        
+
 }
