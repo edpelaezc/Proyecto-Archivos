@@ -25,6 +25,7 @@ public class Tree {
     private int numberOfNodes = 1;
     public ArrayList<Node<Correo>> order = new ArrayList<Node<Correo>>();
     File correos = new File("C:\\MEIA\\correos.txt");
+    File desc_correos = new File("C:\\MEIA\\desc_correos.txt");
     HandleFiles handler = new HandleFiles();
 
     public Tree() {
@@ -34,12 +35,10 @@ public class Tree {
     public void add(Correo element) {
         if (this.root == null) {
             root = new Node<Correo>(element, null, null, null, numberOfNodes++);
-            writeTree();
-            order = new ArrayList<Node<Correo>>();
+            writeTree();            
         } else {
             addElement(this.root, element);
-            writeTree();
-            order = new ArrayList<Node<Correo>>();
+            writeTree();            
         }
     }
 
@@ -271,5 +270,12 @@ public class Tree {
         } catch (IOException ex) {
             Logger.getLogger(Tree.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        order = new ArrayList<Node<Correo>>();
     }
+    
+    public void reorganize() {
+    
+    }
+        
 }

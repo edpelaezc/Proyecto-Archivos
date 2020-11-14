@@ -31,9 +31,12 @@ public class TestTree extends javax.swing.JFrame {
         ArrayList temp = handler.ReadFile(correos);
 
         for (int i = 0; i < temp.size(); i++) {
-            tree.add(createCorreo(temp.get(i).toString()));
+            Correo aux = createCorreo(temp.get(i).toString());
+            if (!"0".equals(aux.getEstatus())) {
+                tree.add(aux);
+            }
         }
-        
+               
         System.out.println("CARGA TERMINADA");
     }
 
