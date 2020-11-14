@@ -129,13 +129,15 @@ public class Tree {
                 if (aux.contains(temp.getEmisor()) && aux.contains(temp.getReceptor()) && aux.contains(temp.getFecha())) {
                     // eliminación lógica del correo 
                     temp.setEstatus("0");
-                    
+
                     // conseguir el numero de registro del elemento eliminado 
                     String[] fields = aux.split("\\|");
                     writer.println(fields[0] + "|" + "-" + "|" + "-" + "|" + temp.toString());
                     writer.println(order.get(i).toString());
                 } else {
-                    writer.println(order.get(i).toString());
+                    if (i < order.size()) {
+                        writer.println(order.get(i).toString());
+                    }
                 }
             }
             writer.close();
