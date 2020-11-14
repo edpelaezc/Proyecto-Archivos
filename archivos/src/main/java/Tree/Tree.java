@@ -5,6 +5,7 @@
  */
 package Tree;
 
+import Access.HandleFiles;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -23,14 +24,10 @@ public class Tree {
     public Node<Correo> root;
     private int numberOfNodes = 1;
     public ArrayList<Node<Correo>> order = new ArrayList<Node<Correo>>();
-    File correos = new File("C:\\MEIA\\correos.txt");
+    File correos = new File("C:\\MEIA\\correos.txt");    
 
     public Tree() {
         root = null;
-    }
-
-    public int weight() {
-        return numberOfNodes;
     }
 
     public void add(Correo element) {
@@ -66,20 +63,6 @@ public class Tree {
             } else//x es igual que y
             {
                 System.out.println("NO SE PERMITEN DUPLICADOS");
-            }
-        }
-    }
-
-    public boolean elementExists(Node<Correo> root, Correo element) {
-        if (root == null) {
-            return false;
-        } else if (element.compareTo(root.getElement()) == 0) {
-            return true;
-        } else {
-            if (element.compareTo(root.getElement()) < 0) {
-                return elementExists(root.getLeft(), element);
-            } else {
-                return elementExists(root.getRight(), element);
             }
         }
     }
@@ -200,16 +183,15 @@ public class Tree {
         preOrder(this.root);
         PrintWriter writer;
         try {
-            this.correos.delete();
             this.correos.createNewFile();
             // vaciar archivo            
             writer = new PrintWriter(correos);
-            writer.print("");            
+            writer.print("");
 
             // ordenar por medio de la direccion fisica
             Collections.sort(order);
 
-            int size = order.size();            
+            int size = order.size();
             for (int i = 0; i < size; i++) {
                 writer.println(order.get(i).toString());
             }
@@ -219,21 +201,4 @@ public class Tree {
             Logger.getLogger(Tree.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
-    /*
-    public void postOrder(Node<Correo> root) {
-        if (root != null) {
-            postOrder(root.getLeft());
-            postOrder(root.getRight());
-            order.addLast(root);
-        }
-    }
-
-    public void inOrder(Node<Correo> root) {
-        if (root != null) {
-            inOrder(root.getLeft());
-            order.addLast(root);
-            inOrder(root.getRight());
-        }
-    }*/
 }

@@ -159,7 +159,7 @@ public class HandleFiles {
      * @param input Archivo a leer
      * @return Arraylist que contiene las lineas del archivo.
      */
-    private ArrayList ReadFile(File input) {
+    public ArrayList ReadFile(File input) {
         FileReader lectura;
         ArrayList response = new ArrayList();
 
