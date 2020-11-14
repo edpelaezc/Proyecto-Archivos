@@ -90,7 +90,7 @@ public class Correo implements Comparable<Correo> {
 
     @Override
     public String toString() {
-        return "Correo{" + "emisor=" + emisor + ", receptor=" + receptor + ", fecha=" + fecha + ", asunto=" + asunto + ", mensaje=" + mensaje + ", adjunto=" + adjunto + ", estatus=" + estatus + '}';
+        return this.getEmisor() + "|" + this.getReceptor()+ "|" + this.getFecha()+ "|" + this.getAsunto()+ "|" + this.getMensaje() + "|" + this.getAdjunto() + "|" + this.getEstatus();
     }
 
     @Override
