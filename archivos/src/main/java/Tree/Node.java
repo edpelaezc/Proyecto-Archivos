@@ -12,29 +12,49 @@ package Tree;
 public class Node<Correo> {
 
     private Correo element;
-    private Node<Correo> next;
+    private int no_registro;
+    private Node<Correo> parent;
+    private Node<Correo> left;
+    private Node<Correo> right;
 
-    /**
-     * Objeto nodo utilizado para orden del árbol
-     *
-     * @param newElement
-     * @param nextNode
-     */
-    public Node(Correo newElement, Node<Correo> nextNode) {
-        element = newElement;
-        next = nextNode;
+    public Node(Correo t, Node<Correo> above, Node<Correo> leftChild, Node<Correo> rightChild, int registro) {
+        this.element = t;
+        this.parent = above;
+        this.left = leftChild;
+        this.right = rightChild;
+        this.no_registro = registro; 
     }
 
     public Correo getElement() {
         return element;
     }
 
-    public Node<Correo> getNext() {
-        return next;
+    public Node<Correo> getParent() {
+        return parent;
     }
 
-    public void setNext(Node<Correo> next) {
-        this.next = next;
+    public Node<Correo> getLeft() {
+        return left;
+    }
+
+    public Node<Correo> getRight() {
+        return right;
+    }
+
+    public void setElement(Correo t) {
+        element = t;
+    }
+
+    public void setParent(Node<Correo> parentTreeNode) {
+        parent = parentTreeNode;
+    }
+
+    public void setLeft(Node<Correo> leftChild) {
+        left = leftChild;
+    }
+
+    public void setRight(Node<Correo> rightChild) {
+        right = rightChild;
     }
 
 }
