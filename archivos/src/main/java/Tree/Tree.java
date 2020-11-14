@@ -24,7 +24,8 @@ public class Tree {
     public Node<Correo> root;
     private int numberOfNodes = 1;
     public ArrayList<Node<Correo>> order = new ArrayList<Node<Correo>>();
-    File correos = new File("C:\\MEIA\\correos.txt");    
+    File correos = new File("C:\\MEIA\\correos.txt");
+    HandleFiles handler = new HandleFiles();
 
     public Tree() {
         root = null;
@@ -78,7 +79,75 @@ public class Tree {
         return count;
     }
 
-    public Correo remove(Node<Correo> root, Correo element) {
+    /**
+     * GET en el árbol.
+     *
+     * @param input
+     * @return null si no existe, de lo contrario retorna un objeto "Correo".
+     */
+    public Correo search(Correo input) {
+        return elementExists(this.root, input);
+    }
+
+    public Correo elementExists(Node<Correo> root, Correo element) {
+        if (root == null) {
+            return null;
+        } else if (element.compareTo(root.getElement()) == 0) {
+            return root.getElement();
+        } else {
+            if (element.compareTo(root.getElement()) < 0) {
+                return elementExists(root.getLeft(), element);
+            } else {
+                return elementExists(root.getRight(), element);
+            }
+        }
+    }
+
+    public void logicalDelete(Correo input) {
+        // elemento al que se le cambiará el estado.
+        Correo temp = remove(this.root, input);
+
+        // leer archivo 
+        ArrayList tree = handler.ReadFile(correos);
+
+        preOrder(this.root);
+        PrintWriter writer;
+        try {
+            this.correos.createNewFile();
+            // vaciar archivo            
+            writer = new PrintWriter(correos);
+            writer.print("");
+
+            // ordenar por medio de la direccion fisica
+            Collections.sort(order);
+
+            int size = tree.size();
+            for (int i = 0; i < size; i++) {
+                String aux = tree.get(i).toString();
+
+                // si contiene la clave
+                if (aux.contains(temp.getEmisor()) && aux.contains(temp.getReceptor()) && aux.contains(temp.getFecha())) {
+                    // eliminación lógica del correo 
+                    temp.setEstatus("0");
+                    
+                    // conseguir el numero de registro del elemento eliminado 
+                    String[] fields = aux.split("\\|");
+                    writer.println(fields[0] + "|" + "-" + "|" + "-" + "|" + temp.toString());
+                    writer.println(order.get(i).toString());
+                } else {
+                    writer.println(order.get(i).toString());
+                }
+            }
+            writer.close();
+
+        } catch (IOException ex) {
+            Logger.getLogger(Tree.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        order = new ArrayList<Node<Correo>>();
+    }
+
+    private Correo remove(Node<Correo> root, Correo element) {
         if (root == null) {
             return null;
         } else if (element.compareTo(root.getElement()) == 0) {
