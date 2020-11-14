@@ -27,8 +27,7 @@ public class Tree {
 
     public void add(Correo element) {
         if (this.root == null) {
-            root = new Node<Correo>(element, null, null, null, numberOfNodes);
-            numberOfNodes++;
+            root = new Node<Correo>(element, null, null, null, numberOfNodes++);            
         } else {
             addElement(this.root, element);
         }
@@ -36,22 +35,19 @@ public class Tree {
 
     private void addElement(Node<Correo> root, Correo element) {
         if (this.root == null) {
-            this.root = new Node<Correo>(element, null, null, null, numberOfNodes);
-            numberOfNodes++;
+            this.root = new Node<Correo>(element, null, null, null, numberOfNodes++);            
         } else {
             if (element.compareTo(root.getElement()) < 0)//x es menor que y
             {
                 if (root.getLeft() == null) {
-                    root.setLeft(new Node<Correo>(element, root, null, null, numberOfNodes));
-                    numberOfNodes++;
+                    root.setLeft(new Node<Correo>(element, root, null, null, numberOfNodes++));                    
                 } else {
                     addElement(root.getLeft(), element);
                 }
             } else if (element.compareTo(root.getElement()) > 0)//x es mayor que y 
             {
                 if (root.getRight() == null) {
-                    root.setRight(new Node<Correo>(element, root, null, null, numberOfNodes));
-                    numberOfNodes++;
+                    root.setRight(new Node<Correo>(element, root, null, null, numberOfNodes++));                    
                 } else {
                     addElement(root.getRight(), element);
                 }
@@ -106,7 +102,7 @@ public class Tree {
                         root = null;
                     }
                 }
-                numberOfNodes--;
+                
                 return aux;
             }//borrar nodo sin hijos
             else if (numberOfChildren(root) == 1)//borrar nodo con 1 hijo
@@ -144,7 +140,7 @@ public class Tree {
                         }
                     }
                 }
-                numberOfNodes--;
+                
                 return aux;
             }//borrar nodo con 1 hijo
             else {//El que sustituirá será el más derecho de los izquierdos
@@ -168,7 +164,7 @@ public class Tree {
                     }
                 }
 
-                numberOfNodes--;
+                
                 return aux;
             }
         } else {

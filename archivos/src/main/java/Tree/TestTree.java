@@ -138,6 +138,12 @@ public class TestTree extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         tree.add(new Correo(emisorTF.getText(), receptorTF.getText(), fechaTF.getText(), asuntoTF.getText(), mensajeTF.getText(), adjuntoTF.getText(), "1"));
+        /*emisorTF.setText("");
+        receptorTF.setText("");
+        fechaTF.setText("");
+        asuntoTF.setText("");
+        mensajeTF.setText("");
+        adjuntoTF.setText("");*/
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
