@@ -9,10 +9,10 @@ package Tree;
  *
  * @author edanP
  */
-public class Node<Correo> {
+public class Node<Correo> implements Comparable<Node<Correo>> {
 
     private Correo element;
-    private int no_registro;
+    private Integer no_registro; // actua como la dirección física de los nodos
     private Node<Correo> parent;
     private Node<Correo> left;
     private Node<Correo> right;
@@ -22,7 +22,7 @@ public class Node<Correo> {
         this.parent = above;
         this.left = leftChild;
         this.right = rightChild;
-        this.no_registro = registro; 
+        this.no_registro = registro;
     }
 
     public Correo getElement() {
@@ -55,6 +55,32 @@ public class Node<Correo> {
 
     public void setRight(Node<Correo> rightChild) {
         right = rightChild;
+    }
+
+    public Integer getNo_registro() {
+        return no_registro;
+    }
+
+    public void setNo_registro(Integer no_registro) {
+        this.no_registro = no_registro;
+    }
+
+    @Override
+    public int compareTo(Node<Correo> o) {
+        return this.no_registro.compareTo(o.no_registro);
+    }
+
+    @Override
+    public String toString() {
+        if (this.getLeft() == null && this.getRight() == null) {
+            return this.getNo_registro().toString()+ "|" + "-" + "|" + "-" + "|" + this.element.toString();
+        } else if (this.getLeft() != null && this.getRight() == null) {
+            return this.getNo_registro().toString()+ "|" + this.getLeft().getNo_registro().toString()+ "|" + "-"+ "|" + this.element.toString();
+        } else if (this.getRight() != null && this.getLeft() == null) {
+            return this.getNo_registro().toString()+ "|" + "-" + "|" + this.getRight().getNo_registro().toString() + "|" + this.element.toString();
+        } else {
+            return this.getNo_registro().toString() + "|" + this.getLeft().getNo_registro().toString() + "|" + this.getRight().getNo_registro().toString() + "|" + this.element.toString();
+        } 
     }
 
 }

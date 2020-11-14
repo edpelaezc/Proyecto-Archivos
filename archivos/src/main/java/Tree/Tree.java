@@ -5,7 +5,14 @@
  */
 package Tree;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -14,8 +21,9 @@ import java.util.ArrayList;
 public class Tree {
 
     public Node<Correo> root;
-    private int numberOfNodes = 0;
+    private int numberOfNodes = 1;
     public ArrayList<Node<Correo>> order = new ArrayList<Node<Correo>>();
+    File correos = new File("C:\\MEIA\\correos.txt");
 
     public Tree() {
         root = null;
@@ -27,27 +35,31 @@ public class Tree {
 
     public void add(Correo element) {
         if (this.root == null) {
-            root = new Node<Correo>(element, null, null, null, numberOfNodes++);            
+            root = new Node<Correo>(element, null, null, null, numberOfNodes++);
+            writeTree();
+            order = new ArrayList<Node<Correo>>();
         } else {
             addElement(this.root, element);
+            writeTree();
+            order = new ArrayList<Node<Correo>>();
         }
     }
 
     private void addElement(Node<Correo> root, Correo element) {
         if (this.root == null) {
-            this.root = new Node<Correo>(element, null, null, null, numberOfNodes++);            
+            this.root = new Node<Correo>(element, null, null, null, numberOfNodes++);
         } else {
             if (element.compareTo(root.getElement()) < 0)//x es menor que y
             {
                 if (root.getLeft() == null) {
-                    root.setLeft(new Node<Correo>(element, root, null, null, numberOfNodes++));                    
+                    root.setLeft(new Node<Correo>(element, root, null, null, numberOfNodes++));
                 } else {
                     addElement(root.getLeft(), element);
                 }
             } else if (element.compareTo(root.getElement()) > 0)//x es mayor que y 
             {
                 if (root.getRight() == null) {
-                    root.setRight(new Node<Correo>(element, root, null, null, numberOfNodes++));                    
+                    root.setRight(new Node<Correo>(element, root, null, null, numberOfNodes++));
                 } else {
                     addElement(root.getRight(), element);
                 }
@@ -102,7 +114,7 @@ public class Tree {
                         root = null;
                     }
                 }
-                
+
                 return aux;
             }//borrar nodo sin hijos
             else if (numberOfChildren(root) == 1)//borrar nodo con 1 hijo
@@ -140,7 +152,7 @@ public class Tree {
                         }
                     }
                 }
-                
+
                 return aux;
             }//borrar nodo con 1 hijo
             else {//El que sustituirá será el más derecho de los izquierdos
@@ -164,7 +176,6 @@ public class Tree {
                     }
                 }
 
-                
                 return aux;
             }
         } else {
@@ -186,7 +197,27 @@ public class Tree {
     }
 
     public void writeTree() {
+        preOrder(this.root);
+        PrintWriter writer;
+        try {
+            this.correos.delete();
+            this.correos.createNewFile();
+            // vaciar archivo            
+            writer = new PrintWriter(correos);
+            writer.print("");            
 
+            // ordenar por medio de la direccion fisica
+            Collections.sort(order);
+
+            int size = order.size();            
+            for (int i = 0; i < size; i++) {
+                writer.println(order.get(i).toString());
+            }
+            writer.close();
+
+        } catch (IOException ex) {
+            Logger.getLogger(Tree.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /*
