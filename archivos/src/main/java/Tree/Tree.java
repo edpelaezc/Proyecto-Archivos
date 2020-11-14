@@ -5,6 +5,8 @@
  */
 package Tree;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author edanP
@@ -13,7 +15,7 @@ public class Tree {
 
     public Node<Correo> root;
     private int numberOfNodes = 0;
-    // public MyLinkedList<Node<Correo>> order = new MyLinkedList<Node<Correo>>();
+    public ArrayList<Node<Correo>> order = new ArrayList<Node<Correo>>();
 
     public Tree() {
         root = null;
