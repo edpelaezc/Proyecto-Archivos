@@ -5,6 +5,12 @@
  */
 package Email;
 
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+import javax.swing.JFileChooser;
+import org.codehaus.plexus.util.FileUtils;
+
 /**
  *
  * @author llaaj
@@ -50,6 +56,11 @@ public class Redactar extends javax.swing.JFrame {
 
         adjuntarBtn.setText("Adjuntar");
         adjuntarBtn.setToolTipText("");
+        adjuntarBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                adjuntarBtnActionPerformed(evt);
+            }
+        });
 
         asuntoTxt1.setText("Asunto");
 
@@ -90,6 +101,43 @@ public class Redactar extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void adjuntarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adjuntarBtnActionPerformed
+        // TODO add your handling code here:
+        JFileChooser dialog = new JFileChooser();
+        // dialog.setFileFilter(new FileNameExtensionFilter("Image files", ImageIO.getReaderFileSuffixes()));
+
+        File fichero;
+        String path;
+        int valor = dialog.showOpenDialog(this);
+
+        if (valor == JFileChooser.APPROVE_OPTION) {
+            fichero = dialog.getSelectedFile();
+            path = fichero.getPath();
+
+            adjuntoTxt.setText(path);
+        }
+        
+        System.out.println(moverAdjunto(adjuntoTxt.getText()));
+
+    }//GEN-LAST:event_adjuntarBtnActionPerformed
+
+    private String moverAdjunto(String path) {
+        path = path.replaceAll(" ", "");
+        if (!"".equals(path)) {
+            File source = new File(path);
+            int index = source.getName().lastIndexOf('.');
+            File dest = new File("C:\\MEIA\\Adjuntos\\" + source.getName());
+            System.out.println(dest.getName());
+            try {
+                FileUtils.copyFile(source, dest);
+                return dest.getPath();
+            } catch (IOException e) {
+                return e.getMessage();
+            }
+        }
+        return "";
+    }
 
     /**
      * @param args the command line arguments
