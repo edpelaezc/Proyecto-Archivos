@@ -7,9 +7,10 @@ package Tree;
 
 import Access.HandleFiles;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.logging.Level;
@@ -22,7 +23,8 @@ import java.util.logging.Logger;
 public class Tree {
 
     public Node<Correo> root;
-    private int size = 0;
+    private int active = 0;
+    private int inactive = 0;
     private int numberOfNodes = 1;
     public ArrayList<Node<Correo>> order = new ArrayList<Node<Correo>>();
     File correos = new File("C:\\MEIA\\correos.txt");
@@ -141,7 +143,7 @@ public class Tree {
                 }
             }
             writer.close();
-
+            updateDesc();
         } catch (IOException ex) {
             Logger.getLogger(Tree.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -267,12 +269,84 @@ public class Tree {
                 writer.println(order.get(i).toString());
             }
             writer.close();
+            updateDesc();
 
         } catch (IOException ex) {
             Logger.getLogger(Tree.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         order = new ArrayList<Node<Correo>>();
+    }
+
+    private Correo createCorreo(String line) {
+        String[] fields = line.split("\\|");
+        return new Correo(
+                fields[3],
+                fields[4],
+                fields[5],
+                fields[6],
+                fields[7],
+                fields[8],
+                fields[9]
+        );
+    }
+
+    public void count() {
+        ArrayList tree = handler.ReadFile(correos);
+
+        for (int i = 0; i < tree.size(); i++) {
+            Correo aux = createCorreo(tree.get(i).toString());
+
+            if ("1".equals(aux.getEstatus())) {
+                this.active++;
+            } else {
+                this.inactive++;
+            }
+        }
+    }
+
+    public void updateDesc() {
+
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+        String fecha = dtf.format(now);
+
+        preOrder(this.root);
+        int size = order.size();
+        this.active = 0;
+        this.inactive = 0;
+        count();        
+
+        try {
+
+            if (desc_correos.createNewFile()) {
+                PrintWriter descWriter = new PrintWriter(desc_correos);
+                descWriter.print("nombre_simbolico: correos\n"
+                        + "fecha_creacion: " + fecha + "\n"
+                        + "usuario_creacion: " + order.get(size - 1).getElement().getEmisor() + "\n"
+                        + "fecha_modificacion: " + fecha + "\n"
+                        + "usuario_modificacion: " + order.get(size - 1).getElement().getEmisor() + "\n"
+                        + "#_registros:" + (this.active + this.inactive) + "\n"
+                        + "registros_activos: " + this.active + "\n"
+                        + "registros_inactivos: " + this.inactive + "\n");
+                descWriter.close();
+            } else {
+                ArrayList desc = handler.ReadFile(desc_correos);
+                PrintWriter descWriter = new PrintWriter(desc_correos);
+                descWriter.print("nombre_simbolico: correos\n"
+                        + desc.get(1).toString() + "\n"
+                        + desc.get(2).toString() + "\n"
+                        + "fecha_modificacion: " + fecha + "\n"
+                        + "usuario_modificacion: " + order.get(size - 1).getElement().getEmisor() + "\n"
+                        + "#_registros:" + (this.active + this.inactive) + "\n"
+                        + "registros_activos: " + this.active + "\n"
+                        + "registros_inactivos: " + this.inactive + "\n");
+                descWriter.close();
+            }
+
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
 }
