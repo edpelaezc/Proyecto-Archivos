@@ -10,8 +10,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.logging.Level;
@@ -24,14 +22,12 @@ import java.util.logging.Logger;
 public class Tree {
 
     public Node<Correo> root;
-    private int active = 0;
-    private int inactive = 0;
+    private int size = 0;
     private int numberOfNodes = 1;
     public ArrayList<Node<Correo>> order = new ArrayList<Node<Correo>>();
     File correos = new File("C:\\MEIA\\correos.txt");
     File desc_correos = new File("C:\\MEIA\\desc_correos.txt");
     HandleFiles handler = new HandleFiles();
-    HandleTree tree_handler = new HandleTree();
 
     public Tree() {
         root = null;
@@ -142,10 +138,9 @@ public class Tree {
                     if (i < order.size()) {
                         writer.println(order.get(i).toString());
                     }
-                }                              
+                }
             }
             writer.close();
-            updateDesc(size);
 
         } catch (IOException ex) {
             Logger.getLogger(Tree.class.getName()).log(Level.SEVERE, null, ex);
@@ -255,20 +250,6 @@ public class Tree {
         }
     }
 
-    public void count() {
-        ArrayList tree = handler.ReadFile(correos);
-
-        for (int i = 0; i < tree.size(); i++) {
-            Correo aux = tree_handler.createCorreo(tree.get(i).toString());
-
-            if (aux.getEstatus() == "1") {
-                this.active++;
-            } else {
-                this.inactive++;
-            }
-        }
-    }
-
     public void writeTree() {
         preOrder(this.root);
         PrintWriter writer;
@@ -286,55 +267,12 @@ public class Tree {
                 writer.println(order.get(i).toString());
             }
             writer.close();
-            
-            updateDesc(size);
+
         } catch (IOException ex) {
             Logger.getLogger(Tree.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         order = new ArrayList<Node<Correo>>();
-    }
-
-    public void updateDesc(int size) {
-
-        this.active = 0;
-        this.inactive = 0;
-        count();
-
-        // escribir en bitacora
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-        LocalDateTime now = LocalDateTime.now();
-        String fecha = dtf.format(now);
-
-        try {
-            if (desc_correos.createNewFile()) { // descriptor no existe
-                PrintWriter descWriter = new PrintWriter(desc_correos);
-                descWriter.print("nombre_simbolico: correos\n"
-                        + "fecha_creacion: " + fecha + "\n"
-                        + "usuario_creacion: " + order.get(size - 1).getElement().getEmisor() + "\n"
-                        + "fecha_modificacion: " + fecha + "\n"
-                        + "usuario_modificacion: " + order.get(size - 1).getElement().getEmisor() + "\n"
-                        + "#_registros: " + this.active + this.inactive + "\n"
-                        + "registros_activos: " + this.active + "\n"
-                        + "registros_inactivos: 0\n");
-                descWriter.close();
-            } else {
-
-                ArrayList desc = handler.ReadFile(desc_correos);
-
-                PrintWriter descWriter = new PrintWriter(desc_correos);
-                descWriter.print("nombre_simbolico: correos\n"
-                        + desc.get(1).toString()
-                        + desc.get(2).toString()
-                        + "fecha_modificacion: " + fecha + "\n"
-                        + "usuario_modificacion: " + order.get(size - 1).getElement().getEmisor() + "\n"
-                        + "#_registros: " + this.active + this.inactive + "\n"
-                        + "registros_activos: " + this.active + "\n"
-                        + "registros_inactivos: " + this.inactive);
-                descWriter.close();
-            }
-        } catch (IOException e) {
-        }
     }
 
 }

@@ -32,7 +32,7 @@ public class HandleTree {
         System.out.println("CARGA TERMINADA");
     }
 
-    public Correo createCorreo(String line) {
+    private Correo createCorreo(String line) {
         String[] fields = line.split("\\|");
         return new Correo(
                 fields[3],
