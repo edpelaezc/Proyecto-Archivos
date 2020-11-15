@@ -67,15 +67,15 @@
         <Property name="text" type="java.lang.String" value="Bandeja de Entrada"/>
         <Property name="actionCommand" type="java.lang.String" value="recibidos"/>
       </Properties>
-      <AccessibilityProperties>
-        <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="Bandeja de Entrada"/>
-      </AccessibilityProperties>
     </Component>
     <Component class="javax.swing.JButton" name="redactarBtn">
       <Properties>
         <Property name="actionCommand" type="java.lang.String" value="enviar"/>
         <Property name="label" type="java.lang.String" value="+ Redactar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="redactarBtnActionPerformed"/>
+      </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
       <AuxValues>

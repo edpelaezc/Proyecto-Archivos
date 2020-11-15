@@ -43,6 +43,11 @@ public class Email extends javax.swing.JFrame {
 
         redactarBtn.setActionCommand("enviar");
         redactarBtn.setLabel("+ Redactar");
+        redactarBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                redactarBtnActionPerformed(evt);
+            }
+        });
 
         jScrollPane1.setViewportView(jList1);
         jList1.getAccessibleContext().setAccessibleName("");
@@ -76,10 +81,14 @@ public class Email extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        bandejaEntrada.getAccessibleContext().setAccessibleName("Bandeja de Entrada");
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void redactarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_redactarBtnActionPerformed
+        // TODO add your handling code here:
+        Redactar redactar = new Redactar();
+        redactar.setVisible(true);
+    }//GEN-LAST:event_redactarBtnActionPerformed
 
     /**
      * @param args the command line arguments
