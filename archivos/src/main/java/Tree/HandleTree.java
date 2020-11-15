@@ -15,7 +15,7 @@ import java.util.ArrayList;
  */
 public class HandleTree {
 
-    Tree tree = new Tree();
+    public Tree tree = new Tree();
     File correos = new File("C:\\MEIA\\correos.txt");
     HandleFiles handler = new HandleFiles();
 

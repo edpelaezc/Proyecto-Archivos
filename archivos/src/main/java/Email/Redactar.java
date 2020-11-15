@@ -5,8 +5,13 @@
  */
 package Email;
 
+import Data.Data;
+import Tree.Correo;
+import Tree.HandleTree;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import org.codehaus.plexus.util.FileUtils;
@@ -17,11 +22,14 @@ import org.codehaus.plexus.util.FileUtils;
  */
 public class Redactar extends javax.swing.JFrame {
 
+    HandleTree handler = new HandleTree();
+
     /**
      * Creates new form Redactar
      */
     public Redactar() {
         initComponents();
+        handler.readTree();
     }
 
     /**
@@ -44,6 +52,11 @@ public class Redactar extends javax.swing.JFrame {
 
         sendBtn.setText("Enviar");
         sendBtn.setToolTipText("");
+        sendBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sendBtnActionPerformed(evt);
+            }
+        });
 
         destinatarioTxt.setText("Destinatario");
 
@@ -117,10 +130,17 @@ public class Redactar extends javax.swing.JFrame {
 
             adjuntoTxt.setText(path);
         }
-        
-        System.out.println(moverAdjunto(adjuntoTxt.getText()));
 
     }//GEN-LAST:event_adjuntarBtnActionPerformed
+
+    private void sendBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendBtnActionPerformed
+        // TODO add your handling code here:
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+        String fecha = dtf.format(now);
+        
+        handler.tree.add(new Correo(Data.Instance().user.getUsuario(), destinatarioTxt.getText(), fecha, asuntoTxt1.getText(), msgTxt.getText(), moverAdjunto(adjuntoTxt.getText()), "1"));
+    }//GEN-LAST:event_sendBtnActionPerformed
 
     private String moverAdjunto(String path) {
         path = path.replaceAll(" ", "");
