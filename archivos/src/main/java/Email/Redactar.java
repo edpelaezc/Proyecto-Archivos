@@ -152,12 +152,12 @@ public class Redactar extends javax.swing.JFrame {
         LocalDateTime now = LocalDateTime.now();
         String fecha = dtf.format(now);
                 
-        Data.Instance().tree.add(new Correo(Data.Instance().user.getUsuario(), destinatarioTxt.getText(), fecha, asuntoTxt1.getText(), msgTxt.getText(), moverAdjunto(adjuntoTxt.getText()), "1"));
-        this.dispose();
+        //Data.Instance().tree.add(new Correo(Data.Instance().user.getUsuario(), destinatarioTxt.getText(), fecha, asuntoTxt1.getText(), msgTxt.getText(), moverAdjunto(adjuntoTxt.getText()), "1"));
+        //this.dispose();
         
         Receptor r = new Receptor();
         if(r.userExists(destinatarioTxt.getText())){
-            if (r.isUserOrList(destinatarioTxt.getText())) {
+            if (!r.isUserOrList(destinatarioTxt.getText())) { // false para listas
                 if (r.userHasList(destinatarioTxt.getText(), Data.Instance().user.getUsuario())) {
                     ArrayList<String> usersInList = r.getUsersFromList(destinatarioTxt.getText());
                     
@@ -166,6 +166,7 @@ public class Redactar extends javax.swing.JFrame {
                             user, fecha, asuntoTxt1.getText(), msgTxt.getText(), 
                             moverAdjunto(adjuntoTxt.getText()), "1"));
                     }
+                    this.dispose();
                 }
                 else {
                     showMessageDialog(null, "No has creado esta lista anteriormente");
@@ -176,6 +177,7 @@ public class Redactar extends javax.swing.JFrame {
                         destinatarioTxt.getText(), fecha, 
                         asuntoTxt1.getText(), msgTxt.getText(), 
                         moverAdjunto(adjuntoTxt.getText()), "1"));
+                this.dispose();
             }
             
         }
@@ -195,7 +197,7 @@ public class Redactar extends javax.swing.JFrame {
                 FileUtils.copyFile(source, dest);
                 return dest.getPath();
             } catch (IOException e) {
-                return "";
+               return "";
             }
         }
         return "";

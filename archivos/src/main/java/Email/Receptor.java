@@ -104,10 +104,10 @@ public class Receptor {
             File fBloque = new File("C:\\MEIA\\bloque_usuario.txt");
             Scanner scan = new Scanner(fBloque);
             
-            ArrayList<String> userList = new ArrayList<String>();
             while (scan.hasNextLine()){
                 String[] data = scan.nextLine().split("\\|");
-                if (data[0].equals(list) && data[1].equals(user)) {
+                String[] key = data[0].split(",");
+                if (key[0].equals(list) && key[1].equals(user)) {
                         return true; // hay coincidencia con el usuario y la lista
                 }
             }
@@ -128,8 +128,11 @@ public class Receptor {
             ArrayList<String> userList = new ArrayList<String>();
             while (scan.hasNextLine()){
                 String[] data = scan.nextLine().split("\\|");
-                if (data[0].equals(list) && data[5].equals("1")) {
-                        userList.add(data[2]); // agregar usuario asociado
+                String[] key = data[0].split(",");
+                
+                if (key[0].equals(list) && data[3].equals("1")) {
+                    
+                        userList.add(key[2]); // agregar usuario asociado
                 }
             }
             
