@@ -473,7 +473,7 @@ public class Registro extends javax.swing.JFrame {
                 FileUtils.copyFile(source, dest);
                 return dest.getPath();
             } catch (IOException e) {
-                return e.getMessage();
+                return "";
             }
         }
         return "";

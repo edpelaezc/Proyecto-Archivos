@@ -5,17 +5,26 @@
  */
 package Email;
 
+import Data.Data;
+import Tree.Correo;
+import Tree.HandleTree;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author llaaj
  */
 public class Email extends javax.swing.JFrame {
 
+    HandleTree handler = new HandleTree();
+
     /**
      * Creates new form Email
      */
     public Email() {
         initComponents();
+        handler.readTree();
     }
 
     /**
@@ -30,16 +39,27 @@ public class Email extends javax.swing.JFrame {
         bandejaSalida = new javax.swing.JButton();
         bandejaEntrada = new javax.swing.JButton();
         redactarBtn = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        bandejaTable = new javax.swing.JTable();
+        EliminarBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         bandejaSalida.setActionCommand("enviados");
         bandejaSalida.setLabel("Bandeja de Salida");
+        bandejaSalida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bandejaSalidaActionPerformed(evt);
+            }
+        });
 
         bandejaEntrada.setText("Bandeja de Entrada");
         bandejaEntrada.setActionCommand("recibidos");
+        bandejaEntrada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bandejaEntradaActionPerformed(evt);
+            }
+        });
 
         redactarBtn.setActionCommand("enviar");
         redactarBtn.setLabel("+ Redactar");
@@ -49,8 +69,20 @@ public class Email extends javax.swing.JFrame {
             }
         });
 
-        jScrollPane1.setViewportView(jList1);
-        jList1.getAccessibleContext().setAccessibleName("");
+        bandejaTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane2.setViewportView(bandejaTable);
+
+        EliminarBtn.setText("Eliminar");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -59,13 +91,15 @@ public class Email extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
-                    .addGroup(layout.createSequentialGroup()
+                    .addComponent(jScrollPane2)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(bandejaEntrada)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(bandejaSalida)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 124, Short.MAX_VALUE)
-                        .addComponent(redactarBtn)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(EliminarBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(redactarBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -76,8 +110,10 @@ public class Email extends javax.swing.JFrame {
                     .addComponent(bandejaEntrada)
                     .addComponent(bandejaSalida)
                     .addComponent(redactarBtn))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(EliminarBtn)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -89,6 +125,36 @@ public class Email extends javax.swing.JFrame {
         Redactar redactar = new Redactar();
         redactar.setVisible(true);
     }//GEN-LAST:event_redactarBtnActionPerformed
+
+    private void bandejaEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bandejaEntradaActionPerformed
+        // TODO add your handling code here:
+        showTable(2);
+    }//GEN-LAST:event_bandejaEntradaActionPerformed
+
+    private void bandejaSalidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bandejaSalidaActionPerformed
+        // TODO add your handling code here:
+        showTable(1);
+    }//GEN-LAST:event_bandejaSalidaActionPerformed
+
+    public void showTable(int bandeja) {
+        String[] columns = {"Usuario", "Asunto", "Fecha"};
+        String[] tupla = new String[3];
+
+        DefaultTableModel model = new DefaultTableModel(null, columns);
+        
+        // conseguir datos 
+        ArrayList<Correo> correos = Data.Instance().tree.query(Data.Instance().user.getUsuario(), bandeja);
+        
+        for (int i = 0; i < correos.size(); i++) {
+            tupla[0] = correos.get(i).getReceptor();
+            tupla[1] = correos.get(i).getAsunto();
+            tupla[2] = correos.get(i).getFecha();
+            
+            model.addRow(tupla);
+        }
+        
+        bandejaTable.setModel(model);
+    }
 
     /**
      * @param args the command line arguments
@@ -126,10 +192,11 @@ public class Email extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton EliminarBtn;
     private javax.swing.JButton bandejaEntrada;
     private javax.swing.JButton bandejaSalida;
-    private javax.swing.JList<String> jList1;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable bandejaTable;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton redactarBtn;
     // End of variables declaration//GEN-END:variables
 }

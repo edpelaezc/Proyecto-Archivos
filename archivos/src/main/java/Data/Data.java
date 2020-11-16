@@ -6,6 +6,7 @@
 package Data;
 
 import Access.Usuario;
+import Tree.Tree;
 
 /**
  * Patrón singleton, usado para persistir el usuario actual en la aplicación.
@@ -27,4 +28,5 @@ public class Data {
     }
 
     public Usuario user = null;
+    public Tree tree = new Tree();
 }

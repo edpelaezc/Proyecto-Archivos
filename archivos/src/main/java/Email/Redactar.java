@@ -28,8 +28,7 @@ public class Redactar extends javax.swing.JFrame {
      * Creates new form Redactar
      */
     public Redactar() {
-        initComponents();
-        handler.readTree();
+        initComponents();        
     }
 
     /**
@@ -138,8 +137,9 @@ public class Redactar extends javax.swing.JFrame {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
         String fecha = dtf.format(now);
-        
-        handler.tree.add(new Correo(Data.Instance().user.getUsuario(), destinatarioTxt.getText(), fecha, asuntoTxt1.getText(), msgTxt.getText(), moverAdjunto(adjuntoTxt.getText()), "1"));
+                
+        Data.Instance().tree.add(new Correo(Data.Instance().user.getUsuario(), destinatarioTxt.getText(), fecha, asuntoTxt1.getText(), msgTxt.getText(), moverAdjunto(adjuntoTxt.getText()), "1"));
+        this.dispose();
     }//GEN-LAST:event_sendBtnActionPerformed
 
     private String moverAdjunto(String path) {
@@ -153,7 +153,7 @@ public class Redactar extends javax.swing.JFrame {
                 FileUtils.copyFile(source, dest);
                 return dest.getPath();
             } catch (IOException e) {
-                return e.getMessage();
+                return "";
             }
         }
         return "";

@@ -303,6 +303,21 @@ public class Tree {
                 this.inactive++;
             }
         }
+    }    
+
+    public ArrayList<Correo> query(String usuario, int bandeja) {
+        ArrayList data = handler.ReadFile(correos);
+        ArrayList<Correo> response = new ArrayList();
+
+        for (int i = 0; i < data.size(); i++) {
+            Correo aux = createCorreo(data.get(i).toString());
+            if (aux.getEmisor().equals(usuario) && bandeja == 1) { // bandeja de salida
+                response.add(aux);
+            } else if (aux.getReceptor().equals(usuario) && bandeja == 2) { // bandeja de entrada
+                response.add(aux);
+            }
+        }
+        return response;
     }
 
     public void updateDesc() {
@@ -315,7 +330,7 @@ public class Tree {
         int size = order.size();
         this.active = 0;
         this.inactive = 0;
-        count();        
+        count();
 
         try {
 
@@ -337,7 +352,7 @@ public class Tree {
                         + desc.get(1).toString() + "\n"
                         + desc.get(2).toString() + "\n"
                         + "fecha_modificacion: " + fecha + "\n"
-                        + "usuario_modificacion: " + order.get(size - 1).getElement().getEmisor() + "\n"
+                        + "usuario_modificacion: " + Data.Data.Instance().user.getUsuario() + "\n"
                         + "#_registros:" + (this.active + this.inactive) + "\n"
                         + "registros_activos: " + this.active + "\n"
                         + "registros_inactivos: " + this.inactive + "\n");
