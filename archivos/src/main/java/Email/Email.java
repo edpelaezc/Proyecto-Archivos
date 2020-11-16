@@ -24,6 +24,7 @@ public class Email extends javax.swing.JFrame {
      */
     public Email() {
         initComponents();
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         handler.readTree();
     }
 
