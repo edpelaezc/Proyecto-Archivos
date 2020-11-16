@@ -6,6 +6,7 @@
 package Tree;
 
 import Access.HandleFiles;
+import Data.Data;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -98,6 +99,21 @@ public class Tree {
             }
         }
         return elementExists(this.root, input);
+    }
+
+    public ArrayList<Correo> searchBy(String field) {
+        ArrayList data = handler.ReadFile(correos);
+        ArrayList<Correo> response = new ArrayList();
+
+        for (int i = 0; i < data.size(); i++) {   
+            Correo aux = createCorreo(data.get(i).toString());
+            if (aux.getEmisor().equals(Data.Instance().user.getUsuario()) && Data.Instance().actual == 1 && aux.getEstatus().equals("1")) { // bandeja de salida
+                response.add(aux);
+            } else if (aux.getReceptor().equals(Data.Instance().user.getUsuario()) && Data.Instance().actual == 2 && aux.getEstatus().equals("1")) { // bandeja de entrada
+                response.add(aux);
+            }
+        }
+        return response;
     }
 
     public Correo elementExists(Node<Correo> root, Correo element) {
@@ -364,7 +380,7 @@ public class Tree {
                         + desc.get(1).toString() + "\n"
                         + desc.get(2).toString() + "\n"
                         + "fecha_modificacion: " + fecha + "\n"
-                        + "usuario_modificacion: " + Data.Data.Instance().user.getUsuario() + "\n"
+                        + "usuario_modificacion: " + Data.Instance().user.getUsuario() + "\n"
                         + "#_registros:" + (this.active + this.inactive) + "\n"
                         + "registros_activos: " + this.active + "\n"
                         + "registros_inactivos: " + this.inactive + "\n");

@@ -24,6 +24,7 @@ public class Email extends javax.swing.JFrame {
      */
     public Email() {
         initComponents();
+        Data.Instance().actual = 2;
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         handler.readTree();
     }
@@ -44,6 +45,8 @@ public class Email extends javax.swing.JFrame {
         bandejaTable = new javax.swing.JTable();
         EliminarBtn = new javax.swing.JButton();
         verBtn = new javax.swing.JButton();
+        buscarTxt = new javax.swing.JTextField();
+        buscarBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -98,6 +101,13 @@ public class Email extends javax.swing.JFrame {
             }
         });
 
+        buscarBtn.setText("Buscar");
+        buscarBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscarBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -113,9 +123,13 @@ public class Email extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 124, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(verBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(EliminarBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(redactarBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                            .addComponent(EliminarBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(redactarBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(buscarTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(buscarBtn)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -130,7 +144,11 @@ public class Email extends javax.swing.JFrame {
                 .addComponent(EliminarBtn)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(verBtn)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 95, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(buscarTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buscarBtn))
+                .addGap(45, 45, 45)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -187,6 +205,12 @@ public class Email extends javax.swing.JFrame {
             redactar.setVisible(true);
         }
     }//GEN-LAST:event_verBtnActionPerformed
+
+    private void buscarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarBtnActionPerformed
+        // TODO add your handling code here:
+        ArrayList<Correo> temp = Data.Instance().tree.searchBy(buscarTxt.getText());
+        
+    }//GEN-LAST:event_buscarBtnActionPerformed
 
     public void showTable(int bandeja) {
         String[] columns = {"Usuario", "Asunto", "Fecha"};
@@ -254,6 +278,8 @@ public class Email extends javax.swing.JFrame {
     private javax.swing.JButton bandejaEntrada;
     private javax.swing.JButton bandejaSalida;
     private javax.swing.JTable bandejaTable;
+    private javax.swing.JButton buscarBtn;
+    private javax.swing.JTextField buscarTxt;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton redactarBtn;
     private javax.swing.JButton verBtn;
