@@ -30,9 +30,14 @@ public class Redactar extends javax.swing.JFrame {
         initComponents();    
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         if (Data.Instance().ver != null) {
-            destinatarioTxt.setText(Data.Instance().ver.getReceptor());
+            if (Data.Instance().actual == 2) {
+                destinatarioTxt.setText("Usuario: " + Data.Instance().ver.getEmisor());
+            } else {
+                destinatarioTxt.setText("Destinatario: " + Data.Instance().ver.getReceptor());
+            } 
             asuntoTxt1.setText(Data.Instance().ver.getAsunto());
             msgTxt.setText(Data.Instance().ver.getMensaje());
+            adjuntoTxt.setText(Data.Instance().ver.getAdjunto());
             sendBtn.setEnabled(false);
             adjuntarBtn.setEnabled(false);
         }
