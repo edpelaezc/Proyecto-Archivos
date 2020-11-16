@@ -24,7 +24,7 @@ public class Email extends javax.swing.JFrame {
      * Creates new form Email
      */
     public Email() {
-        initComponents();        
+        initComponents();
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         handler.readTree();
     }
@@ -210,47 +210,38 @@ public class Email extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         if (Data.Instance().actual != 0) {
-            String[] columns = null;
-            if (Data.Instance().actual == 2) {
-                columns = new String[]{"Usuario", "Asunto", "Fecha"};
-            } else {
-                columns = new String[]{"Destinatario", "Asunto", "Fecha"};
-            }
-
+            String[] columns = new String[]{"Usuario", "Asunto", "Fecha"};
             String[] tupla = new String[3];
 
             DefaultTableModel model = new DefaultTableModel(null, columns);
 
             // conseguir datos 
-            ArrayList<Correo> correos = Data.Instance().tree.searchBy(buscarTxt.getText());
+            if (!"".equals(buscarTxt.getText())) {
+                ArrayList<Correo> correos = Data.Instance().tree.searchBy(buscarTxt.getText());
 
-            for (int i = 0; i < correos.size(); i++) {
+                for (int i = 0; i < correos.size(); i++) {
 
-                // dependiendo la bandeja mostrar el usuario
-                if (Data.Instance().actual == 2) {
-                    tupla[0] = correos.get(i).getEmisor();
-                } else {
-                    tupla[0] = correos.get(i).getReceptor();
+                    // dependiendo la bandeja mostrar el usuario
+                    if (Data.Instance().actual == 2) {
+                        tupla[0] = correos.get(i).getEmisor();
+                    } else {
+                        tupla[0] = correos.get(i).getReceptor();
+                    }
+                    tupla[1] = correos.get(i).getAsunto();
+                    tupla[2] = correos.get(i).getFecha();
+
+                    model.addRow(tupla);
                 }
-                tupla[1] = correos.get(i).getAsunto();
-                tupla[2] = correos.get(i).getFecha();
 
-                model.addRow(tupla);
+                bandejaTable.setModel(model);
             }
-
-            bandejaTable.setModel(model);
         } else {
-            JOptionPane.showMessageDialog(null, "USUARIO O CONTRASEÑA INVÁLIDOS");
+            JOptionPane.showMessageDialog(null, "SELECCIONE UNA BANDEJA");
         }
     }//GEN-LAST:event_buscarBtnActionPerformed
 
     public void showTable(int bandeja) {
-        String[] columns = null;
-        if (Data.Instance().actual == 2) {
-            columns = new String[]{"Usuario", "Asunto", "Fecha"};
-        } else {
-            columns = new String[]{"Destinatario", "Asunto", "Fecha"};
-        }
+        String[] columns = new String[]{"Usuario", "Asunto", "Fecha"};
         String[] tupla = new String[3];
 
         DefaultTableModel model = new DefaultTableModel(null, columns);
