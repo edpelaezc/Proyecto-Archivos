@@ -162,7 +162,7 @@ public class Redactar extends javax.swing.JFrame {
                     ArrayList<String> usersInList = r.getUsersFromList(destinatarioTxt.getText());
                     
                     for(String user : usersInList){
-                        handler.tree.add(new Correo(Data.Instance().user.getUsuario(), 
+                        Data.Instance().tree.add(new Correo(Data.Instance().user.getUsuario(), 
                             user, fecha, asuntoTxt1.getText(), msgTxt.getText(), 
                             moverAdjunto(adjuntoTxt.getText()), "1"));
                     }
@@ -172,7 +172,7 @@ public class Redactar extends javax.swing.JFrame {
                 }
             }
             else{
-                handler.tree.add(new Correo(Data.Instance().user.getUsuario(), 
+                Data.Instance().tree.add(new Correo(Data.Instance().user.getUsuario(), 
                         destinatarioTxt.getText(), fecha, 
                         asuntoTxt1.getText(), msgTxt.getText(), 
                         moverAdjunto(adjuntoTxt.getText()), "1"));
