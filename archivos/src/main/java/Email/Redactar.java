@@ -40,6 +40,7 @@ public class Redactar extends javax.swing.JFrame {
             adjuntoTxt.setText(Data.Instance().ver.getAdjunto());
             sendBtn.setEnabled(false);
             adjuntarBtn.setEnabled(false);
+            Data.Instance().ver = null;
         }
     }
 
