@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
+import static javax.swing.JOptionPane.showMessageDialog;
 import org.codehaus.plexus.util.FileUtils;
 
 /**
@@ -139,7 +140,13 @@ public class Redactar extends javax.swing.JFrame {
         LocalDateTime now = LocalDateTime.now();
         String fecha = dtf.format(now);
         
-        handler.tree.add(new Correo(Data.Instance().user.getUsuario(), destinatarioTxt.getText(), fecha, asuntoTxt1.getText(), msgTxt.getText(), moverAdjunto(adjuntoTxt.getText()), "1"));
+        Receptor r = new Receptor();
+        if(r.userExists(destinatarioTxt.getText())){
+            handler.tree.add(new Correo(Data.Instance().user.getUsuario(), destinatarioTxt.getText(), fecha, asuntoTxt1.getText(), msgTxt.getText(), moverAdjunto(adjuntoTxt.getText()), "1"));
+        }
+        else {
+            showMessageDialog(null, "Usuario o lista no existentes");
+        }
     }//GEN-LAST:event_sendBtnActionPerformed
 
     private String moverAdjunto(String path) {
