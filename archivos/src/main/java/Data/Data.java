@@ -29,4 +29,5 @@ public class Data {
 
     public Usuario user = null;
     public Tree tree = new Tree();
+    public int actual = 0;
 }

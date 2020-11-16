@@ -87,7 +87,16 @@ public class Tree {
      * @param input
      * @return null si no existe, de lo contrario retorna un objeto "Correo".
      */
-    public Correo search(Correo input) {
+    public Correo search(String emisor, String receptor, String fecha) {
+        ArrayList data = handler.ReadFile(correos);
+        Correo input = null;
+        
+        for (int i = 0; i < data.size(); i++) {
+            Correo aux = createCorreo(data.get(i).toString());
+            if (aux.getEmisor().equals(emisor) && aux.getReceptor().equals(receptor) && aux.getFecha().equals(fecha)) {
+                input = aux;
+            }
+        }
         return elementExists(this.root, input);
     }
 

@@ -83,6 +83,11 @@ public class Email extends javax.swing.JFrame {
         jScrollPane2.setViewportView(bandejaTable);
 
         EliminarBtn.setText("Eliminar");
+        EliminarBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EliminarBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -129,30 +134,51 @@ public class Email extends javax.swing.JFrame {
     private void bandejaEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bandejaEntradaActionPerformed
         // TODO add your handling code here:
         showTable(2);
+        Data.Instance().actual = 2;
     }//GEN-LAST:event_bandejaEntradaActionPerformed
 
     private void bandejaSalidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bandejaSalidaActionPerformed
         // TODO add your handling code here:
         showTable(1);
+        Data.Instance().actual = 1;
     }//GEN-LAST:event_bandejaSalidaActionPerformed
+
+    private void EliminarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EliminarBtnActionPerformed
+        // TODO add your handling code here:
+        int selected = bandejaTable.getSelectedRow();
+        Correo temp = null;
+        // buscar dependiendo de la bandeja
+        if (Data.Instance().actual == 2) {
+            temp = Data.Instance().tree.search(bandejaTable.getValueAt(selected, 0).toString(), Data.Instance().user.getUsuario(), bandejaTable.getValueAt(selected, 2).toString());
+        } else {
+            temp = Data.Instance().tree.search(Data.Instance().user.getUsuario(), bandejaTable.getValueAt(selected, 0).toString(), bandejaTable.getValueAt(selected, 2).toString());
+        }
+        Data.Instance().tree.logicalDelete(temp);
+    }//GEN-LAST:event_EliminarBtnActionPerformed
 
     public void showTable(int bandeja) {
         String[] columns = {"Usuario", "Asunto", "Fecha"};
         String[] tupla = new String[3];
 
         DefaultTableModel model = new DefaultTableModel(null, columns);
-        
+
         // conseguir datos 
         ArrayList<Correo> correos = Data.Instance().tree.query(Data.Instance().user.getUsuario(), bandeja);
-        
+
         for (int i = 0; i < correos.size(); i++) {
-            tupla[0] = correos.get(i).getReceptor();
+            
+            // dependiendo la bandeja mostrar el usuario
+            if (bandeja == 2) {
+                tupla[0] = correos.get(i).getEmisor();
+            } else {
+                tupla[0] = correos.get(i).getReceptor();
+            }
             tupla[1] = correos.get(i).getAsunto();
             tupla[2] = correos.get(i).getFecha();
-            
+
             model.addRow(tupla);
         }
-        
+
         bandejaTable.setModel(model);
     }
 
