@@ -12,6 +12,7 @@ import javax.swing.*;
 import Backup.BackupManagement;
 import Contacts.AdminContactos;
 import Data.Data;
+import Email.Email;
 import MLD.MLD;
 import ListaUsuario.Mantenimiento;
 import com.mycompany.archivos.Login;
@@ -46,7 +47,7 @@ public class Admin extends javax.swing.JFrame {
             Nuevo_Usuario.setEnabled(true);
             Administrar.setEnabled(true);
         } else {
-            AdminTxt.setText("Usuario");
+            AdminTxt.setText("Usuario: " + Data.Instance().user.getUsuario());
             backup.setEnabled(false);
             Baja.setEnabled(true);
             Nuevo_Usuario.setEnabled(false);
@@ -92,6 +93,7 @@ public class Admin extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         contactosButton = new javax.swing.JButton();
         LU = new javax.swing.JButton();
+        correosBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -237,6 +239,13 @@ public class Admin extends javax.swing.JFrame {
             }
         });
 
+        correosBtn.setText("Correos");
+        correosBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                correosBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -294,7 +303,10 @@ public class Admin extends javax.swing.JFrame {
                                         .addGap(18, 18, 18)
                                         .addComponent(Baja)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jButton2)))
+                                        .addComponent(jButton2))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(correosBtn)
+                                        .addGap(0, 0, Short.MAX_VALUE)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(Nuevo_Usuario, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -346,7 +358,9 @@ public class Admin extends javax.swing.JFrame {
                                     .addComponent(jLabel6)
                                     .addComponent(phone_number, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(0, 36, Short.MAX_VALUE)))
-                        .addGap(36, 36, 36))
+                        .addGap(2, 2, 2)
+                        .addComponent(correosBtn)
+                        .addGap(12, 12, 12))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(30, 30, 30)
                         .addComponent(name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -603,6 +617,12 @@ public class Admin extends javax.swing.JFrame {
         lista_usuarios.setVisible(true);
     }//GEN-LAST:event_LUActionPerformed
 
+    private void correosBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_correosBtnActionPerformed
+        // TODO add your handling code here:
+        Email email = new Email();  
+        email.setVisible(true);
+    }//GEN-LAST:event_correosBtnActionPerformed
+
     private void setIcon(){
         ImageIcon img = new ImageIcon("C:\\MEIA\\Imagenes\\icon.jpg");
         this.setIconImage(img.getImage());    }
@@ -654,6 +674,7 @@ public class Admin extends javax.swing.JFrame {
     private javax.swing.JButton backup;
     private javax.swing.JFormattedTextField birthday;
     private javax.swing.JButton contactosButton;
+    private javax.swing.JButton correosBtn;
     private javax.swing.JTextField email;
     private javax.swing.JLabel imageLabel;
     private javax.swing.JButton jButton1;

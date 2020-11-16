@@ -22,16 +22,27 @@ import org.codehaus.plexus.util.FileUtils;
  *
  * @author llaaj
  */
-public class Redactar extends javax.swing.JFrame {
-
-    HandleTree handler = new HandleTree();
+public class Redactar extends javax.swing.JFrame {    
 
     /**
      * Creates new form Redactar
      */
     public Redactar() {
-        initComponents();
-        handler.readTree();
+        initComponents();    
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        if (Data.Instance().ver != null) {
+            if (Data.Instance().actual == 2) {
+                destinatarioTxt.setText("Usuario: " + Data.Instance().ver.getEmisor());
+            } else {
+                destinatarioTxt.setText("Destinatario: " + Data.Instance().ver.getReceptor());
+            } 
+            asuntoTxt1.setText(Data.Instance().ver.getAsunto());
+            msgTxt.setText(Data.Instance().ver.getMensaje());
+            adjuntoTxt.setText(Data.Instance().ver.getAdjunto());
+            sendBtn.setEnabled(false);
+            adjuntarBtn.setEnabled(false);
+            Data.Instance().ver = null;
+        }
     }
 
     /**
@@ -140,6 +151,9 @@ public class Redactar extends javax.swing.JFrame {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
         String fecha = dtf.format(now);
+                
+        Data.Instance().tree.add(new Correo(Data.Instance().user.getUsuario(), destinatarioTxt.getText(), fecha, asuntoTxt1.getText(), msgTxt.getText(), moverAdjunto(adjuntoTxt.getText()), "1"));
+        this.dispose();
         
         Receptor r = new Receptor();
         if(r.userExists(destinatarioTxt.getText())){
@@ -181,7 +195,7 @@ public class Redactar extends javax.swing.JFrame {
                 FileUtils.copyFile(source, dest);
                 return dest.getPath();
             } catch (IOException e) {
-                return e.getMessage();
+                return "";
             }
         }
         return "";

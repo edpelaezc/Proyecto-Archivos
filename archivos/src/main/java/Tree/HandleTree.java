@@ -6,6 +6,7 @@
 package Tree;
 
 import Access.HandleFiles;
+import Data.Data;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -14,8 +15,7 @@ import java.util.ArrayList;
  * @author edanP
  */
 public class HandleTree {
-
-    public Tree tree = new Tree();
+    
     File correos = new File("C:\\MEIA\\correos.txt");
     HandleFiles handler = new HandleFiles();
 
@@ -25,7 +25,7 @@ public class HandleTree {
         for (int i = 0; i < temp.size(); i++) {
             Correo aux = createCorreo(temp.get(i).toString());
             if (!"0".equals(aux.getEstatus())) {
-                tree.add(aux);
+                Data.Instance().tree.add(aux);
             }
         }
 

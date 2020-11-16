@@ -342,13 +342,15 @@ public class HandleFiles {
         ArrayList aux_usuario = ReadFile(usuario); // usuarios en usuario.txt
 
         for (var object : aux_usuario) {
-            if (object.toString().contains(username) && object.toString().contains(password)) {
+            Usuario aux = createUsuario(object.toString());
+            if (aux.getUsuario().equals(username) && aux.getPassword().equals(password)) {
                 return createUsuario(object.toString());
             }
         }
 
         for (var object : bitacora) {
-            if (object.toString().contains(username) && object.toString().contains(password)) {
+            Usuario aux = createUsuario(object.toString());
+            if (aux.getUsuario().equals(username) && aux.getPassword().equals(password)) {
                 return createUsuario(object.toString());
             }
         }

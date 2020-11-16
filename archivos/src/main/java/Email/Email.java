@@ -5,17 +5,28 @@
  */
 package Email;
 
+import Data.Data;
+import Tree.Correo;
+import Tree.HandleTree;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author llaaj
  */
 public class Email extends javax.swing.JFrame {
 
+    HandleTree handler = new HandleTree();
+
     /**
      * Creates new form Email
      */
     public Email() {
         initComponents();
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        handler.readTree();
     }
 
     /**
@@ -30,16 +41,30 @@ public class Email extends javax.swing.JFrame {
         bandejaSalida = new javax.swing.JButton();
         bandejaEntrada = new javax.swing.JButton();
         redactarBtn = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        bandejaTable = new javax.swing.JTable();
+        EliminarBtn = new javax.swing.JButton();
+        verBtn = new javax.swing.JButton();
+        buscarTxt = new javax.swing.JTextField();
+        buscarBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         bandejaSalida.setActionCommand("enviados");
         bandejaSalida.setLabel("Bandeja de Salida");
+        bandejaSalida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bandejaSalidaActionPerformed(evt);
+            }
+        });
 
         bandejaEntrada.setText("Bandeja de Entrada");
         bandejaEntrada.setActionCommand("recibidos");
+        bandejaEntrada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bandejaEntradaActionPerformed(evt);
+            }
+        });
 
         redactarBtn.setActionCommand("enviar");
         redactarBtn.setLabel("+ Redactar");
@@ -49,8 +74,39 @@ public class Email extends javax.swing.JFrame {
             }
         });
 
-        jScrollPane1.setViewportView(jList1);
-        jList1.getAccessibleContext().setAccessibleName("");
+        bandejaTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane2.setViewportView(bandejaTable);
+
+        EliminarBtn.setText("Eliminar");
+        EliminarBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EliminarBtnActionPerformed(evt);
+            }
+        });
+
+        verBtn.setText("Ver");
+        verBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                verBtnActionPerformed(evt);
+            }
+        });
+
+        buscarBtn.setText("Buscar");
+        buscarBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscarBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -59,13 +115,21 @@ public class Email extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
-                    .addGroup(layout.createSequentialGroup()
+                    .addComponent(jScrollPane2)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(bandejaEntrada)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(bandejaSalida)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 124, Short.MAX_VALUE)
-                        .addComponent(redactarBtn)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(verBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(EliminarBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(redactarBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(buscarTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(buscarBtn)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -76,8 +140,16 @@ public class Email extends javax.swing.JFrame {
                     .addComponent(bandejaEntrada)
                     .addComponent(bandejaSalida)
                     .addComponent(redactarBtn))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(EliminarBtn)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(verBtn)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(buscarTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buscarBtn))
+                .addGap(45, 45, 45)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -89,6 +161,110 @@ public class Email extends javax.swing.JFrame {
         Redactar redactar = new Redactar();
         redactar.setVisible(true);
     }//GEN-LAST:event_redactarBtnActionPerformed
+
+    private void bandejaEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bandejaEntradaActionPerformed
+        // TODO add your handling code here:
+        showTable(2);
+        Data.Instance().actual = 2;
+    }//GEN-LAST:event_bandejaEntradaActionPerformed
+
+    private void bandejaSalidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bandejaSalidaActionPerformed
+        // TODO add your handling code here:
+        showTable(1);
+        Data.Instance().actual = 1;
+    }//GEN-LAST:event_bandejaSalidaActionPerformed
+
+    private void EliminarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EliminarBtnActionPerformed
+        // TODO add your handling code here:
+        int selected = bandejaTable.getSelectedRow();
+        Correo temp = null;
+        // buscar dependiendo de la bandeja
+        if (Data.Instance().actual == 2) {
+            temp = Data.Instance().tree.search(bandejaTable.getValueAt(selected, 0).toString(), Data.Instance().user.getUsuario(), bandejaTable.getValueAt(selected, 2).toString());
+        } else {
+            temp = Data.Instance().tree.search(Data.Instance().user.getUsuario(), bandejaTable.getValueAt(selected, 0).toString(), bandejaTable.getValueAt(selected, 2).toString());
+        }
+        Data.Instance().tree.logicalDelete(temp);
+    }//GEN-LAST:event_EliminarBtnActionPerformed
+
+    private void verBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verBtnActionPerformed
+        // TODO add your handling code here:
+        int selected = bandejaTable.getSelectedRow();
+
+        if (selected != -1) {
+            Correo temp = null;
+            // buscar dependiendo de la bandeja
+            if (Data.Instance().actual == 2) {
+                temp = Data.Instance().tree.search(bandejaTable.getValueAt(selected, 0).toString(), Data.Instance().user.getUsuario(), bandejaTable.getValueAt(selected, 2).toString());
+            } else {
+                temp = Data.Instance().tree.search(Data.Instance().user.getUsuario(), bandejaTable.getValueAt(selected, 0).toString(), bandejaTable.getValueAt(selected, 2).toString());
+            }
+
+            Data.Instance().ver = temp;
+            Redactar redactar = new Redactar();
+            redactar.setVisible(true);
+        }
+    }//GEN-LAST:event_verBtnActionPerformed
+
+    private void buscarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarBtnActionPerformed
+        // TODO add your handling code here:
+
+        if (Data.Instance().actual != 0) {
+            String[] columns = new String[]{"Usuario", "Asunto", "Fecha"};
+            String[] tupla = new String[3];
+
+            DefaultTableModel model = new DefaultTableModel(null, columns);
+
+            // conseguir datos 
+            if (!"".equals(buscarTxt.getText())) {
+                ArrayList<Correo> correos = Data.Instance().tree.searchBy(buscarTxt.getText());
+
+                for (int i = 0; i < correos.size(); i++) {
+
+                    // dependiendo la bandeja mostrar el usuario
+                    if (Data.Instance().actual == 2) {
+                        tupla[0] = correos.get(i).getEmisor();
+                    } else {
+                        tupla[0] = correos.get(i).getReceptor();
+                    }
+                    tupla[1] = correos.get(i).getAsunto();
+                    tupla[2] = correos.get(i).getFecha();
+
+                    model.addRow(tupla);
+                }
+
+                bandejaTable.setModel(model);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "SELECCIONE UNA BANDEJA");
+        }
+    }//GEN-LAST:event_buscarBtnActionPerformed
+
+    public void showTable(int bandeja) {
+        String[] columns = new String[]{"Usuario", "Asunto", "Fecha"};
+        String[] tupla = new String[3];
+
+        DefaultTableModel model = new DefaultTableModel(null, columns);
+
+        // conseguir datos 
+        ArrayList<Correo> correos = Data.Instance().tree.query(Data.Instance().user.getUsuario(), bandeja);
+
+        for (int i = 0; i < correos.size(); i++) {
+
+            // dependiendo la bandeja mostrar el usuario
+            if (bandeja == 2) {
+                tupla[0] = correos.get(i).getEmisor();
+            } else {
+                tupla[0] = correos.get(i).getReceptor();
+            }
+            tupla[1] = correos.get(i).getAsunto();
+            tupla[2] = correos.get(i).getFecha();
+
+            model.addRow(tupla);
+        }
+
+        bandejaTable.setModel(model);
+    }
 
     /**
      * @param args the command line arguments
@@ -126,10 +302,14 @@ public class Email extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton EliminarBtn;
     private javax.swing.JButton bandejaEntrada;
     private javax.swing.JButton bandejaSalida;
-    private javax.swing.JList<String> jList1;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable bandejaTable;
+    private javax.swing.JButton buscarBtn;
+    private javax.swing.JTextField buscarTxt;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton redactarBtn;
+    private javax.swing.JButton verBtn;
     // End of variables declaration//GEN-END:variables
 }
