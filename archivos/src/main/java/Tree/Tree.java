@@ -323,9 +323,9 @@ public class Tree {
 
         for (int i = 0; i < data.size(); i++) {
             Correo aux = createCorreo(data.get(i).toString());
-            if (aux.getEmisor().equals(usuario) && bandeja == 1) { // bandeja de salida
+            if (aux.getEmisor().equals(usuario) && bandeja == 1 && aux.getEstatus().equals("1")) { // bandeja de salida
                 response.add(aux);
-            } else if (aux.getReceptor().equals(usuario) && bandeja == 2) { // bandeja de entrada
+            } else if (aux.getReceptor().equals(usuario) && bandeja == 2 && aux.getEstatus().equals("1")) { // bandeja de entrada
                 response.add(aux);
             }
         }
