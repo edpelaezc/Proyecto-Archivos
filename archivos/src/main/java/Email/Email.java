@@ -9,6 +9,7 @@ import Data.Data;
 import Tree.Correo;
 import Tree.HandleTree;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -23,8 +24,7 @@ public class Email extends javax.swing.JFrame {
      * Creates new form Email
      */
     public Email() {
-        initComponents();
-        Data.Instance().actual = 2;
+        initComponents();        
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         handler.readTree();
     }
@@ -208,12 +208,49 @@ public class Email extends javax.swing.JFrame {
 
     private void buscarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarBtnActionPerformed
         // TODO add your handling code here:
-        ArrayList<Correo> temp = Data.Instance().tree.searchBy(buscarTxt.getText());
-        
+
+        if (Data.Instance().actual != 0) {
+            String[] columns = null;
+            if (Data.Instance().actual == 2) {
+                columns = new String[]{"Usuario", "Asunto", "Fecha"};
+            } else {
+                columns = new String[]{"Destinatario", "Asunto", "Fecha"};
+            }
+
+            String[] tupla = new String[3];
+
+            DefaultTableModel model = new DefaultTableModel(null, columns);
+
+            // conseguir datos 
+            ArrayList<Correo> correos = Data.Instance().tree.searchBy(buscarTxt.getText());
+
+            for (int i = 0; i < correos.size(); i++) {
+
+                // dependiendo la bandeja mostrar el usuario
+                if (Data.Instance().actual == 2) {
+                    tupla[0] = correos.get(i).getEmisor();
+                } else {
+                    tupla[0] = correos.get(i).getReceptor();
+                }
+                tupla[1] = correos.get(i).getAsunto();
+                tupla[2] = correos.get(i).getFecha();
+
+                model.addRow(tupla);
+            }
+
+            bandejaTable.setModel(model);
+        } else {
+            JOptionPane.showMessageDialog(null, "USUARIO O CONTRASEÑA INVÁLIDOS");
+        }
     }//GEN-LAST:event_buscarBtnActionPerformed
 
     public void showTable(int bandeja) {
-        String[] columns = {"Usuario", "Asunto", "Fecha"};
+        String[] columns = null;
+        if (Data.Instance().actual == 2) {
+            columns = new String[]{"Usuario", "Asunto", "Fecha"};
+        } else {
+            columns = new String[]{"Destinatario", "Asunto", "Fecha"};
+        }
         String[] tupla = new String[3];
 
         DefaultTableModel model = new DefaultTableModel(null, columns);

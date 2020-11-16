@@ -107,9 +107,9 @@ public class Tree {
 
         for (int i = 0; i < data.size(); i++) {   
             Correo aux = createCorreo(data.get(i).toString());
-            if (aux.getEmisor().equals(Data.Instance().user.getUsuario()) && Data.Instance().actual == 1 && aux.getEstatus().equals("1")) { // bandeja de salida
+            if (data.get(i).toString().contains(field) && aux.getEmisor().equals(Data.Instance().user.getUsuario()) && Data.Instance().actual == 1 && aux.getEstatus().equals("1")) { // bandeja de salida
                 response.add(aux);
-            } else if (aux.getReceptor().equals(Data.Instance().user.getUsuario()) && Data.Instance().actual == 2 && aux.getEstatus().equals("1")) { // bandeja de entrada
+            } else if (data.get(i).toString().contains(field) && aux.getReceptor().equals(Data.Instance().user.getUsuario()) && Data.Instance().actual == 2 && aux.getEstatus().equals("1")) { // bandeja de entrada
                 response.add(aux);
             }
         }
