@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import static javax.swing.JOptionPane.showMessageDialog;
@@ -142,7 +143,27 @@ public class Redactar extends javax.swing.JFrame {
         
         Receptor r = new Receptor();
         if(r.userExists(destinatarioTxt.getText())){
-            handler.tree.add(new Correo(Data.Instance().user.getUsuario(), destinatarioTxt.getText(), fecha, asuntoTxt1.getText(), msgTxt.getText(), moverAdjunto(adjuntoTxt.getText()), "1"));
+            if (r.isUserOrList(destinatarioTxt.getText())) {
+                if (r.userHasList(destinatarioTxt.getText(), Data.Instance().user.getUsuario())) {
+                    ArrayList<String> usersInList = r.getUsersFromList(destinatarioTxt.getText());
+                    
+                    for(String user : usersInList){
+                        handler.tree.add(new Correo(Data.Instance().user.getUsuario(), 
+                            user, fecha, asuntoTxt1.getText(), msgTxt.getText(), 
+                            moverAdjunto(adjuntoTxt.getText()), "1"));
+                    }
+                }
+                else {
+                    showMessageDialog(null, "No has creado esta lista anteriormente");
+                }
+            }
+            else{
+                handler.tree.add(new Correo(Data.Instance().user.getUsuario(), 
+                        destinatarioTxt.getText(), fecha, 
+                        asuntoTxt1.getText(), msgTxt.getText(), 
+                        moverAdjunto(adjuntoTxt.getText()), "1"));
+            }
+            
         }
         else {
             showMessageDialog(null, "Usuario o lista no existentes");
