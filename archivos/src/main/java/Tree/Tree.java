@@ -90,7 +90,7 @@ public class Tree {
     public Correo search(String emisor, String receptor, String fecha) {
         ArrayList data = handler.ReadFile(correos);
         Correo input = null;
-        
+
         for (int i = 0; i < data.size(); i++) {
             Correo aux = createCorreo(data.get(i).toString());
             if (aux.getEmisor().equals(emisor) && aux.getReceptor().equals(receptor) && aux.getFecha().equals(fecha)) {
@@ -144,7 +144,10 @@ public class Tree {
                     // conseguir el numero de registro del elemento eliminado 
                     String[] fields = aux.split("\\|");
                     writer.println(fields[0] + "|" + "-" + "|" + "-" + "|" + temp.toString());
-                    writer.println(order.get(i).toString());
+
+                    if (i < order.size()) {
+                        writer.println(order.get(i).toString());
+                    }
                 } else {
                     if (i < order.size()) {
                         writer.println(order.get(i).toString());
@@ -312,7 +315,7 @@ public class Tree {
                 this.inactive++;
             }
         }
-    }    
+    }
 
     public ArrayList<Correo> query(String usuario, int bandeja) {
         ArrayList data = handler.ReadFile(correos);
