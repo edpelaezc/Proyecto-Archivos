@@ -6,6 +6,7 @@
 package Data;
 
 import Access.Usuario;
+import Tree.Correo;
 import Tree.Tree;
 
 /**
@@ -30,4 +31,5 @@ public class Data {
     public Usuario user = null;
     public Tree tree = new Tree();
     public int actual = 0;
+    public Correo ver = null;
 }

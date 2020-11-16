@@ -27,7 +27,15 @@ public class Redactar extends javax.swing.JFrame {
      * Creates new form Redactar
      */
     public Redactar() {
-        initComponents();        
+        initComponents();    
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        if (Data.Instance().ver != null) {
+            destinatarioTxt.setText(Data.Instance().ver.getReceptor());
+            asuntoTxt1.setText(Data.Instance().ver.getAsunto());
+            msgTxt.setText(Data.Instance().ver.getMensaje());
+            sendBtn.setEnabled(false);
+            adjuntarBtn.setEnabled(false);
+        }
     }
 
     /**
