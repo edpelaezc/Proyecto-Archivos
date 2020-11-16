@@ -21,9 +21,7 @@ import org.codehaus.plexus.util.FileUtils;
  *
  * @author llaaj
  */
-public class Redactar extends javax.swing.JFrame {
-
-    HandleTree handler = new HandleTree();
+public class Redactar extends javax.swing.JFrame {    
 
     /**
      * Creates new form Redactar
@@ -144,7 +142,7 @@ public class Redactar extends javax.swing.JFrame {
         
         Receptor r = new Receptor();
         if(r.userExists(destinatarioTxt.getText())){
-            handler.tree.add(new Correo(Data.Instance().user.getUsuario(), destinatarioTxt.getText(), fecha, asuntoTxt1.getText(), msgTxt.getText(), moverAdjunto(adjuntoTxt.getText()), "1"));
+            Data.Instance().tree.add(new Correo(Data.Instance().user.getUsuario(), destinatarioTxt.getText(), fecha, asuntoTxt1.getText(), msgTxt.getText(), moverAdjunto(adjuntoTxt.getText()), "1"));
         }
         else {
             showMessageDialog(null, "Usuario o lista no existentes");
